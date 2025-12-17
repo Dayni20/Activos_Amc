@@ -7,18 +7,14 @@ public class Custodias implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // PK
     private final int id_custodia_equipo;
 
-    // FK
     private final int id_equipo;
     private final int id_custodio;
 
-    // Fechas
     private final LocalDate fecha_inicio;
     private final LocalDate fecha_fin;
 
-    // Observación
     private final String observacion;
 
     private Custodias(

@@ -8,18 +8,14 @@ public class Equipos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // PK
     private final int id_equipo;
 
-    // Identificación
     private final String codigo_sap;
 
-    // Catálogos (FK)
     private final int id_categoria;
     private final int id_marca;
     private final int id_proveedor;
 
-    // Datos del equipo
     private final String tipo_equipo;
     private final String modelo;
     private final String serial;
@@ -35,18 +31,14 @@ public class Equipos implements Serializable {
     private final String ip;
     private final String mac;
 
-    // Ubicación organizacional
     private final Integer id_departamento;
 
-    // Compra
     private final LocalDate fecha_compra;
     private final BigDecimal precio_compra;
 
-    // Estado del equipo
     private final String estado_equipo;
     private final String observacion_equipo;
 
-    // Estado lógico
     private final String estado;
 
     private Equipos(
