@@ -22,18 +22,18 @@ public class CustodiosJpa implements Serializable {
     @Column(name = "id_custodio")
     private int idCustodio;
 
-    @Column(name = "nombre", length = 100, nullable = false)
+    @Column(length = 100, nullable = false)
     private String nombre;
 
-    @Column(name = "cedula", length = 20)
+    @Column(length = 20)
     private String cedula;
 
-    @Column(name = "correo", length = 150)
+    @Column(length = 150)
     private String correo;
 
-    @Column(name = "telefono", length = 20)
+    @Column(length = 20)
     private String telefono;
 
-    @Column(name = "estado", length = 20)
+    @Column(length = 20)
     private String estado;
 }

@@ -35,6 +35,6 @@ public class CustodiasJpa implements Serializable {
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
 
-    @Column(name = "observacion", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String observacion;
 }

@@ -39,13 +39,13 @@ public class EquiposJpa implements Serializable {
     @Column(name = "tipo_equipo", length = 100)
     private String tipoEquipo;
 
-    @Column(name = "modelo", length = 100)
+    @Column(length = 100)
     private String modelo;
 
-    @Column(name = "serial", length = 100)
+    @Column(length = 100)
     private String serial;
 
-    @Column(name = "procesador", length = 100)
+    @Column(length = 100)
     private String procesador;
 
     @Column(name = "memoria_ram_gb")
@@ -72,10 +72,10 @@ public class EquiposJpa implements Serializable {
     @Column(name = "union_dominio")
     private Boolean unionDominio;
 
-    @Column(name = "ip", length = 100)
+    @Column(length = 100)
     private String ip;
 
-    @Column(name = "mac", length = 100)
+    @Column(length = 100)
     private String mac;
 
     @Column(name = "id_departamento")
@@ -93,6 +93,6 @@ public class EquiposJpa implements Serializable {
     @Column(name = "observacion_equipo", columnDefinition = "TEXT")
     private String observacionEquipo;
 
-    @Column(name = "estado", length = 20)
+    @Column(length = 20)
     private String estado;
 }
