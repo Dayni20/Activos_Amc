@@ -1,0 +1,1 @@
+package com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores;
