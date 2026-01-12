@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.DepartamentosJpa;
 
-public interface IDepartamentosRepositorio
+public interface IDepartamentosJpaRepositorio
         extends JpaRepository<DepartamentosJpa, Integer> {
 
 }

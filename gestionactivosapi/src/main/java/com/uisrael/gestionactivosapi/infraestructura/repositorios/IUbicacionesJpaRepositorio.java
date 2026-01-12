@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.UbicacionesJpa;
 
-public interface IUbicacionesRepositorio
+public interface IUbicacionesJpaRepositorio
         extends JpaRepository<UbicacionesJpa, Integer> {
 
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,11 +29,14 @@ public class DepartamentosJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_departamento")
-    private int idDepartamento;
+    private int id_departamento;
 
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-
-    @Column(name = "id_ubicacion", nullable = false)
-    private int idUbicacion;
+    
+    private boolean estado;
+    
+    @ManyToOne
+    @JoinColumn(name = "fkUbicacion")
+    private UbicacionesJpa fkUbicacion;
 }

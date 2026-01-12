@@ -12,7 +12,6 @@ public class Ubicaciones implements Serializable {
 	private final boolean estado;
 	
 	public Ubicaciones(int id_ubicacion, String nombre, String agencia, boolean estado) {
-		super();
 		this.id_ubicacion = id_ubicacion;
 		this.nombre = nombre;
 		this.agencia = agencia;
