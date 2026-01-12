@@ -17,7 +17,7 @@ public class Custodias implements Serializable {
 
     private final String observacion;
 
-    private Custodias(
+    public Custodias(
             int id_custodia_equipo,
             int id_equipo,
             int id_custodio,

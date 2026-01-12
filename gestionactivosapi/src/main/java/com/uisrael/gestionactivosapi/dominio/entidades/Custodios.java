@@ -13,7 +13,7 @@ public class Custodios implements Serializable {
     private final String telefono;
     private final String estado;
 
-    private Custodios(
+    public Custodios(
             int id_custodio,
             String nombre,
             String cedula,

@@ -41,7 +41,7 @@ public class Equipos implements Serializable {
 
     private final String estado;
 
-    private Equipos(
+    public Equipos(
             int id_equipo,
             String codigo_sap,
             int id_categoria,

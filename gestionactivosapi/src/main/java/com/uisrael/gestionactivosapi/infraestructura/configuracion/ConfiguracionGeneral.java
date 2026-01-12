@@ -34,6 +34,30 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IMa
 
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IProveedoresJpaRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IMarcasJpaRepositorio;
+
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IEquiposUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.ICustodiosUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.ICustodiasUseCase;
+
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.EquiposUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.CustodiosUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.CustodiasUseCaseImpl;
+
+import com.uisrael.gestionactivosapi.dominio.repositorios.IEquiposRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.ICustodiosRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.ICustodiasRepositorio;
+
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.EquiposRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.CustodiosRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.CustodiasRepositorioImpl;
+
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IEquiposJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiosJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiasJpaRepositorio;
+
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IEquiposJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiosJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiasJpaMapper;
 @Configuration
 public class ConfiguracionGeneral {
 	
@@ -76,4 +100,39 @@ public class ConfiguracionGeneral {
 	IMarcasRepositorio marcasRepositorio(IMarcasJpaRepositorio jpaRepositorio, IMarcasJpaMapper mapper) {
 	    return new MarcasRepositorioImpl(jpaRepositorio, mapper);
 	}
+    @Bean
+    IEquiposUseCase equiposUseCase(IEquiposRepositorio repositorio) {
+        return new EquiposUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    IEquiposRepositorio equiposRepositorio(
+            IEquiposJpaRepositorio jpaRepositorio,
+            IEquiposJpaMapper mapper) {
+        return new EquiposRepositorioImpl(jpaRepositorio, mapper);
+    }
+    
+    @Bean
+    ICustodiosUseCase custodiosUseCase(ICustodiosRepositorio repositorio) {
+        return new CustodiosUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    ICustodiosRepositorio custodiosRepositorio(
+            ICustodiosJpaRepositorio jpaRepositorio,
+            ICustodiosJpaMapper mapper) {
+        return new CustodiosRepositorioImpl(jpaRepositorio, mapper);
+    }
+
+    @Bean
+    ICustodiasUseCase custodiasUseCase(ICustodiasRepositorio repositorio) {
+        return new CustodiasUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    ICustodiasRepositorio custodiasRepositorio(
+            ICustodiasJpaRepositorio jpaRepositorio,
+            ICustodiasJpaMapper mapper) {
+        return new CustodiasRepositorioImpl(jpaRepositorio, mapper);
+    }
 }
