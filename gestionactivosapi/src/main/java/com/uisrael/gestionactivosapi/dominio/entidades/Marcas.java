@@ -15,7 +15,10 @@ public class Marcas implements Serializable {
         this.nombre = nombre;
         this.estado = estado;
     }
-
+    
+    public static Marcas of(int id_marca, String nombre, boolean estado) {
+        return new Marcas(id_marca, nombre, estado);
+    }
     public int getId_marca() {
         return id_marca;
     }

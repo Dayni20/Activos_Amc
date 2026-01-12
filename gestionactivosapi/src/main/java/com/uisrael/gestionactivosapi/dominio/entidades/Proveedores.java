@@ -31,6 +31,18 @@ public class Proveedores implements Serializable {
         this.direccion = direccion;
         this.estado = estado;
     }
+    
+    public static Proveedores of(
+            int id_proveedor,
+            String nombre,
+            String ruc,
+            String telefono,
+            String correo,
+            String direccion,
+            String estado
+    ) {
+        return new Proveedores(id_proveedor, nombre, ruc, telefono, correo, direccion, estado);
+    }
 
     public int getId_proveedor() {
         return id_proveedor;

@@ -1,6 +1,7 @@
 package com.uisrael.gestionactivosapi.infraestructura.configuracion;
 
 import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IDepartamentosUseCase;
@@ -16,6 +17,23 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IUb
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IDepartamentosJpaRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IUbicacionesJpaRepositorio;
 
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IProveedoresUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IMarcasUseCase;
+
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.ProveedoresUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.MarcasUseCaseImpl;
+
+import com.uisrael.gestionactivosapi.dominio.repositorios.IProveedoresRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.IMarcasRepositorio;
+
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.ProveedoresRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.MarcasRepositorioImpl;
+
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IProveedoresJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IMarcasJpaMapper;
+
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IProveedoresJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IMarcasJpaRepositorio;
 @Configuration
 public class ConfiguracionGeneral {
 	
@@ -37,5 +55,25 @@ public class ConfiguracionGeneral {
 	@Bean
 	IUbicacionesRepositorio ubicacionRepositorio(IUbicacionesJpaRepositorio jpaRepositorio, IUbicacionesJpaMapper mapper) {
 		return new UbicacionesRepositorioImpl(jpaRepositorio, mapper);
+	}
+	
+	@Bean
+	IProveedoresUseCase proveedoresUseCase(IProveedoresRepositorio repositorio) {
+	    return new ProveedoresUseCaseImpl(repositorio);
+	}
+
+	@Bean
+	IMarcasUseCase marcasUseCase(IMarcasRepositorio repositorio) {
+	    return new MarcasUseCaseImpl(repositorio);
+	}
+
+	@Bean
+	IProveedoresRepositorio proveedoresRepositorio(IProveedoresJpaRepositorio jpaRepositorio, IProveedoresJpaMapper mapper) {
+	    return new ProveedoresRepositorioImpl(jpaRepositorio, mapper);
+	}
+
+	@Bean
+	IMarcasRepositorio marcasRepositorio(IMarcasJpaRepositorio jpaRepositorio, IMarcasJpaMapper mapper) {
+	    return new MarcasRepositorioImpl(jpaRepositorio, mapper);
 	}
 }
