@@ -58,6 +58,26 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiasJpaR
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IEquiposJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiosJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiasJpaMapper;
+
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IRolesUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUsuariosUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.ICategoriaEquiposUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.RolesUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.UsuariosUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.CategoriaEquiposUseCaseImpl;
+import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.IUsuariosRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.ICategoriaEquiposRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.RolesRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.UsuariosRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.CategoriaEquiposRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IRolesJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IUsuariosJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICategoriaEquiposJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IRolesJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IUsuariosJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICategoriaEquiposJpaRepositorio;
+
 @Configuration
 public class ConfiguracionGeneral {
 	
@@ -134,5 +154,35 @@ public class ConfiguracionGeneral {
             ICustodiasJpaRepositorio jpaRepositorio,
             ICustodiasJpaMapper mapper) {
         return new CustodiasRepositorioImpl(jpaRepositorio, mapper);
+    }
+
+    @Bean
+    IRolesUseCase rolesUseCase(IRolesRepositorio repositorio) {
+        return new RolesUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    IRolesRepositorio rolesRepositorio(IRolesJpaRepositorio jpaRepositorio, IRolesJpaMapper mapper) {
+        return new RolesRepositorioImpl(jpaRepositorio, mapper);
+    }
+
+    @Bean
+    IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio) {
+        return new UsuariosUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    IUsuariosRepositorio usuariosRepositorio(IUsuariosJpaRepositorio jpaRepositorio, IUsuariosJpaMapper mapper) {
+        return new UsuariosRepositorioImpl(jpaRepositorio, mapper);
+    }
+
+    @Bean
+    ICategoriaEquiposUseCase categoriaEquiposUseCase(ICategoriaEquiposRepositorio repositorio) {
+        return new CategoriaEquiposUseCaseImpl(repositorio);
+    }
+
+    @Bean
+    ICategoriaEquiposRepositorio categoriaEquiposRepositorio(ICategoriaEquiposJpaRepositorio jpaRepositorio, ICategoriaEquiposJpaMapper mapper) {
+        return new CategoriaEquiposRepositorioImpl(jpaRepositorio, mapper);
     }
 }
