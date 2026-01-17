@@ -4,62 +4,52 @@ import java.io.Serializable;
 
 public class Custodios implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final int id_custodio;
-    private final String nombre;
-    private final String cedula;
-    private final String correo;
-    private final String telefono;
-    private final String estado;
+	private final int idCustodio;
+	private final String nombre;
+	private final String cedula;
+	private final String correo;
+	private final String telefono;
+	private final String estado;
 
-    public Custodios(
-            int id_custodio,
-            String nombre,
-            String cedula,
-            String correo,
-            String telefono,
-            String estado
-    ) {
-        this.id_custodio = id_custodio;
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.estado = estado;
-    }
+	public Custodios(int idCustodio, String nombre, String cedula, String correo, String telefono, String estado) {
+		this.idCustodio = idCustodio;
+		this.nombre = nombre;
+		this.cedula = cedula;
+		this.correo = correo;
+		this.telefono = telefono;
+		this.estado = estado;
+	}
 
-    public int getId_custodio() {
-        return id_custodio;
-    }
+	public int getIdCustodio() {
+		return idCustodio;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getCedula() {
-        return cedula;
-    }
+	public String getCedula() {
+		return cedula;
+	}
 
-    public String getCorreo() {
-        return correo;
-    }
+	public String getCorreo() {
+		return correo;
+	}
 
-    public String getTelefono() {
-        return telefono;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public String getEstado() {
+		return estado;
+	}
 
-    @Override
-    public String toString() {
-        return "Custodios [id_custodio=" + id_custodio +
-                ", nombre=" + nombre +
-                ", cedula=" + cedula +
-                ", correo=" + correo +
-                ", telefono=" + telefono +
-                ", estado=" + estado + "]";
-    }
+	@Override
+	public String toString() {
+		return "Custodios [idCustodio=" + idCustodio + ", nombre=" + nombre + ", cedula=" + cedula + ", correo="
+				+ correo + ", telefono=" + telefono + ", estado=" + estado + "]";
+	}
+
 }

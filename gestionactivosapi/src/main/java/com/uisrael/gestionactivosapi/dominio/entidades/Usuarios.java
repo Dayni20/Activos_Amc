@@ -6,34 +6,27 @@ public class Usuarios implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id_usuario;
+	private int idUsuario;
 	private String nombre;
 	private String correo;
 	private String contrasena;
-	private int id_rol;
-	private int id_departamento;
 	private String estado;
-	
-	public Usuarios() {
-	}
-	
-	public Usuarios(int id_usuario, String nombre, String correo, String contrasena, int id_rol, int id_departamento,
-			String estado) {
-		this.id_usuario = id_usuario;
+
+	public Usuarios(int idUsuario, String nombre, String correo, String contrasena, String estado) {
+		super();
+		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.correo = correo;
 		this.contrasena = contrasena;
-		this.id_rol = id_rol;
-		this.id_departamento = id_departamento;
 		this.estado = estado;
 	}
 
-	public int getId_usuario() {
-		return id_usuario;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNombre() {
@@ -60,22 +53,6 @@ public class Usuarios implements Serializable {
 		this.contrasena = contrasena;
 	}
 
-	public int getId_rol() {
-		return id_rol;
-	}
-
-	public void setId_rol(int id_rol) {
-		this.id_rol = id_rol;
-	}
-
-	public int getId_departamento() {
-		return id_departamento;
-	}
-
-	public void setId_departamento(int id_departamento) {
-		this.id_departamento = id_departamento;
-	}
-
 	public String getEstado() {
 		return estado;
 	}
@@ -86,10 +63,8 @@ public class Usuarios implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuarios [id_usuario=" + id_usuario + ", nombre=" + nombre + ", correo=" + correo + ", contrasena="
-				+ contrasena + ", id_rol=" + id_rol + ", id_departamento=" + id_departamento + ", estado=" + estado
-				+ "]";
+		return "Usuarios [idUsuario=" + idUsuario + ", nombre=" + nombre + ", correo=" + correo + ", contrasena="
+				+ contrasena + ", estado=" + estado + "]";
 	}
 
 }
-		

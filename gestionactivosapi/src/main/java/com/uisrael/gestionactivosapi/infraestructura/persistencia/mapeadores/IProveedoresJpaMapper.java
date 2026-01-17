@@ -23,6 +23,6 @@ public interface IProveedoresJpaMapper {
         );
     }
 
-    @Mapping(target = "idProveedor", source = "id_proveedor")
+    @Mapping(target = "idProveedor", source = "idProveedor")
     ProveedoresJpa toEntity(Proveedores proveedor);
 }

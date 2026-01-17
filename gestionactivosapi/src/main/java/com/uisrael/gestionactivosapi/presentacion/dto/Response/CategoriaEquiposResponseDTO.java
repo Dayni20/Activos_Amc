@@ -1,11 +1,22 @@
 package com.uisrael.gestionactivosapi.presentacion.dto.Response;
 
-import lombok.Data;
-
-@Data
 public class CategoriaEquiposResponseDTO {
 	
-	private int id_categoria;
+	private int idCategoria;
 	private String nombre;
+	public int getIdCategoria() {
+		return idCategoria;
+	}
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	
 
 }

@@ -9,14 +9,10 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.UsuariosJp
 @Mapper(componentModel = "spring")
 public interface IUsuariosJpaMapper {
 	
-	@Mapping(source = "idUsuario", target = "id_usuario")
-	@Mapping(source = "idRol", target = "id_rol")
-	@Mapping(source = "idDepartamento", target = "id_departamento")
+	@Mapping(source = "idUsuario", target = "idUsuario")
 	Usuarios toDomain(UsuariosJpa entity);
 	
-	@Mapping(source = "id_usuario", target = "idUsuario")
-	@Mapping(source = "id_rol", target = "idRol")
-	@Mapping(source = "id_departamento", target = "idDepartamento")
+	@Mapping(source = "idUsuario", target = "idUsuario")
 	UsuariosJpa toEntity(Usuarios usuario);
 
 }

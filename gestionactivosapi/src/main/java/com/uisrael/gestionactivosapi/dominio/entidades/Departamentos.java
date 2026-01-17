@@ -5,20 +5,21 @@ import java.io.Serializable;
 public class Departamentos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private final int id_departamento;
+
+	private final int idDepartamento;
 	private final String nombre;
 	private final boolean estado;
-	
-	public Departamentos(int id_departamento, String nombre, boolean estado) {
-		this.id_departamento = id_departamento;
+
+	public Departamentos(int idDepartamento, String nombre, boolean estado) {
+		this.idDepartamento = idDepartamento;
 		this.nombre = nombre;
 		this.estado = estado;
 	}
-	
-	public int getId_departamento() {
-		return id_departamento;
+
+	public int getIdDepartamento() {
+		return idDepartamento;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -26,11 +27,10 @@ public class Departamentos implements Serializable {
 	public boolean isEstado() {
 		return estado;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Departamentos [id_departamento=" + id_departamento + ", nombre=" + nombre + ", estado=" + estado + "]";
+		return "Departamentos [idDepartamento=" + idDepartamento + ", nombre=" + nombre + ", estado=" + estado + "]";
 	}
-	
 
 }

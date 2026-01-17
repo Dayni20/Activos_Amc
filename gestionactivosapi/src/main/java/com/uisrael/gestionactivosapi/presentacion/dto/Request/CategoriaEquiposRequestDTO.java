@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CategoriaEquiposRequestDTO {
 	
-	private int id_categoria;
+	private int idCategoria;
 	
 	@NotBlank
 	private String nombre;

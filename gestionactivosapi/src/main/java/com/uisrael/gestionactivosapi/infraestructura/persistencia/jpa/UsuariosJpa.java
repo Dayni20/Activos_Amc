@@ -38,12 +38,6 @@ public class UsuariosJpa implements Serializable {
     @Column(name = "contrasena", length = 255, nullable = false)
     private String contrasena;
 
-    @Column(name = "id_rol", nullable = false)
-    private int idRol;
-
-    @Column(name = "id_departamento", nullable = false)
-    private int idDepartamento;
-
     @Column(name = "estado", length = 20, nullable = false)
     private String estado;
 }

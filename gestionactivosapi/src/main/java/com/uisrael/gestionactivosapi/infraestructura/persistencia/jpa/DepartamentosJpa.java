@@ -29,7 +29,7 @@ public class DepartamentosJpa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_departamento")
-    private int id_departamento;
+    private int idDepartamento;
 
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;

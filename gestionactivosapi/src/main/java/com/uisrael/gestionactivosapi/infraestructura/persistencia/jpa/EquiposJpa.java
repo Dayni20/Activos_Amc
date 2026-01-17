@@ -34,15 +34,6 @@ public class EquiposJpa implements Serializable {
     @Column(name = "codigo_sap", length = 20)
     private String codigoSap;
 
-    @Column(name = "id_categoria", nullable = false)
-    private int idCategoria;
-
-    @Column(name = "id_marca", nullable = false)
-    private int idMarca;
-
-    @Column(name = "id_proveedor", nullable = false)
-    private int idProveedor;
-
     @Column(name = "tipo_equipo", length = 100)
     private String tipoEquipo;
 
@@ -84,9 +75,6 @@ public class EquiposJpa implements Serializable {
 
     @Column(length = 100)
     private String mac;
-
-    @Column(name = "id_departamento")
-    private Integer idDepartamento;
 
     @Column(name = "fecha_compra")
     private LocalDate fechaCompra;

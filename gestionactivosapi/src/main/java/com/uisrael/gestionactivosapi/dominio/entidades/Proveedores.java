@@ -4,82 +4,64 @@ import java.io.Serializable;
 
 public class Proveedores implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final int id_proveedor;
-    private final String nombre;
-    private final String ruc;
-    private final String telefono;
-    private final String correo;
-    private final String direccion;
-    private final String estado;
+	private final int idProveedor;
+	private final String nombre;
+	private final String ruc;
+	private final String telefono;
+	private final String correo;
+	private final String direccion;
+	private final String estado;
 
-    private Proveedores(
-            int id_proveedor,
-            String nombre,
-            String ruc,
-            String telefono,
-            String correo,
-            String direccion,
-            String estado
-    ) {
-        this.id_proveedor = id_proveedor;
-        this.nombre = nombre;
-        this.ruc = ruc;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.direccion = direccion;
-        this.estado = estado;
-    }
-    
-    public static Proveedores of(
-            int id_proveedor,
-            String nombre,
-            String ruc,
-            String telefono,
-            String correo,
-            String direccion,
-            String estado
-    ) {
-        return new Proveedores(id_proveedor, nombre, ruc, telefono, correo, direccion, estado);
-    }
+	public Proveedores(int idProveedor, String nombre, String ruc, String telefono, String correo, String direccion,
+			String estado) {
+		this.idProveedor = idProveedor;
+		this.nombre = nombre;
+		this.ruc = ruc;
+		this.telefono = telefono;
+		this.correo = correo;
+		this.direccion = direccion;
+		this.estado = estado;
+	}
 
-    public int getId_proveedor() {
-        return id_proveedor;
-    }
+	public static Proveedores of(int idProveedor, String nombre, String ruc, String telefono, String correo,
+			String direccion, String estado) {
+		return new Proveedores(idProveedor, nombre, ruc, telefono, correo, direccion, estado);
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public int getIdProveedor() {
+		return idProveedor;
+	}
 
-    public String getRuc() {
-        return ruc;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getTelefono() {
-        return telefono;
-    }
+	public String getRuc() {
+		return ruc;
+	}
 
-    public String getCorreo() {
-        return correo;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public String getDireccion() {
-        return direccion;
-    }
+	public String getCorreo() {
+		return correo;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public String getDireccion() {
+		return direccion;
+	}
 
-    @Override
-    public String toString() {
-        return "Proveedores [id_proveedor=" + id_proveedor +
-                ", nombre=" + nombre +
-                ", ruc=" + ruc +
-                ", telefono=" + telefono +
-                ", correo=" + correo +
-                ", direccion=" + direccion +
-                ", estado=" + estado + "]";
-    }
+	public String getEstado() {
+		return estado;
+	}
+
+	@Override
+	public String toString() {
+		return "Proveedores [idProveedor=" + idProveedor + ", nombre=" + nombre + ", ruc=" + ruc + ", telefono="
+				+ telefono + ", correo=" + correo + ", direccion=" + direccion + ", estado=" + estado + "]";
+	}
+
 }

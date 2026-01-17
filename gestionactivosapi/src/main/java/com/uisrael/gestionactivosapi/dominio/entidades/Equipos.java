@@ -6,223 +6,152 @@ import java.time.LocalDate;
 
 public class Equipos implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final int id_equipo;
+	private final int idEquipo;
+	private final String codigoSap;
+	private final String tipoEquipo;
+	private final String modelo;
+	private final String serial;
+	private final String procesador;
+	private final Integer memoriaRamGb;
+	private final Integer capacidadAlmacenamientoGb;
+	private final String sistemaOperativo;
+	private final Boolean licenciaWindowsActivada;
+	private final Boolean etiquetaActivoFijo;
+	private final String tipoLicenciaOffice;
+	private final String versionOffice;
+	private final Boolean unionDominio;
+	private final String ip;
+	private final String mac;
+	private final LocalDate fechaCompra;
+	private final BigDecimal precioCompra;
+	private final String estadoEquipo;
+	private final String observacionEquipo;
+	private final String estado;
 
-    private final String codigo_sap;
+	public Equipos(int idEquipo, String codigoSap, String tipoEquipo, String modelo, String serial, String procesador,
+			Integer memoriaRamGb, Integer capacidadAlmacenamientoGb, String sistemaOperativo,
+			Boolean licenciaWindowsActivada, Boolean etiquetaActivoFijo, String tipoLicenciaOffice,
+			String versionOffice, Boolean unionDominio, String ip, String mac, LocalDate fechaCompra,
+			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, String estado) {
+		this.idEquipo = idEquipo;
+		this.codigoSap = codigoSap;
+		this.tipoEquipo = tipoEquipo;
+		this.modelo = modelo;
+		this.serial = serial;
+		this.procesador = procesador;
+		this.memoriaRamGb = memoriaRamGb;
+		this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb;
+		this.sistemaOperativo = sistemaOperativo;
+		this.licenciaWindowsActivada = licenciaWindowsActivada;
+		this.etiquetaActivoFijo = etiquetaActivoFijo;
+		this.tipoLicenciaOffice = tipoLicenciaOffice;
+		this.versionOffice = versionOffice;
+		this.unionDominio = unionDominio;
+		this.ip = ip;
+		this.mac = mac;
+		this.fechaCompra = fechaCompra;
+		this.precioCompra = precioCompra;
+		this.estadoEquipo = estadoEquipo;
+		this.observacionEquipo = observacionEquipo;
+		this.estado = estado;
+	}
 
-    private final int id_categoria;
-    private final int id_marca;
-    private final int id_proveedor;
+	public int getIdEquipo() {
+		return idEquipo;
+	}
 
-    private final String tipo_equipo;
-    private final String modelo;
-    private final String serial;
-    private final String procesador;
-    private final Integer memoria_ram_gb;
-    private final Integer capacidad_almacenamiento_gb;
-    private final String sistema_operativo;
-    private final Boolean licencia_windows_activada;
-    private final Boolean etiqueta_activo_fijo;
-    private final String tipo_licencia_office;
-    private final String version_office;
-    private final Boolean union_dominio;
-    private final String ip;
-    private final String mac;
+	public String getCodigoSap() {
+		return codigoSap;
+	}
 
-    private final Integer id_departamento;
+	public String getTipoEquipo() {
+		return tipoEquipo;
+	}
 
-    private final LocalDate fecha_compra;
-    private final BigDecimal precio_compra;
+	public String getModelo() {
+		return modelo;
+	}
 
-    private final String estado_equipo;
-    private final String observacion_equipo;
+	public String getSerial() {
+		return serial;
+	}
 
-    private final String estado;
+	public String getProcesador() {
+		return procesador;
+	}
 
-    public Equipos(
-            int id_equipo,
-            String codigo_sap,
-            int id_categoria,
-            int id_marca,
-            int id_proveedor,
-            String tipo_equipo,
-            String modelo,
-            String serial,
-            String procesador,
-            Integer memoria_ram_gb,
-            Integer capacidad_almacenamiento_gb,
-            String sistema_operativo,
-            Boolean licencia_windows_activada,
-            Boolean etiqueta_activo_fijo,
-            String tipo_licencia_office,
-            String version_office,
-            Boolean union_dominio,
-            String ip,
-            String mac,
-            Integer id_departamento,
-            LocalDate fecha_compra,
-            BigDecimal precio_compra,
-            String estado_equipo,
-            String observacion_equipo,
-            String estado
-    ) {
-        this.id_equipo = id_equipo;
-        this.codigo_sap = codigo_sap;
-        this.id_categoria = id_categoria;
-        this.id_marca = id_marca;
-        this.id_proveedor = id_proveedor;
-        this.tipo_equipo = tipo_equipo;
-        this.modelo = modelo;
-        this.serial = serial;
-        this.procesador = procesador;
-        this.memoria_ram_gb = memoria_ram_gb;
-        this.capacidad_almacenamiento_gb = capacidad_almacenamiento_gb;
-        this.sistema_operativo = sistema_operativo;
-        this.licencia_windows_activada = licencia_windows_activada;
-        this.etiqueta_activo_fijo = etiqueta_activo_fijo;
-        this.tipo_licencia_office = tipo_licencia_office;
-        this.version_office = version_office;
-        this.union_dominio = union_dominio;
-        this.ip = ip;
-        this.mac = mac;
-        this.id_departamento = id_departamento;
-        this.fecha_compra = fecha_compra;
-        this.precio_compra = precio_compra;
-        this.estado_equipo = estado_equipo;
-        this.observacion_equipo = observacion_equipo;
-        this.estado = estado;
-    }
+	public Integer getMemoriaRamGb() {
+		return memoriaRamGb;
+	}
 
-    public int getId_equipo() {
-        return id_equipo;
-    }
+	public Integer getCapacidadAlmacenamientoGb() {
+		return capacidadAlmacenamientoGb;
+	}
 
-    public String getCodigo_sap() {
-        return codigo_sap;
-    }
+	public String getSistemaOperativo() {
+		return sistemaOperativo;
+	}
 
-    public int getId_categoria() {
-        return id_categoria;
-    }
+	public Boolean getLicenciaWindowsActivada() {
+		return licenciaWindowsActivada;
+	}
 
-    public int getId_marca() {
-        return id_marca;
-    }
+	public Boolean getEtiquetaActivoFijo() {
+		return etiquetaActivoFijo;
+	}
 
-    public int getId_proveedor() {
-        return id_proveedor;
-    }
+	public String getTipoLicenciaOffice() {
+		return tipoLicenciaOffice;
+	}
 
-    public String getTipo_equipo() {
-        return tipo_equipo;
-    }
+	public String getVersionOffice() {
+		return versionOffice;
+	}
 
-    public String getModelo() {
-        return modelo;
-    }
+	public Boolean getUnionDominio() {
+		return unionDominio;
+	}
 
-    public String getSerial() {
-        return serial;
-    }
+	public String getIp() {
+		return ip;
+	}
 
-    public String getProcesador() {
-        return procesador;
-    }
+	public String getMac() {
+		return mac;
+	}
 
-    public Integer getMemoria_ram_gb() {
-        return memoria_ram_gb;
-    }
+	public LocalDate getFechaCompra() {
+		return fechaCompra;
+	}
 
-    public Integer getCapacidad_almacenamiento_gb() {
-        return capacidad_almacenamiento_gb;
-    }
+	public BigDecimal getPrecioCompra() {
+		return precioCompra;
+	}
 
-    public String getSistema_operativo() {
-        return sistema_operativo;
-    }
+	public String getEstadoEquipo() {
+		return estadoEquipo;
+	}
 
-    public Boolean getLicencia_windows_activada() {
-        return licencia_windows_activada;
-    }
+	public String getObservacionEquipo() {
+		return observacionEquipo;
+	}
 
-    public Boolean getEtiqueta_activo_fijo() {
-        return etiqueta_activo_fijo;
-    }
+	public String getEstado() {
+		return estado;
+	}
 
-    public String getTipo_licencia_office() {
-        return tipo_licencia_office;
-    }
+	@Override
+	public String toString() {
+		return "Equipos [idEquipo=" + idEquipo + ", codigoSap=" + codigoSap + ", tipoEquipo=" + tipoEquipo + ", modelo="
+				+ modelo + ", serial=" + serial + ", procesador=" + procesador + ", memoriaRamGb=" + memoriaRamGb
+				+ ", capacidadAlmacenamientoGb=" + capacidadAlmacenamientoGb + ", sistemaOperativo=" + sistemaOperativo
+				+ ", licenciaWindowsActivada=" + licenciaWindowsActivada + ", etiquetaActivoFijo=" + etiquetaActivoFijo
+				+ ", tipoLicenciaOffice=" + tipoLicenciaOffice + ", versionOffice=" + versionOffice + ", unionDominio="
+				+ unionDominio + ", ip=" + ip + ", mac=" + mac + ", fechaCompra=" + fechaCompra + ", precioCompra="
+				+ precioCompra + ", estadoEquipo=" + estadoEquipo + ", observacionEquipo=" + observacionEquipo
+				+ ", estado=" + estado + "]";
+	}
 
-    public String getVersion_office() {
-        return version_office;
-    }
-
-    public Boolean getUnion_dominio() {
-        return union_dominio;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public String getMac() {
-        return mac;
-    }
-
-    public Integer getId_departamento() {
-        return id_departamento;
-    }
-
-    public LocalDate getFecha_compra() {
-        return fecha_compra;
-    }
-
-    public BigDecimal getPrecio_compra() {
-        return precio_compra;
-    }
-
-    public String getEstado_equipo() {
-        return estado_equipo;
-    }
-
-    public String getObservacion_equipo() {
-        return observacion_equipo;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipos [" +
-                "id_equipo=" + id_equipo +
-                ", codigo_sap=" + codigo_sap +
-                ", id_categoria=" + id_categoria +
-                ", id_marca=" + id_marca +
-                ", id_proveedor=" + id_proveedor +
-                ", tipo_equipo=" + tipo_equipo +
-                ", modelo=" + modelo +
-                ", serial=" + serial +
-                ", procesador=" + procesador +
-                ", memoria_ram_gb=" + memoria_ram_gb +
-                ", capacidad_almacenamiento_gb=" + capacidad_almacenamiento_gb +
-                ", sistema_operativo=" + sistema_operativo +
-                ", licencia_windows_activada=" + licencia_windows_activada +
-                ", etiqueta_activo_fijo=" + etiqueta_activo_fijo +
-                ", tipo_licencia_office=" + tipo_licencia_office +
-                ", version_office=" + version_office +
-                ", union_dominio=" + union_dominio +
-                ", ip=" + ip +
-                ", mac=" + mac +
-                ", id_departamento=" + id_departamento +
-                ", fecha_compra=" + fecha_compra +
-                ", precio_compra=" + precio_compra +
-                ", estado_equipo=" + estado_equipo +
-                ", observacion_equipo=" + observacion_equipo +
-                ", estado=" + estado +
-                "]";
-    }
 }
