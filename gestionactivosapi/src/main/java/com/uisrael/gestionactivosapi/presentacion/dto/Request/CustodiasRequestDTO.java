@@ -9,19 +9,13 @@ import lombok.Data;
 public class CustodiasRequestDTO {
 
     @NotBlank
-    private int id_custodia_equipo;
+    private int idCustodiaEquipo;
 
     @NotBlank
-    private int id_equipo;
+    private LocalDate fechaInicio;
 
     @NotBlank
-    private int id_custodio;
-
-    @NotBlank
-    private LocalDate fecha_inicio;
-
-    @NotBlank
-    private LocalDate fecha_fin;
+    private LocalDate fechaFin;
 
     @NotBlank
     private String observacion;

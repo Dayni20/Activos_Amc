@@ -11,5 +11,9 @@ public interface IUbicacionesUseCase {
 	Ubicaciones obtenerPorId (int id);
 	
 	List<Ubicaciones> listar();
+	
+	Ubicaciones actualizar(int id, Ubicaciones ubicacion);
+
+	Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion);
 
 }

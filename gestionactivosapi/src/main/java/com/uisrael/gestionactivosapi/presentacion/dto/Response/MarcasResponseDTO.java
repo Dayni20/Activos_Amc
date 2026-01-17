@@ -1,23 +1,23 @@
 package com.uisrael.gestionactivosapi.presentacion.dto.Response;
 
 public class MarcasResponseDTO {
-	 private int id_marca;
-	    private String nombre;
+	private int idMarca;
+	private String nombre;
 
-	    public int getId_marca() {
-	        return id_marca;
-	    }
+	public int getIdMarca() {
+		return idMarca;
+	}
 
-	    public void setId_marca(int id_marca) {
-	        this.id_marca = id_marca;
-	    }
+	public void setIdMarca(int idMarca) {
+		this.idMarca = idMarca;
+	}
 
-	    public String getNombre() {
-	        return nombre;
-	    }
+	public String getNombre() {
+		return nombre;
+	}
 
-	    public void setNombre(String nombre) {
-	        this.nombre = nombre;
-	    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 }

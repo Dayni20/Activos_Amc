@@ -8,17 +8,12 @@ public class Custodias implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final int idCustodiaEquipo;
-	private final int idEquipo;
-	private final int idCustodio;
 	private final LocalDate fechaInicio;
 	private final LocalDate fechaFin;
 	private final String observacion;
 
-	public Custodias(int idCustodiaEquipo, int idEquipo, int idCustodio, LocalDate fechaInicio, LocalDate fechaFin,
-			String observacion) {
+	public Custodias(int idCustodiaEquipo, LocalDate fechaInicio, LocalDate fechaFin, String observacion) {
 		this.idCustodiaEquipo = idCustodiaEquipo;
-		this.idEquipo = idEquipo;
-		this.idCustodio = idCustodio;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.observacion = observacion;
@@ -26,14 +21,6 @@ public class Custodias implements Serializable {
 
 	public int getIdCustodiaEquipo() {
 		return idCustodiaEquipo;
-	}
-
-	public int getIdEquipo() {
-		return idEquipo;
-	}
-
-	public int getIdCustodio() {
-		return idCustodio;
 	}
 
 	public LocalDate getFechaInicio() {
@@ -50,9 +37,8 @@ public class Custodias implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Custodias [idCustodiaEquipo=" + idCustodiaEquipo + ", idEquipo=" + idEquipo + ", idCustodio="
-				+ idCustodio + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", observacion="
-				+ observacion + "]";
+		return "Custodias [idCustodiaEquipo=" + idCustodiaEquipo + ", fechaInicio=" + fechaInicio + ", fechaFin="
+				+ fechaFin + ", observacion=" + observacion + "]";
 	}
 
 }

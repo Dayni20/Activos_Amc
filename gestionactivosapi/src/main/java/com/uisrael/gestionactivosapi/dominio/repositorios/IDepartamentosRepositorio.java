@@ -12,5 +12,9 @@ public interface IDepartamentosRepositorio {
 	Optional<Departamentos> buscarPorId(int id);
 	
 	List<Departamentos> listarTodos();
+	
+	Departamentos actualizar(int id, Departamentos departamento);
+	
+	Departamentos actualizarEstado(int id, Departamentos departamento);
 
 }

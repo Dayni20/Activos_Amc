@@ -7,10 +7,12 @@ import lombok.Data;
 public class DepartamentosRequestDTO {
 	
 	@NotBlank
-	private int id_departamento;
+	private int idDepartamento;
 	@NotBlank
 	private String nombre;
-	@NotBlank
+
 	private boolean estado;
+	
+	private UbicacionesRequestDTO fkUbicacion;
 
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 public class MarcasRequestDTO {
 	
 	@NotBlank
-	private int id_marca;
+	private int idMarca;
 	@NotBlank
 	private String nombre;
 

@@ -39,6 +39,28 @@ public class UbicacionesRepositorioImpl implements IUbicacionesRepositorio {
 	public List<Ubicaciones> listarTodos() {
 		return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
 	}
+
+	@Override
+	public Ubicaciones actualizar(int id, Ubicaciones ubicacion) {
+		UbicacionesJpa existente = jpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ubicacion no encontrada"));
+
+		existente.setNombre(ubicacion.getNombre());
+		existente.setAgencia(ubicacion.getAgencia());
+		existente.setEstado(ubicacion.isEstado());
+
+		UbicacionesJpa guardado = jpaRepository.save(existente);
+		return entityMapper.toDomain(guardado);
+	}
+
+	@Override
+	public Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion) {
+		UbicacionesJpa existente = jpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ubicacion no encontrada"));
+
+		existente.setEstado(ubicacion.isEstado());
+
+		UbicacionesJpa guardado = jpaRepository.save(existente);
+		return entityMapper.toDomain(guardado);
+	}
 	
 	
 

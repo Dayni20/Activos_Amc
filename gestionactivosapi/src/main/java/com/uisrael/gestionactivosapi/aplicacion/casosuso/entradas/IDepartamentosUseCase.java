@@ -11,5 +11,9 @@ public interface IDepartamentosUseCase {
 	Departamentos obtenerPorId(int id);
 	
 	List<Departamentos> listar();
+	
+	Departamentos actualizar(int id, Departamentos departamento);
+	
+	Departamentos actualizarEstado(int id, Departamentos departamento);
 
 }

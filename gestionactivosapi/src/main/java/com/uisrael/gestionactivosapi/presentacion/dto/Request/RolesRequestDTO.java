@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RolesRequestDTO {
 	
-	private int id_rol;
+	private int idRol;
 	
 	@NotBlank
 	private String nombre;

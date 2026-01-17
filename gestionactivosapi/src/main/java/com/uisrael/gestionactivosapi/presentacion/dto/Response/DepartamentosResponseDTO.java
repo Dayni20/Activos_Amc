@@ -1,29 +1,43 @@
 package com.uisrael.gestionactivosapi.presentacion.dto.Response;
 
 public class DepartamentosResponseDTO {
-	
-	private int id_departamento;
+
+	private int idDepartamento;
 	private String nombre;
 	private boolean estado;
-	
-	public int getId_departamento() {
-		return id_departamento;
+
+	private UbicacionesResponseDTO fkUbicacion;
+
+	public int getIdDepartamento() {
+		return idDepartamento;
 	}
-	public void setId_departamento(int id_departamento) {
-		this.id_departamento = id_departamento;
+
+	public void setIdDepartamento(int idDepartamento) {
+		this.idDepartamento = idDepartamento;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public boolean isEstado() {
 		return estado;
 	}
+
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 
-	
+	public UbicacionesResponseDTO getFkUbicacion() {
+		return fkUbicacion;
+	}
+
+	public void setFkUbicacion(UbicacionesResponseDTO fkUbicacion) {
+		this.fkUbicacion = fkUbicacion;
+	}
+
 }

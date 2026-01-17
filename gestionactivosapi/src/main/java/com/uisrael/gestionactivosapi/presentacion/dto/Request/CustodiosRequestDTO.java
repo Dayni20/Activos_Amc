@@ -7,7 +7,7 @@ import lombok.Data;
 public class CustodiosRequestDTO {
 
     @NotBlank
-    private int id_custodio;
+    private int idCustodio;
 
     @NotBlank
     private String nombre;

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.DepartamentosJpa;
+
 public class Equipos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,11 +32,14 @@ public class Equipos implements Serializable {
 	private final String observacionEquipo;
 	private final String estado;
 
+	private DepartamentosJpa fkDepartamento;
+
 	public Equipos(int idEquipo, String codigoSap, String tipoEquipo, String modelo, String serial, String procesador,
 			Integer memoriaRamGb, Integer capacidadAlmacenamientoGb, String sistemaOperativo,
 			Boolean licenciaWindowsActivada, Boolean etiquetaActivoFijo, String tipoLicenciaOffice,
 			String versionOffice, Boolean unionDominio, String ip, String mac, LocalDate fechaCompra,
-			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, String estado) {
+			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, String estado,
+			DepartamentosJpa fkDepartamento) {
 		this.idEquipo = idEquipo;
 		this.codigoSap = codigoSap;
 		this.tipoEquipo = tipoEquipo;
@@ -56,6 +61,15 @@ public class Equipos implements Serializable {
 		this.estadoEquipo = estadoEquipo;
 		this.observacionEquipo = observacionEquipo;
 		this.estado = estado;
+		this.fkDepartamento = fkDepartamento;
+	}
+
+	public DepartamentosJpa getFkDepartamento() {
+		return fkDepartamento;
+	}
+
+	public void setFkDepartamento(DepartamentosJpa fkDepartamento) {
+		this.fkDepartamento = fkDepartamento;
 	}
 
 	public int getIdEquipo() {
@@ -151,7 +165,7 @@ public class Equipos implements Serializable {
 				+ ", tipoLicenciaOffice=" + tipoLicenciaOffice + ", versionOffice=" + versionOffice + ", unionDominio="
 				+ unionDominio + ", ip=" + ip + ", mac=" + mac + ", fechaCompra=" + fechaCompra + ", precioCompra="
 				+ precioCompra + ", estadoEquipo=" + estadoEquipo + ", observacionEquipo=" + observacionEquipo
-				+ ", estado=" + estado + "]";
+				+ ", estado=" + estado + ", fkDepartamento=" + fkDepartamento + "]";
 	}
 
 }

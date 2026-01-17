@@ -6,8 +6,8 @@ import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IDepartamentos
 import com.uisrael.gestionactivosapi.dominio.entidades.Departamentos;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IDepartamentosRepositorio;
 
-public class DepartamentosUseCaseImpl implements IDepartamentosUseCase{
-	
+public class DepartamentosUseCaseImpl implements IDepartamentosUseCase {
+
 	private final IDepartamentosRepositorio repositorio;
 
 	public DepartamentosUseCaseImpl(IDepartamentosRepositorio repositorio) {
@@ -28,7 +28,25 @@ public class DepartamentosUseCaseImpl implements IDepartamentosUseCase{
 	public List<Departamentos> listar() {
 		return repositorio.listarTodos();
 	}
-	
-	
+
+	@Override
+	public Departamentos actualizar(int id, Departamentos departamento) {
+		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+
+		Departamentos actualizado = new Departamentos(id, departamento.getNombre(), departamento.isEstado(),
+				departamento.getFkUbicacion());
+
+		return repositorio.actualizar(id, actualizado);
+	}
+
+	@Override
+	public Departamentos actualizarEstado(int id, Departamentos departamento) {
+		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+
+		Departamentos actualizado = new Departamentos(id, departamento.getNombre(), departamento.isEstado(),
+				departamento.getFkUbicacion());
+
+		return repositorio.actualizarEstado(id, actualizado);
+	}
 
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class ProveedoresRequestDTO {
 
 	@NotBlank
-    private Integer id_proveedor;
+    private Integer idProveedor;
 
     @NotBlank
     @Size(max = 100)

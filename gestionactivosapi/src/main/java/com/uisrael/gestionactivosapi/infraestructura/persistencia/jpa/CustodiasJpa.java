@@ -30,12 +30,6 @@ public class CustodiasJpa implements Serializable {
     @Column(name = "id_custodia_equipo")
     private int idCustodiaEquipo;
 
-    @Column(name = "id_equipo", nullable = false)
-    private int idEquipo;
-
-    @Column(name = "id_custodio", nullable = false)
-    private int idCustodio;
-
     @Column(name = "fecha_inicio", nullable = false)
     private LocalDate fechaInicio;
 

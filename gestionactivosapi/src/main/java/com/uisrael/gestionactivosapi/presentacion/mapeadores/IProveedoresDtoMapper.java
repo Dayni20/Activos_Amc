@@ -12,7 +12,7 @@ public interface IProveedoresDtoMapper {
 
     default Proveedores toDomain(ProveedoresRequestDTO dto) {
         return Proveedores.of(
-                dto.getId_proveedor(),
+                dto.getIdProveedor(),
                 dto.getNombre(),
                 dto.getRuc(),
                 dto.getTelefono(),

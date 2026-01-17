@@ -12,7 +12,7 @@ public interface IMarcasDtoMapper {
 
     default Marcas toDomain(MarcasRequestDTO dto) {
         return Marcas.of(
-                dto.getId_marca(),
+                dto.getIdMarca(),
                 dto.getNombre(),
                 true
         );

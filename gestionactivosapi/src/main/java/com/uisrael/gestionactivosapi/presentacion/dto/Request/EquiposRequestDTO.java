@@ -10,22 +10,13 @@ import lombok.Data;
 public class EquiposRequestDTO {
 
     @NotBlank
-    private int id_equipo;
+    private int idEquipo;
 
     @NotBlank
-    private String codigo_sap;
+    private String codigoSap;
 
     @NotBlank
-    private int id_categoria;
-
-    @NotBlank
-    private int id_marca;
-
-    @NotBlank
-    private int id_proveedor;
-
-    @NotBlank
-    private String tipo_equipo;
+    private String tipoEquipo;
 
     @NotBlank
     private String modelo;
@@ -37,28 +28,28 @@ public class EquiposRequestDTO {
     private String procesador;
 
     @NotBlank
-    private Integer memoria_ram_gb;
+    private Integer memoriaRamGb;
 
     @NotBlank
-    private Integer capacidad_almacenamiento_gb;
+    private Integer capacidadAlmacenamientoGb;
 
     @NotBlank
-    private String sistema_operativo;
+    private String sistemaOperativo;
 
     @NotBlank
-    private Boolean licencia_windows_activada;
+    private Boolean licenciaWindowsActivada;
 
     @NotBlank
-    private Boolean etiqueta_activo_fijo;
+    private Boolean etiquetaActivoFijo;
 
     @NotBlank
-    private String tipo_licencia_office;
+    private String tipoLicenciaOffice;
 
     @NotBlank
-    private String version_office;
+    private String versionOffice;
 
     @NotBlank
-    private Boolean union_dominio;
+    private Boolean unionDominio;
 
     @NotBlank
     private String ip;
@@ -67,20 +58,19 @@ public class EquiposRequestDTO {
     private String mac;
 
     @NotBlank
-    private Integer id_departamento;
+    private LocalDate fechaCompra;
 
     @NotBlank
-    private LocalDate fecha_compra;
+    private BigDecimal precioCompra;
 
     @NotBlank
-    private BigDecimal precio_compra;
+    private String estadoEquipo;
 
     @NotBlank
-    private String estado_equipo;
-
-    @NotBlank
-    private String observacion_equipo;
+    private String observacionEquipo;
 
     @NotBlank
     private String estado;
+    
+    private DepartamentosRequestDTO fkDepartamento;
 }

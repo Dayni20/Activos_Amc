@@ -6,10 +6,10 @@ import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUbicacionesUs
 import com.uisrael.gestionactivosapi.dominio.entidades.Ubicaciones;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IUbicacionesRepositorio;
 
-public class UbicacionesUseCaseImpl implements IUbicacionesUseCase{
-	
+public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
+
 	private final IUbicacionesRepositorio repositorio;
-	
+
 	public UbicacionesUseCaseImpl(IUbicacionesRepositorio repositorio) {
 		super();
 		this.repositorio = repositorio;
@@ -29,7 +29,25 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase{
 	public List<Ubicaciones> listar() {
 		return repositorio.listarTodos();
 	}
-	
-	
+
+	@Override
+	public Ubicaciones actualizar(int id, Ubicaciones ubicacion) {
+		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+
+		Ubicaciones actualizado = new Ubicaciones(id, ubicacion.getNombre(), ubicacion.getAgencia(),
+				ubicacion.isEstado());
+
+		return repositorio.actualizar(id, actualizado);
+	}
+
+	@Override
+	public Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion) {
+		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+
+		Ubicaciones actualizado = new Ubicaciones(id, ubicacion.getNombre(), ubicacion.getAgencia(),
+				ubicacion.isEstado());
+
+		return repositorio.actualizarEstado(id, actualizado);
+	}
 
 }

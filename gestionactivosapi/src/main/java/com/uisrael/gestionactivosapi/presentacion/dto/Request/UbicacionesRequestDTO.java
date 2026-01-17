@@ -7,7 +7,7 @@ import lombok.Data;
 public class UbicacionesRequestDTO {
 	
 	@NotBlank
-	private int id_ubicacion;
+	private int idubicacion;
 	@NotBlank
 	private String nombre;
 	@NotBlank

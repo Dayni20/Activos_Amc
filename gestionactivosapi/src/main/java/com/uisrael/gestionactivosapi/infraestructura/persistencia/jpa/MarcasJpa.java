@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,18 +21,18 @@ import lombok.Setter;
 @Table(name = "marcas")
 public class MarcasJpa implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_marca")
-    private int idMarca;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_marca")
+	private int idMarca;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String nombre;
+	@Column(length = 100, nullable = false, unique = true)
+	private String nombre;
 
 	public boolean isEstado() {
-		
+
 		return false;
 	}
 }
