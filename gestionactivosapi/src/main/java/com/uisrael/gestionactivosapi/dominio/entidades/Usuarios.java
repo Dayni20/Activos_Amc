@@ -8,15 +8,15 @@ public class Usuarios implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int idUsuario;
-	private String nombre;
-	private String correo;
-	private String contrasena;
-	private String estado;
+	private final int idUsuario;
+	private final String nombre;
+	private final String correo;
+	private final String contrasena;
+	private final boolean estado;
 
 	private DepartamentosJpa fkDepartamento;
 
-	public Usuarios(int idUsuario, String nombre, String correo, String contrasena, String estado,
+	public Usuarios(int idUsuario, String nombre, String correo, String contrasena, boolean estado,
 			DepartamentosJpa fkDepartamento) {
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
@@ -26,52 +26,32 @@ public class Usuarios implements Serializable {
 		this.fkDepartamento = fkDepartamento;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getContrasena() {
-		return contrasena;
-	}
-
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	public DepartamentosJpa getFkDepartamento() {
 		return fkDepartamento;
 	}
 
 	public void setFkDepartamento(DepartamentosJpa fkDepartamento) {
 		this.fkDepartamento = fkDepartamento;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public boolean isEstado() {
+		return estado;
 	}
 
 	@Override

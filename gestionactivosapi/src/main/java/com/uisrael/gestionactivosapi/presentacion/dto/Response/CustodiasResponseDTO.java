@@ -4,17 +4,18 @@ import java.time.LocalDate;
 
 public class CustodiasResponseDTO {
 
-	private int idCustodia_equipo;
+	private int idCustodiaEquipo;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	private String observacion;
+	private boolean estado;
 
-	public int getIdCustodia_equipo() {
-		return idCustodia_equipo;
+	public int getIdCustodiaEquipo() {
+		return idCustodiaEquipo;
 	}
 
-	public void setIdCustodia_equipo(int idCustodia_equipo) {
-		this.idCustodia_equipo = idCustodia_equipo;
+	public void setIdCustodiaEquipo(int idCustodiaEquipo) {
+		this.idCustodiaEquipo = idCustodiaEquipo;
 	}
 
 	public LocalDate getFechaInicio() {
@@ -40,5 +41,14 @@ public class CustodiasResponseDTO {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 
 }

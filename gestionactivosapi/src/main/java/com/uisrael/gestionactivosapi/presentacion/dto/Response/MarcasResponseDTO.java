@@ -3,6 +3,7 @@ package com.uisrael.gestionactivosapi.presentacion.dto.Response;
 public class MarcasResponseDTO {
 	private int idMarca;
 	private String nombre;
+	private boolean estado;
 
 	public int getIdMarca() {
 		return idMarca;
@@ -20,4 +21,12 @@ public class MarcasResponseDTO {
 		this.nombre = nombre;
 	}
 
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 }

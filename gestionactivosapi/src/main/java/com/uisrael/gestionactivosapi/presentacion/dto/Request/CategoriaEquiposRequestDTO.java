@@ -10,5 +10,7 @@ public class CategoriaEquiposRequestDTO {
 	
 	@NotBlank
 	private String nombre;
+	
+	private boolean estado;
 
 }

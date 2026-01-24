@@ -30,9 +30,6 @@ public class MarcasJpa implements Serializable {
 
 	@Column(length = 100, nullable = false, unique = true)
 	private String nombre;
-
-	public boolean isEstado() {
-
-		return false;
-	}
+	
+	private boolean estado;
 }

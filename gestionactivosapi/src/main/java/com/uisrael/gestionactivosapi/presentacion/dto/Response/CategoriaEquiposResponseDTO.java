@@ -4,6 +4,7 @@ public class CategoriaEquiposResponseDTO {
 
 	private int idCategoria;
 	private String nombre;
+	private boolean estado;
 
 	public int getIdCategoria() {
 		return idCategoria;
@@ -21,4 +22,12 @@ public class CategoriaEquiposResponseDTO {
 		this.nombre = nombre;
 	}
 
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 }

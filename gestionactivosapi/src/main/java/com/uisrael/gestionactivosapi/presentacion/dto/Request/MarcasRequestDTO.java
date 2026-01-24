@@ -10,6 +10,8 @@ public class MarcasRequestDTO {
 	private int idMarca;
 	@NotBlank
 	private String nombre;
+	
+	private boolean estado;
 
 
 }

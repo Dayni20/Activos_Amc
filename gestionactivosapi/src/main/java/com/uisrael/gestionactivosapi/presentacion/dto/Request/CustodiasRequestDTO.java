@@ -19,4 +19,6 @@ public class CustodiasRequestDTO {
 
     @NotBlank
     private String observacion;
+    
+    private boolean estado;
 }

@@ -10,5 +10,7 @@ public class RolesRequestDTO {
 	
 	@NotBlank
 	private String nombre;
+	
+	private boolean estado;
 
 }

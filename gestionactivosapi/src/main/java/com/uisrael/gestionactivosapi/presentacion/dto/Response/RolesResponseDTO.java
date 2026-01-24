@@ -4,6 +4,7 @@ public class RolesResponseDTO {
 
 	private int idRol;
 	private String nombre;
+	private boolean estado;
 
 	public int getIdRol() {
 		return idRol;
@@ -21,4 +22,13 @@ public class RolesResponseDTO {
 		this.nombre = nombre;
 	}
 
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
+	
 }

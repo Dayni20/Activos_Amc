@@ -38,4 +38,6 @@ public class CustodiasJpa implements Serializable {
 
     @Column(columnDefinition = "TEXT")
     private String observacion;
+    
+    private boolean estado;
 }
