@@ -6,13 +6,12 @@ import lombok.Data;
 @Data
 public class UbicacionesRequestDTO {
 	
-	@NotBlank
-	private int idubicacion;
+	private int idUbicacion;
 	@NotBlank
 	private String nombre;
 	@NotBlank
 	private String agencia;
-	@NotBlank
+
 	private boolean estado;
 
 }

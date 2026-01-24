@@ -19,7 +19,7 @@ public class UsuariosRequestDTO {
 	@NotBlank
 	private String contrasena;
 	
-	private String estado;
+	private boolean estado;
 	
 	private DepartamentosRequestDTO fkDepartamento;
 

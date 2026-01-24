@@ -11,9 +11,9 @@ public class Custodios implements Serializable {
 	private final String cedula;
 	private final String correo;
 	private final String telefono;
-	private final String estado;
-
-	public Custodios(int idCustodio, String nombre, String cedula, String correo, String telefono, String estado) {
+	private final boolean estado;
+	
+	public Custodios(int idCustodio, String nombre, String cedula, String correo, String telefono, boolean estado) {
 		this.idCustodio = idCustodio;
 		this.nombre = nombre;
 		this.cedula = cedula;
@@ -42,7 +42,7 @@ public class Custodios implements Serializable {
 		return telefono;
 	}
 
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 

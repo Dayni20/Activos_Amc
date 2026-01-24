@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class CustodiosRequestDTO {
 
-    @NotBlank
     private int idCustodio;
 
     @NotBlank
@@ -21,6 +20,5 @@ public class CustodiosRequestDTO {
     @NotBlank
     private String telefono;
 
-    @NotBlank
-    private String estado;
+    private boolean estado;
 }

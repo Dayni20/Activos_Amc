@@ -41,7 +41,7 @@ public class UsuariosRepositorioImpl implements IUsuariosRepositorio {
 	public void eliminar(int id) {
 		UsuariosJpa entity = jpaRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-		entity.setEstado("INACTIVO");
+		entity.setEstado(false);;
 		jpaRepository.save(entity);
 	}
 

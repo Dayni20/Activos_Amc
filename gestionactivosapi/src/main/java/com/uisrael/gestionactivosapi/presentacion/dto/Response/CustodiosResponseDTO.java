@@ -7,7 +7,7 @@ public class CustodiosResponseDTO {
 	private String cedula;
 	private String correo;
 	private String telefono;
-	private String estado;
+	private boolean estado;
 
 	public int getIdCustodio() {
 		return idCustodio;
@@ -49,11 +49,13 @@ public class CustodiosResponseDTO {
 		this.telefono = telefono;
 	}
 
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
+
 }

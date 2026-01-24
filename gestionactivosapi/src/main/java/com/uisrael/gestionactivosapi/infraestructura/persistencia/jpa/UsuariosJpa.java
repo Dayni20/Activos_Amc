@@ -11,13 +11,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -40,8 +38,7 @@ public class UsuariosJpa implements Serializable {
     @Column(name = "contrasena", length = 255, nullable = false)
     private String contrasena;
 
-    @Column(name = "estado", length = 20, nullable = false)
-    private String estado;
+    private boolean estado;
     
     @ManyToOne
     @JoinColumn(name = "fkDepartamento")

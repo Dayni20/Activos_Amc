@@ -30,15 +30,16 @@ public class Equipos implements Serializable {
 	private final BigDecimal precioCompra;
 	private final String estadoEquipo;
 	private final String observacionEquipo;
-	private final String estado;
+	private final boolean estado;
 
 	private DepartamentosJpa fkDepartamento;
 
+	
 	public Equipos(int idEquipo, String codigoSap, String tipoEquipo, String modelo, String serial, String procesador,
 			Integer memoriaRamGb, Integer capacidadAlmacenamientoGb, String sistemaOperativo,
 			Boolean licenciaWindowsActivada, Boolean etiquetaActivoFijo, String tipoLicenciaOffice,
 			String versionOffice, Boolean unionDominio, String ip, String mac, LocalDate fechaCompra,
-			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, String estado,
+			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, boolean estado,
 			DepartamentosJpa fkDepartamento) {
 		this.idEquipo = idEquipo;
 		this.codigoSap = codigoSap;
@@ -152,7 +153,7 @@ public class Equipos implements Serializable {
 		return observacionEquipo;
 	}
 
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 

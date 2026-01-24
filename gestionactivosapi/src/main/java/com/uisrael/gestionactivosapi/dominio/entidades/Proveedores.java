@@ -12,10 +12,10 @@ public class Proveedores implements Serializable {
 	private final String telefono;
 	private final String correo;
 	private final String direccion;
-	private final String estado;
+	private final boolean estado;
 
 	public Proveedores(int idProveedor, String nombre, String ruc, String telefono, String correo, String direccion,
-			String estado) {
+			boolean estado) {
 		this.idProveedor = idProveedor;
 		this.nombre = nombre;
 		this.ruc = ruc;
@@ -25,10 +25,6 @@ public class Proveedores implements Serializable {
 		this.estado = estado;
 	}
 
-	public static Proveedores of(int idProveedor, String nombre, String ruc, String telefono, String correo,
-			String direccion, String estado) {
-		return new Proveedores(idProveedor, nombre, ruc, telefono, correo, direccion, estado);
-	}
 
 	public int getIdProveedor() {
 		return idProveedor;
@@ -54,9 +50,11 @@ public class Proveedores implements Serializable {
 		return direccion;
 	}
 
-	public String getEstado() {
+
+	public boolean isEstado() {
 		return estado;
 	}
+
 
 	@Override
 	public String toString() {

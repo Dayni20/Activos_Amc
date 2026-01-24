@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class ProveedoresRequestDTO {
 
-	@NotBlank
     private Integer idProveedor;
 
     @NotBlank
@@ -30,6 +29,5 @@ public class ProveedoresRequestDTO {
     @Size(max = 200)
     private String direccion;
 
-    @NotBlank
-    private String estado; // Ej: ACTIVO / INACTIVO
+    private boolean estado; // Ej: ACTIVO / INACTIVO
 }

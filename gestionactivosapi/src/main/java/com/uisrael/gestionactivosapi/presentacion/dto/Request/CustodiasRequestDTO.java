@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class CustodiasRequestDTO {
 
-    @NotBlank
     private int idCustodiaEquipo;
 
     @NotBlank

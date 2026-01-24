@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class EquiposRequestDTO {
 
-    @NotBlank
     private int idEquipo;
 
     @NotBlank
@@ -27,19 +26,15 @@ public class EquiposRequestDTO {
     @NotBlank
     private String procesador;
 
-    @NotBlank
     private Integer memoriaRamGb;
 
-    @NotBlank
     private Integer capacidadAlmacenamientoGb;
 
     @NotBlank
     private String sistemaOperativo;
 
-    @NotBlank
     private Boolean licenciaWindowsActivada;
 
-    @NotBlank
     private Boolean etiquetaActivoFijo;
 
     @NotBlank
@@ -48,7 +43,6 @@ public class EquiposRequestDTO {
     @NotBlank
     private String versionOffice;
 
-    @NotBlank
     private Boolean unionDominio;
 
     @NotBlank
@@ -57,10 +51,8 @@ public class EquiposRequestDTO {
     @NotBlank
     private String mac;
 
-    @NotBlank
     private LocalDate fechaCompra;
 
-    @NotBlank
     private BigDecimal precioCompra;
 
     @NotBlank
@@ -69,8 +61,7 @@ public class EquiposRequestDTO {
     @NotBlank
     private String observacionEquipo;
 
-    @NotBlank
-    private String estado;
+    private boolean estado;
     
     private DepartamentosRequestDTO fkDepartamento;
 }

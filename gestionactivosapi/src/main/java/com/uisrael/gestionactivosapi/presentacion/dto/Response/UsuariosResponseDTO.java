@@ -5,7 +5,7 @@ public class UsuariosResponseDTO {
 	private int idUsuario;
 	private String nombre;
 	private String correo;
-	private String estado;
+	private boolean estado;
 
 	private DepartamentosResponseDTO fkDepartamento;
 
@@ -33,11 +33,11 @@ public class UsuariosResponseDTO {
 		this.correo = correo;
 	}
 
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 

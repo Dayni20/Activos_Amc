@@ -90,7 +90,6 @@ public class EquiposJpa implements Serializable {
     @Column(name = "observacion_equipo", columnDefinition = "TEXT")
     private String observacionEquipo;
 
-    @Column(length = 20)
     private String estado;
     
     @ManyToOne

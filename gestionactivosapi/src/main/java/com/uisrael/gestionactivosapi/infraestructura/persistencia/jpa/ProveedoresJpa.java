@@ -44,6 +44,5 @@ public class ProveedoresJpa implements Serializable {
     @Column(length = 200)
     private String direccion;
 
-    @Column(length = 20)
-    private String estado;
+    private boolean estado;
 }

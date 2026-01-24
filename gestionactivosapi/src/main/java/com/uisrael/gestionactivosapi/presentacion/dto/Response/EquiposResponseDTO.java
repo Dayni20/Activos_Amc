@@ -25,7 +25,7 @@ public class EquiposResponseDTO {
 	private BigDecimal precioCompra;
 	private String estadoEquipo;
 	private String observacionEquipo;
-	private String estado;
+	private boolean estado;
 
 	private DepartamentosResponseDTO fkDepartamento;
 
@@ -189,11 +189,11 @@ public class EquiposResponseDTO {
 		this.observacionEquipo = observacionEquipo;
 	}
 
-	public String getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 

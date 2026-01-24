@@ -9,19 +9,7 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.ProveedoresRespon
 @Mapper(componentModel = "spring")
 public interface IProveedoresDtoMapper {
 
+	Proveedores toDomain(ProveedoresRequestDTO dto);
 
-    default Proveedores toDomain(ProveedoresRequestDTO dto) {
-        return Proveedores.of(
-                dto.getIdProveedor(),
-                dto.getNombre(),
-                dto.getRuc(),
-                dto.getTelefono(),
-                dto.getCorreo(),
-                dto.getDireccion(),
-                dto.getEstado()
-        );
-    }
-
-   
-    ProveedoresResponseDTO toResponseDto(Proveedores proveedor);
+	ProveedoresResponseDTO toResponseDto(Proveedores proveedor);
 }
