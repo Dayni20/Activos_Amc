@@ -37,4 +37,12 @@ public class RolesRepositorioImpl implements IRolesRepositorio {
 		return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
 	}
 
+	@Override
+	public void eliminar(int id) {
+		RolesJpa entity = jpaRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+		entity.setEstado(false);
+		jpaRepository.save(entity);
+	}
+
 }

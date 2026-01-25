@@ -29,4 +29,14 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 		return repositorio.listarTodos();
 	}
 
+	@Override
+	public Roles actualizar(Roles rol) {
+		return repositorio.guardar(rol);
+	}
+
+	@Override
+	public void eliminar(int id) {
+		repositorio.eliminar(id);
+	}
+
 }

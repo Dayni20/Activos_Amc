@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,5 +48,15 @@ public class UsuariosControlador {
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void eliminar(@PathVariable int id) {
 		usuariosUseCase.eliminar(id);
+	}
+
+	@GetMapping("/{id}")
+	public UsuariosResponseDTO obtener(@PathVariable int id) {
+		return mapper.toResponseDto(usuariosUseCase.obtenerPorId(id));
+	}
+
+	@PutMapping
+	public UsuariosResponseDTO actualizar(@Valid @RequestBody UsuariosRequestDTO request) {
+		return mapper.toResponseDto(usuariosUseCase.actualizar(mapper.toDomain(request)));
 	}
 }

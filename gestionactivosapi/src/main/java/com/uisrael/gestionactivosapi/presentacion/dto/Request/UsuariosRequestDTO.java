@@ -20,7 +20,9 @@ public class UsuariosRequestDTO {
 	private String contrasena;
 	
 	private boolean estado;
-	
+    
 	private DepartamentosRequestDTO fkDepartamento;
+
+	private RolesRequestDTO fkRol;
 
 }

@@ -12,4 +12,8 @@ public interface IRolesUseCase {
 	
 	List<Roles> listar();
 
+	Roles actualizar(Roles rol);
+
+	void eliminar(int id);
+
 }

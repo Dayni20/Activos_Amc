@@ -11,10 +11,12 @@ public interface IUsuariosJpaMapper {
 
 	@Mapping(source = "idUsuario", target = "idUsuario")
 	@Mapping(source = "fkDepartamento", target = "fkDepartamento")
+	@Mapping(source = "fkRol", target = "fkRol")
 	Usuarios toDomain(UsuariosJpa entity);
 
 	@Mapping(source = "idUsuario", target = "idUsuario")
 	@Mapping(source = "fkDepartamento", target = "fkDepartamento")
+	@Mapping(source = "fkRol", target = "fkRol")
 	UsuariosJpa toEntity(Usuarios usuario);
 
 }

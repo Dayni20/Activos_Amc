@@ -29,4 +29,14 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 		return repositorio.listarTodos();
 	}
 
+	@Override
+	public CategoriaEquipos actualizar(CategoriaEquipos categoriaEquipo) {
+		return repositorio.guardar(categoriaEquipo);
+	}
+
+	@Override
+	public void eliminar(int id) {
+		repositorio.eliminar(id);
+	}
+
 }

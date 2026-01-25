@@ -14,4 +14,6 @@ public interface IUsuariosUseCase {
 	
 	void eliminar(int id);
 
+	Usuarios actualizar(Usuarios usuario);
+
 }

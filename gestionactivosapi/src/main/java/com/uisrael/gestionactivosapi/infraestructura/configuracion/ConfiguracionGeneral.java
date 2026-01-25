@@ -167,8 +167,9 @@ public class ConfiguracionGeneral {
     }
 
     @Bean
-    IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio) {
-        return new UsuariosUseCaseImpl(repositorio);
+    IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio, IRolesRepositorio rolesRepositorio,
+            IDepartamentosRepositorio departamentosRepositorio) {
+        return new UsuariosUseCaseImpl(repositorio, rolesRepositorio, departamentosRepositorio);
     }
 
     @Bean

@@ -12,4 +12,8 @@ public interface ICategoriaEquiposUseCase {
 	
 	List<CategoriaEquipos> listar();
 
+	CategoriaEquipos actualizar(CategoriaEquipos categoriaEquipo);
+
+	void eliminar(int id);
+
 }

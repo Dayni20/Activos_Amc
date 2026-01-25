@@ -13,4 +13,6 @@ public interface IRolesRepositorio {
 	
 	List<Roles> listarTodos();
 
+	void eliminar(int id);
+
 }

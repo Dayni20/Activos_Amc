@@ -2,6 +2,7 @@ package com.uisrael.gestionactivosapi.presentacion.dto.Response;
 
 public class UsuariosResponseDTO {
 
+	private RolesResponseDTO fkRol;
 	private int idUsuario;
 	private String nombre;
 	private String correo;
@@ -47,6 +48,14 @@ public class UsuariosResponseDTO {
 
 	public void setFkDepartamento(DepartamentosResponseDTO fkDepartamento) {
 		this.fkDepartamento = fkDepartamento;
+	}
+
+	public RolesResponseDTO getFkRol() {
+		return fkRol;
+	}
+
+	public void setFkRol(RolesResponseDTO fkRol) {
+		this.fkRol = fkRol;
 	}
 
 }

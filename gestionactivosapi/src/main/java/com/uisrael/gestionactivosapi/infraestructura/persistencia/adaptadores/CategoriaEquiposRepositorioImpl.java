@@ -37,4 +37,12 @@ public class CategoriaEquiposRepositorioImpl implements ICategoriaEquiposReposit
 		return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
 	}
 
+	@Override
+	public void eliminar(int id) {
+		CategoriaEquiposJpa entity = jpaRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+		entity.setEstado(false);
+		jpaRepository.save(entity);
+	}
+
 }

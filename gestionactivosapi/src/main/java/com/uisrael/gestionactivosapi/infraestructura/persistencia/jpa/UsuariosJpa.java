@@ -41,6 +41,10 @@ public class UsuariosJpa implements Serializable {
     private boolean estado;
     
     @ManyToOne
-    @JoinColumn(name = "fkDepartamento")
+    @JoinColumn(name = "id_departamento")
     private DepartamentosJpa fkDepartamento;
+
+    @ManyToOne
+    @JoinColumn(name = "id_rol")
+    private RolesJpa fkRol;
 }
