@@ -29,5 +29,16 @@ public class MarcasUseCaseImpl implements IMarcasUseCase {
 	public List<Marcas> listar() {
 		return repositorio.listarTodos();
 	}
+	
+	@Override
+	public Marcas actualizar(int id, Marcas marcas) {
+		return repositorio.guardar(marcas);
+	}
+
+	@Override
+	public void eliminar(int id) {
+		repositorio.eliminar(id);
+	}
+	
 
 }

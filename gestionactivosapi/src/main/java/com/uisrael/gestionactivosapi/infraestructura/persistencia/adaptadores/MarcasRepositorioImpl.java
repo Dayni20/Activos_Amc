@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
+import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IMarcasRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.RolesJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.UbicacionesJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IMarcasJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IMarcasJpaRepositorio;
 
@@ -39,6 +43,24 @@ private final IMarcasJpaRepositorio jpaRepository;
 		return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
 	}
 	
+	@Override
+	public Marcas actualizar(int id, Marcas marcas) {
+		MarcasJpa existente = jpaRepository.findById(id).orElseThrow(() -> new RuntimeException("Marca no encontrada"));
 
+		existente.setNombre(marcas.getNombre());
+		existente.setEstado(marcas.isEstado());
+
+
+		MarcasJpa guardado = jpaRepository.save(existente);
+		return entityMapper.toDomain(guardado);
+	}
+			
+		@Override
+		public void eliminar(int id) {
+			MarcasJpa entity = jpaRepository.findById(id)
+					.orElseThrow(() -> new RuntimeException("Marca no encontrado"));
+			entity.setEstado(false);
+			jpaRepository.save(entity);
+		}
 	
 }
