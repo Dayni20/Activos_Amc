@@ -90,7 +90,7 @@ public class EquiposJpa implements Serializable {
     @Column(name = "observacion_equipo", columnDefinition = "TEXT")
     private String observacionEquipo;
 
-    private String estado;
+    private boolean estado;
     
     @ManyToOne
     @JoinColumn(name = "fKDepartamento")

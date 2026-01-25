@@ -16,20 +16,21 @@
 <!--! END:  Apps Title-->
 <!--! BEGIN: Favicon-->
 <link rel="shortcut icon" type="image/x-icon"
-	href="assets/images/favicon.ico" />
+	th:href="@{/assets/images/favicon.ico}" />
 <!--! END: Favicon-->
 <!--! BEGIN: Bootstrap CSS-->
 <link rel="stylesheet" type="text/css"
-	href="assets/css/bootstrap.min.css" />
+	th:href="@{/assets/css/bootstrap.min.css}" />
 <!--! END: Bootstrap CSS-->
 <!--! BEGIN: Vendors CSS-->
 <link rel="stylesheet" type="text/css"
-	href="assets/vendors/css/vendors.min.css" />
+	th:href="@{/assets/vendors/css/vendors.min.css}" />
 <link rel="stylesheet" type="text/css"
-	href="assets/vendors/css/daterangepicker.min.css" />
+	th:href="@{/assets/vendors/css/daterangepicker.min.css}" />
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
-<link rel="stylesheet" type="text/css" href="assets/css/theme.min.css" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/theme.min.css}" />
 <!--! END: Custom CSS-->
 <!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
 <!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
@@ -111,7 +112,8 @@
 							<li class="nxl-item"><a class="nxl-link"
 								href="proposal-edit.html">Proposal Edit</a></li>
 							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/departamentos/nuevo-departamento}">Crear Departamentos</a></li>
+								th:href="@{/departamentos/nuevo-departamento}">Crear
+									Departamentos</a></li>
 						</ul></li>
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
@@ -431,14 +433,15 @@
 										<a href="proposal.html" class="dropdown-item"> <i
 											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Proposal</span>
 										</a> <a th:href="@{/departamentos}" class="dropdown-item"> <i
-											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Listar Departamentos
-												View</span>
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Listar
+												Departamentos View</span>
 										</a> <a href="proposal-edit.html" class="dropdown-item"> <i
 											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Proposal
 												Edit</span>
-										</a> <a th:href="@{/departamentos/nuevo-departamento}" class="dropdown-item"> <i
-											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Registrar Departamentos
-												Create</span>
+										</a> <a th:href="@{/departamentos/nuevo-departamento}"
+											class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Registrar
+												Departamentos Create</span>
 										</a>
 									</div>
 								</div>
@@ -2602,12 +2605,12 @@
 			<!-- [ Main Content ] start -->
 			<div class="main-content">
 				<div class="container-fluid">
-				<div class="card">
-					<div class="card-body">
-						<section layout:fragment="contenidopaginas"></section>
+					<div class="card">
+						<div class="card-body">
+							<section layout:fragment="contenidopaginas"></section>
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 			<!-- [ Main Content ] end -->
 		</div>
@@ -2616,14 +2619,14 @@
 			<p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
 				<span>Copyright ©</span>
 				<script>
-                    document.write(new Date().getFullYear());
-                </script>
+					document.write(new Date().getFullYear());
+				</script>
 			</p>
 			<p>
 				<span>By: <a
 					href="https://wrapbootstrap.com/user/theme_ocean" target="_blank">theme_ocean</a></span>
-				• <span>Distributed by: <a
-					href="https://themewagon.com" target="_blank">ThemeWagon</a></span>
+				• <span>Distributed by: <a href="https://themewagon.com"
+					target="_blank">ThemeWagon</a></span>
 			</p>
 			<div class="d-flex align-items-center gap-4">
 				<a href="javascript:void(0);"
@@ -2920,18 +2923,18 @@
 	<!--! Footer Script !-->
 	<!--! ================================================================ !-->
 	<!--! BEGIN: Vendors JS !-->
-	<script src="assets/vendors/js/vendors.min.js"></script>
+	<script th:src="@{/assets/vendors/js/vendors.min.js}"></script>
 	<!-- vendors.min.js {always must need to be top} -->
-	<script src="assets/vendors/js/daterangepicker.min.js"></script>
-	<script src="assets/vendors/js/apexcharts.min.js"></script>
-	<script src="assets/vendors/js/circle-progress.min.js"></script>
+	<script th:src="@{/assets/vendors/js/daterangepicker.min.js}"></script>
+	<script th:src="@{/assets/vendors/js/apexcharts.min.js}"></script>
+	<script th:src="@{/assets/vendors/js/circle-progress.min.js}"></script>
 	<!--! END: Vendors JS !-->
 	<!--! BEGIN: Apps Init  !-->
-	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/dashboard-init.min.js"></script>
+	<script th:src="@{/assets/js/common-init.min.js}"></script>
+	<script th:src="@{/assets/js/dashboard-init.min.js}"></script>
 	<!--! END: Apps Init !-->
 	<!--! BEGIN: Theme Customizer  !-->
-	<script src="assets/js/theme-customizer-init.min.js"></script>
+	<script th:src="@{/assets/js/theme-customizer-init.min.js}"></script>
 	<!--! END: Theme Customizer !-->
 </body>
 
