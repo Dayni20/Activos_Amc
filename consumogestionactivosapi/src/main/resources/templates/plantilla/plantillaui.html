@@ -174,11 +174,50 @@
 								th:href="@{/departamentos/nuevo-departamento}">Crear
 									Departamento</a></li>
 						</ul></li>
+<<<<<<< HEAD
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather feather-grid"></i></span> <span class="nxl-mtext">Custodios</span><span
+							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodios}">Listar Custodios</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodios/nuevo-custodio}">Crear Custodios</a></li>
+						</ul></li>
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather feather-grid"></i></span> <span class="nxl-mtext">Custodias</span><span
+							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodias}">Listar Custodias</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodias/nuevo-custodia}">Crear Custodias</a></li>
+						</ul></li>
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather feather-grid"></i></span> <span class="nxl-mtext">Equipos</span><span
+							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/equipos}">Listar Equipos</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/equipos/nuevo-equipo}">Crear Equipos</a></li>
+						</ul></li>
+=======
 						
 						
 					<!-- CODIGO GEOVANNA VELASCO MARCAS Y PROVEEDORES -->
 					
 					
+>>>>>>> d07fa95e8dce84d37a7abe1c3a4f609b99576267
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i class="feather feather-tag"></i></span> <span
 							class="nxl-mtext">Marcas</span><span class="nxl-arrow"><i
@@ -523,6 +562,57 @@
 										</a>
 									</div>
 								</div>
+
+								<div class="dropdown nxl-level-menu">
+									<a href="javascript:void(0);" class="dropdown-item"> <span
+										class="hstack"> <i class="feather feather-grid"></i> <span>Custodios</span>
+									</span> <i class="feather-chevron-right ms-auto me-0"></i>
+									</a>
+									<div class="dropdown-menu nxl-h-dropdown">
+										<a th:href="@{/custodias}" class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Listar
+												Custodios</span>
+										</a> <a th:href="@{/custodios/nuevo-custodio}"
+											class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Crear
+												Custodio</span>
+										</a>
+									</div>
+								</div>
+								
+								<div class="dropdown nxl-level-menu">
+									<a href="javascript:void(0);" class="dropdown-item"> <span
+										class="hstack"> <i class="feather feather-grid"></i> <span>Custodias</span>
+									</span> <i class="feather-chevron-right ms-auto me-0"></i>
+									</a>
+									<div class="dropdown-menu nxl-h-dropdown">
+										<a th:href="@{/custodias}" class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Listar
+												Custodias</span>
+										</a> <a th:href="@{/custodias/nuevo-custodia}"
+											class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Crear
+												Custodia</span>
+										</a>
+									</div>
+								</div>
+								<div class="dropdown nxl-level-menu">
+									<a href="javascript:void(0);" class="dropdown-item"> <span
+										class="hstack"> <i class="feather feather-grid"></i> <span>Equipos</span>
+									</span> <i class="feather-chevron-right ms-auto me-0"></i>
+									</a>
+									<div class="dropdown-menu nxl-h-dropdown">
+										<a th:href="@{/equipos}" class="dropdown-item"> <i
+											class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Listar
+												Equipos</span>
+										</a> <a th:href="@{/equipos/nuevo-equipo}" class="dropdown-item">
+											<i class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i> <span>Crear
+												Equipos</span>
+										</a>
+									</div>
+								</div>
+
+
 								<div class="dropdown nxl-level-menu">
 									<a href="javascript:void(0);" class="dropdown-item"> <span
 										class="hstack"> <i class="feather-users"></i> <span>Customers</span>
@@ -793,9 +883,7 @@
 									<img th:src="@{/assets/images/avatar/1.png}" alt="user-image"
 										class="img-fluid user-avtar" />
 									<div>
-										<h6 class="text-dark mb-0">
-											Usuario PISIP
-										</h6>
+										<h6 class="text-dark mb-0">Usuario PISIP</h6>
 										<span class="fs-12 fw-medium text-muted">alex@example.com</span>
 									</div>
 								</div>
