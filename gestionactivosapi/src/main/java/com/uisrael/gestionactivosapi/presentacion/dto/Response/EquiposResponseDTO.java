@@ -5,204 +5,94 @@ import java.time.LocalDate;
 
 public class EquiposResponseDTO {
 
-	private int idEquipo;
-	private String codigoSap;
-	private String tipoEquipo;
-	private String modelo;
-	private String serial;
-	private String procesador;
-	private Integer memoriaRamGb;
-	private Integer capacidadAlmacenamientoGb;
-	private String sistemaOperativo;
-	private Boolean licenciaWindowsActivada;
-	private Boolean etiquetaActivoFijo;
-	private String tipoLicenciaOffice;
-	private String versionOffice;
-	private Boolean unionDominio;
-	private String ip;
-	private String mac;
-	private LocalDate fechaCompra;
-	private BigDecimal precioCompra;
-	private String estadoEquipo;
-	private String observacionEquipo;
-	private boolean estado;
+    private int idEquipo;
+    private String codigoSap;
+    private String tipoEquipo;
+    private String modelo;
+    private String serial;
+    private String procesador;
+    private Integer memoriaRamGb;
+    private Integer capacidadAlmacenamientoGb;
+    private String sistemaOperativo;
+    private Boolean licenciaWindowsActivada;
+    private Boolean etiquetaActivoFijo;
+    private String tipoLicenciaOffice;
+    private String versionOffice;
+    private Boolean unionDominio;
+    private String ip;
+    private String mac;
+    private LocalDate fechaCompra;
+    private BigDecimal precioCompra;
+    private String estadoEquipo;
+    private String observacionEquipo;
+    private boolean estado;
 
-	private DepartamentosResponseDTO fkDepartamento;
+    private DepartamentosResponseDTO fkDepartamento;
 
-	public int getIdEquipo() {
-		return idEquipo;
-	}
+    // getters y setters (puedes usar Lombok si quieres)
+    public int getIdEquipo() { return idEquipo; }
+    public void setIdEquipo(int idEquipo) { this.idEquipo = idEquipo; }
 
-	public void setIdEquipo(int idEquipo) {
-		this.idEquipo = idEquipo;
-	}
+    public String getCodigoSap() { return codigoSap; }
+    public void setCodigoSap(String codigoSap) { this.codigoSap = codigoSap; }
 
-	public String getCodigoSap() {
-		return codigoSap;
-	}
+    public String getTipoEquipo() { return tipoEquipo; }
+    public void setTipoEquipo(String tipoEquipo) { this.tipoEquipo = tipoEquipo; }
 
-	public void setCodigoSap(String codigoSap) {
-		this.codigoSap = codigoSap;
-	}
+    public String getModelo() { return modelo; }
+    public void setModelo(String modelo) { this.modelo = modelo; }
 
-	public String getTipoEquipo() {
-		return tipoEquipo;
-	}
+    public String getSerial() { return serial; }
+    public void setSerial(String serial) { this.serial = serial; }
 
-	public void setTipoEquipo(String tipoEquipo) {
-		this.tipoEquipo = tipoEquipo;
-	}
+    public String getProcesador() { return procesador; }
+    public void setProcesador(String procesador) { this.procesador = procesador; }
 
-	public String getModelo() {
-		return modelo;
-	}
+    public Integer getMemoriaRamGb() { return memoriaRamGb; }
+    public void setMemoriaRamGb(Integer memoriaRamGb) { this.memoriaRamGb = memoriaRamGb; }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
+    public Integer getCapacidadAlmacenamientoGb() { return capacidadAlmacenamientoGb; }
+    public void setCapacidadAlmacenamientoGb(Integer capacidadAlmacenamientoGb) { this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb; }
 
-	public String getSerial() {
-		return serial;
-	}
+    public String getSistemaOperativo() { return sistemaOperativo; }
+    public void setSistemaOperativo(String sistemaOperativo) { this.sistemaOperativo = sistemaOperativo; }
 
-	public void setSerial(String serial) {
-		this.serial = serial;
-	}
+    public Boolean getLicenciaWindowsActivada() { return licenciaWindowsActivada; }
+    public void setLicenciaWindowsActivada(Boolean licenciaWindowsActivada) { this.licenciaWindowsActivada = licenciaWindowsActivada; }
 
-	public String getProcesador() {
-		return procesador;
-	}
+    public Boolean getEtiquetaActivoFijo() { return etiquetaActivoFijo; }
+    public void setEtiquetaActivoFijo(Boolean etiquetaActivoFijo) { this.etiquetaActivoFijo = etiquetaActivoFijo; }
 
-	public void setProcesador(String procesador) {
-		this.procesador = procesador;
-	}
+    public String getTipoLicenciaOffice() { return tipoLicenciaOffice; }
+    public void setTipoLicenciaOffice(String tipoLicenciaOffice) { this.tipoLicenciaOffice = tipoLicenciaOffice; }
 
-	public Integer getMemoriaRamGb() {
-		return memoriaRamGb;
-	}
+    public String getVersionOffice() { return versionOffice; }
+    public void setVersionOffice(String versionOffice) { this.versionOffice = versionOffice; }
 
-	public void setMemoriaRamGb(Integer memoriaRamGb) {
-		this.memoriaRamGb = memoriaRamGb;
-	}
+    public Boolean getUnionDominio() { return unionDominio; }
+    public void setUnionDominio(Boolean unionDominio) { this.unionDominio = unionDominio; }
 
-	public Integer getCapacidadAlmacenamientoGb() {
-		return capacidadAlmacenamientoGb;
-	}
+    public String getIp() { return ip; }
+    public void setIp(String ip) { this.ip = ip; }
 
-	public void setCapacidadAlmacenamientoGb(Integer capacidadAlmacenamientoGb) {
-		this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb;
-	}
+    public String getMac() { return mac; }
+    public void setMac(String mac) { this.mac = mac; }
 
-	public String getSistemaOperativo() {
-		return sistemaOperativo;
-	}
+    public LocalDate getFechaCompra() { return fechaCompra; }
+    public void setFechaCompra(LocalDate fechaCompra) { this.fechaCompra = fechaCompra; }
 
-	public void setSistemaOperativo(String sistemaOperativo) {
-		this.sistemaOperativo = sistemaOperativo;
-	}
+    public BigDecimal getPrecioCompra() { return precioCompra; }
+    public void setPrecioCompra(BigDecimal precioCompra) { this.precioCompra = precioCompra; }
 
-	public Boolean getLicenciaWindowsActivada() {
-		return licenciaWindowsActivada;
-	}
+    public String getEstadoEquipo() { return estadoEquipo; }
+    public void setEstadoEquipo(String estadoEquipo) { this.estadoEquipo = estadoEquipo; }
 
-	public void setLicenciaWindowsActivada(Boolean licenciaWindowsActivada) {
-		this.licenciaWindowsActivada = licenciaWindowsActivada;
-	}
+    public String getObservacionEquipo() { return observacionEquipo; }
+    public void setObservacionEquipo(String observacionEquipo) { this.observacionEquipo = observacionEquipo; }
 
-	public Boolean getEtiquetaActivoFijo() {
-		return etiquetaActivoFijo;
-	}
+    public boolean isEstado() { return estado; }
+    public void setEstado(boolean estado) { this.estado = estado; }
 
-	public void setEtiquetaActivoFijo(Boolean etiquetaActivoFijo) {
-		this.etiquetaActivoFijo = etiquetaActivoFijo;
-	}
-
-	public String getTipoLicenciaOffice() {
-		return tipoLicenciaOffice;
-	}
-
-	public void setTipoLicenciaOffice(String tipoLicenciaOffice) {
-		this.tipoLicenciaOffice = tipoLicenciaOffice;
-	}
-
-	public String getVersionOffice() {
-		return versionOffice;
-	}
-
-	public void setVersionOffice(String versionOffice) {
-		this.versionOffice = versionOffice;
-	}
-
-	public Boolean getUnionDominio() {
-		return unionDominio;
-	}
-
-	public void setUnionDominio(Boolean unionDominio) {
-		this.unionDominio = unionDominio;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public String getMac() {
-		return mac;
-	}
-
-	public void setMac(String mac) {
-		this.mac = mac;
-	}
-
-	public LocalDate getFechaCompra() {
-		return fechaCompra;
-	}
-
-	public void setFechaCompra(LocalDate fechaCompra) {
-		this.fechaCompra = fechaCompra;
-	}
-
-	public BigDecimal getPrecioCompra() {
-		return precioCompra;
-	}
-
-	public void setPrecioCompra(BigDecimal precioCompra) {
-		this.precioCompra = precioCompra;
-	}
-
-	public String getEstadoEquipo() {
-		return estadoEquipo;
-	}
-
-	public void setEstadoEquipo(String estadoEquipo) {
-		this.estadoEquipo = estadoEquipo;
-	}
-
-	public String getObservacionEquipo() {
-		return observacionEquipo;
-	}
-
-	public void setObservacionEquipo(String observacionEquipo) {
-		this.observacionEquipo = observacionEquipo;
-	}
-
-	public boolean isEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-
-	public DepartamentosResponseDTO getFkDepartamento() {
-		return fkDepartamento;
-	}
-
-	public void setFkDepartamento(DepartamentosResponseDTO fkDepartamento) {
-		this.fkDepartamento = fkDepartamento;
-	}
-
+    public DepartamentosResponseDTO getFkDepartamento() { return fkDepartamento; }
+    public void setFkDepartamento(DepartamentosResponseDTO fkDepartamento) { this.fkDepartamento = fkDepartamento; }
 }

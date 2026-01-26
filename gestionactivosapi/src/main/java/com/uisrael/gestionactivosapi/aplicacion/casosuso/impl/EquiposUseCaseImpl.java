@@ -29,4 +29,15 @@ public class EquiposUseCaseImpl implements IEquiposUseCase {
     public List<Equipos> listar() {
         return repositorio.listarTodos();
     }
+    
+    @Override
+    public Equipos actualizar(int id, Equipos equipo) {
+        return repositorio.actualizar(id, equipo);
+    }
+
+    @Override
+    public Equipos actualizarEstado(int id, Equipos equipo) {
+        return repositorio.actualizarEstado(id, equipo.isEstado());
+    }
+
 }

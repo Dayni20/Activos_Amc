@@ -13,4 +13,9 @@ public interface ICustodiasRepositorio {
 
     List<Custodias> listarTodos();
 
+    // ✅ agregar
+    Custodias actualizar(int id, Custodias custodia);
+
+    // ✅ agregar
+    Custodias actualizarEstado(int id, Custodias custodia);
 }

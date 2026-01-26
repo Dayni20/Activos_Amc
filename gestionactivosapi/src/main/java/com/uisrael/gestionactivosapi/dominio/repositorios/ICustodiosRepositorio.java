@@ -13,4 +13,7 @@ public interface ICustodiosRepositorio {
 
     List<Custodios> listarTodos();
 
+    Custodios actualizar(int id, Custodios custodio);
+
+    Custodios actualizarEstado(int id, Custodios custodio);
 }

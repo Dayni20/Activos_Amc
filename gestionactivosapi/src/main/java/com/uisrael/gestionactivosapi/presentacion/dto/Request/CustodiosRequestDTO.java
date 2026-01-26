@@ -14,10 +14,7 @@ public class CustodiosRequestDTO {
     @NotBlank
     private String cedula;
 
-    @NotBlank
     private String correo;
-
-    @NotBlank
     private String telefono;
 
     private boolean estado;

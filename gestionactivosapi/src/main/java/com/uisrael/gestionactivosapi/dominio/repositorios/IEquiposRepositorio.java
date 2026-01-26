@@ -2,7 +2,6 @@ package com.uisrael.gestionactivosapi.dominio.repositorios;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.uisrael.gestionactivosapi.dominio.entidades.Equipos;
 
 public interface IEquiposRepositorio {
@@ -13,4 +12,7 @@ public interface IEquiposRepositorio {
 
     List<Equipos> listarTodos();
 
+    Equipos actualizar(int id, Equipos equipo);
+
+    Equipos actualizarEstado(int id, boolean estado);
 }

@@ -14,8 +14,7 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
     private final ICustodiosJpaRepositorio jpaRepository;
     private final ICustodiosJpaMapper entityMapper;
 
-    public CustodiosRepositorioImpl(ICustodiosJpaRepositorio jpaRepository,
-                                    ICustodiosJpaMapper entityMapper) {
+    public CustodiosRepositorioImpl(ICustodiosJpaRepositorio jpaRepository, ICustodiosJpaMapper entityMapper) {
         this.jpaRepository = jpaRepository;
         this.entityMapper = entityMapper;
     }
@@ -34,9 +33,32 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
 
     @Override
     public List<Custodios> listarTodos() {
-        return jpaRepository.findAll()
-                .stream()
-                .map(entityMapper::toDomain)
-                .toList();
+        return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
+    }
+
+    @Override
+    public Custodios actualizar(int id, Custodios custodio) {
+        CustodiosJpa existente = jpaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
+
+        existente.setNombre(custodio.getNombre());
+        existente.setCedula(custodio.getCedula());
+        existente.setCorreo(custodio.getCorreo());
+        existente.setTelefono(custodio.getTelefono());
+        existente.setEstado(custodio.isEstado());
+
+        CustodiosJpa guardado = jpaRepository.save(existente);
+        return entityMapper.toDomain(guardado);
+    }
+
+    @Override
+    public Custodios actualizarEstado(int id, Custodios custodio) {
+        CustodiosJpa existente = jpaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
+
+        existente.setEstado(custodio.isEstado());
+
+        CustodiosJpa guardado = jpaRepository.save(existente);
+        return entityMapper.toDomain(guardado);
     }
 }

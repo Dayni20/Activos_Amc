@@ -12,4 +12,7 @@ public interface ICustodiasUseCase {
 
     List<Custodias> listar();
 
+    Custodias actualizar(int id, Custodias custodia);
+
+    Custodias actualizarEstado(int id, Custodias custodia);
 }

@@ -29,4 +29,38 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
     public List<Custodios> listar() {
         return repositorio.listarTodos();
     }
+
+    @Override
+    public Custodios actualizar(int id, Custodios custodio) {
+        repositorio.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
+
+        Custodios actualizado = new Custodios(
+                id,
+                custodio.getNombre(),
+                custodio.getCedula(),
+                custodio.getCorreo(),
+                custodio.getTelefono(),
+                custodio.isEstado()
+        );
+
+        return repositorio.actualizar(id, actualizado);
+    }
+
+    @Override
+    public Custodios actualizarEstado(int id, Custodios custodio) {
+        repositorio.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
+
+        Custodios actualizado = new Custodios(
+                id,
+                custodio.getNombre(),
+                custodio.getCedula(),
+                custodio.getCorreo(),
+                custodio.getTelefono(),
+                custodio.isEstado()
+        );
+
+        return repositorio.actualizarEstado(id, actualizado);
+    }
 }

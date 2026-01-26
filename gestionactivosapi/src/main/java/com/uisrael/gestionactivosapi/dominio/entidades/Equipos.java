@@ -8,165 +8,129 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.Departamen
 
 public class Equipos implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final int idEquipo;
-	private final String codigoSap;
-	private final String tipoEquipo;
-	private final String modelo;
-	private final String serial;
-	private final String procesador;
-	private final Integer memoriaRamGb;
-	private final Integer capacidadAlmacenamientoGb;
-	private final String sistemaOperativo;
-	private final Boolean licenciaWindowsActivada;
-	private final Boolean etiquetaActivoFijo;
-	private final String tipoLicenciaOffice;
-	private final String versionOffice;
-	private final Boolean unionDominio;
-	private final String ip;
-	private final String mac;
-	private final LocalDate fechaCompra;
-	private final BigDecimal precioCompra;
-	private final String estadoEquipo;
-	private final String observacionEquipo;
-	private final boolean estado;
+    private final int idEquipo;
+    private final String codigoSap;
+    private final String tipoEquipo;
+    private final String modelo;
+    private final String serial;
+    private final String procesador;
+    private final Integer memoriaRamGb;
+    private final Integer capacidadAlmacenamientoGb;
+    private final String sistemaOperativo;
+    private final Boolean licenciaWindowsActivada;
+    private final Boolean etiquetaActivoFijo;
+    private final String tipoLicenciaOffice;
+    private final String versionOffice;
+    private final Boolean unionDominio;
+    private final String ip;
+    private final String mac;
+    private final LocalDate fechaCompra;
+    private final BigDecimal precioCompra;
+    private final String estadoEquipo;
+    private final String observacionEquipo;
+    private final boolean estado;
 
-	private DepartamentosJpa fkDepartamento;
+    private DepartamentosJpa fkDepartamento;
 
-	
-	public Equipos(int idEquipo, String codigoSap, String tipoEquipo, String modelo, String serial, String procesador,
-			Integer memoriaRamGb, Integer capacidadAlmacenamientoGb, String sistemaOperativo,
-			Boolean licenciaWindowsActivada, Boolean etiquetaActivoFijo, String tipoLicenciaOffice,
-			String versionOffice, Boolean unionDominio, String ip, String mac, LocalDate fechaCompra,
-			BigDecimal precioCompra, String estadoEquipo, String observacionEquipo, boolean estado,
-			DepartamentosJpa fkDepartamento) {
-		this.idEquipo = idEquipo;
-		this.codigoSap = codigoSap;
-		this.tipoEquipo = tipoEquipo;
-		this.modelo = modelo;
-		this.serial = serial;
-		this.procesador = procesador;
-		this.memoriaRamGb = memoriaRamGb;
-		this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb;
-		this.sistemaOperativo = sistemaOperativo;
-		this.licenciaWindowsActivada = licenciaWindowsActivada;
-		this.etiquetaActivoFijo = etiquetaActivoFijo;
-		this.tipoLicenciaOffice = tipoLicenciaOffice;
-		this.versionOffice = versionOffice;
-		this.unionDominio = unionDominio;
-		this.ip = ip;
-		this.mac = mac;
-		this.fechaCompra = fechaCompra;
-		this.precioCompra = precioCompra;
-		this.estadoEquipo = estadoEquipo;
-		this.observacionEquipo = observacionEquipo;
-		this.estado = estado;
-		this.fkDepartamento = fkDepartamento;
-	}
+    // ✅ AGREGA ESTOS 3 (DOMINIO)
+    private Marcas fkMarca;
+    private CategoriaEquipos fkCategoria;
+    private Proveedores fkProveedor;
 
-	public DepartamentosJpa getFkDepartamento() {
-		return fkDepartamento;
-	}
+    public Equipos(
+            int idEquipo,
+            String codigoSap,
+            String tipoEquipo,
+            String modelo,
+            String serial,
+            String procesador,
+            Integer memoriaRamGb,
+            Integer capacidadAlmacenamientoGb,
+            String sistemaOperativo,
+            Boolean licenciaWindowsActivada,
+            Boolean etiquetaActivoFijo,
+            String tipoLicenciaOffice,
+            String versionOffice,
+            Boolean unionDominio,
+            String ip,
+            String mac,
+            LocalDate fechaCompra,
+            BigDecimal precioCompra,
+            String estadoEquipo,
+            String observacionEquipo,
+            boolean estado,
+            DepartamentosJpa fkDepartamento,
+            Marcas fkMarca,
+            CategoriaEquipos fkCategoria,
+            Proveedores fkProveedor
+    ) {
+        this.idEquipo = idEquipo;
+        this.codigoSap = codigoSap;
+        this.tipoEquipo = tipoEquipo;
+        this.modelo = modelo;
+        this.serial = serial;
+        this.procesador = procesador;
+        this.memoriaRamGb = memoriaRamGb;
+        this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb;
+        this.sistemaOperativo = sistemaOperativo;
+        this.licenciaWindowsActivada = licenciaWindowsActivada;
+        this.etiquetaActivoFijo = etiquetaActivoFijo;
+        this.tipoLicenciaOffice = tipoLicenciaOffice;
+        this.versionOffice = versionOffice;
+        this.unionDominio = unionDominio;
+        this.ip = ip;
+        this.mac = mac;
+        this.fechaCompra = fechaCompra;
+        this.precioCompra = precioCompra;
+        this.estadoEquipo = estadoEquipo;
+        this.observacionEquipo = observacionEquipo;
+        this.estado = estado;
+        this.fkDepartamento = fkDepartamento;
+        this.fkMarca = fkMarca;
+        this.fkCategoria = fkCategoria;
+        this.fkProveedor = fkProveedor;
+    }
 
-	public void setFkDepartamento(DepartamentosJpa fkDepartamento) {
-		this.fkDepartamento = fkDepartamento;
-	}
+    public int getIdEquipo() { return idEquipo; }
+    public String getCodigoSap() { return codigoSap; }
+    public String getTipoEquipo() { return tipoEquipo; }
+    public String getModelo() { return modelo; }
+    public String getSerial() { return serial; }
+    public String getProcesador() { return procesador; }
+    public Integer getMemoriaRamGb() { return memoriaRamGb; }
+    public Integer getCapacidadAlmacenamientoGb() { return capacidadAlmacenamientoGb; }
+    public String getSistemaOperativo() { return sistemaOperativo; }
+    public Boolean getLicenciaWindowsActivada() { return licenciaWindowsActivada; }
+    public Boolean getEtiquetaActivoFijo() { return etiquetaActivoFijo; }
+    public String getTipoLicenciaOffice() { return tipoLicenciaOffice; }
+    public String getVersionOffice() { return versionOffice; }
+    public Boolean getUnionDominio() { return unionDominio; }
+    public String getIp() { return ip; }
+    public String getMac() { return mac; }
+    public LocalDate getFechaCompra() { return fechaCompra; }
+    public BigDecimal getPrecioCompra() { return precioCompra; }
+    public String getEstadoEquipo() { return estadoEquipo; }
+    public String getObservacionEquipo() { return observacionEquipo; }
+    public boolean isEstado() { return estado; }
 
-	public int getIdEquipo() {
-		return idEquipo;
-	}
+    public DepartamentosJpa getFkDepartamento() { return fkDepartamento; }
+    public void setFkDepartamento(DepartamentosJpa fkDepartamento) { this.fkDepartamento = fkDepartamento; }
 
-	public String getCodigoSap() {
-		return codigoSap;
-	}
+    // ✅ GETTERS/SETTERS NUEVOS
+    public Marcas getFkMarca() { return fkMarca; }
+    public void setFkMarca(Marcas fkMarca) { this.fkMarca = fkMarca; }
 
-	public String getTipoEquipo() {
-		return tipoEquipo;
-	}
+    public CategoriaEquipos getFkCategoria() { return fkCategoria; }
+    public void setFkCategoria(CategoriaEquipos fkCategoria) { this.fkCategoria = fkCategoria; }
 
-	public String getModelo() {
-		return modelo;
-	}
+    public Proveedores getFkProveedor() { return fkProveedor; }
+    public void setFkProveedor(Proveedores fkProveedor) { this.fkProveedor = fkProveedor; }
 
-	public String getSerial() {
-		return serial;
-	}
-
-	public String getProcesador() {
-		return procesador;
-	}
-
-	public Integer getMemoriaRamGb() {
-		return memoriaRamGb;
-	}
-
-	public Integer getCapacidadAlmacenamientoGb() {
-		return capacidadAlmacenamientoGb;
-	}
-
-	public String getSistemaOperativo() {
-		return sistemaOperativo;
-	}
-
-	public Boolean getLicenciaWindowsActivada() {
-		return licenciaWindowsActivada;
-	}
-
-	public Boolean getEtiquetaActivoFijo() {
-		return etiquetaActivoFijo;
-	}
-
-	public String getTipoLicenciaOffice() {
-		return tipoLicenciaOffice;
-	}
-
-	public String getVersionOffice() {
-		return versionOffice;
-	}
-
-	public Boolean getUnionDominio() {
-		return unionDominio;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public String getMac() {
-		return mac;
-	}
-
-	public LocalDate getFechaCompra() {
-		return fechaCompra;
-	}
-
-	public BigDecimal getPrecioCompra() {
-		return precioCompra;
-	}
-
-	public String getEstadoEquipo() {
-		return estadoEquipo;
-	}
-
-	public String getObservacionEquipo() {
-		return observacionEquipo;
-	}
-
-	public boolean isEstado() {
-		return estado;
-	}
-
-	@Override
-	public String toString() {
-		return "Equipos [idEquipo=" + idEquipo + ", codigoSap=" + codigoSap + ", tipoEquipo=" + tipoEquipo + ", modelo="
-				+ modelo + ", serial=" + serial + ", procesador=" + procesador + ", memoriaRamGb=" + memoriaRamGb
-				+ ", capacidadAlmacenamientoGb=" + capacidadAlmacenamientoGb + ", sistemaOperativo=" + sistemaOperativo
-				+ ", licenciaWindowsActivada=" + licenciaWindowsActivada + ", etiquetaActivoFijo=" + etiquetaActivoFijo
-				+ ", tipoLicenciaOffice=" + tipoLicenciaOffice + ", versionOffice=" + versionOffice + ", unionDominio="
-				+ unionDominio + ", ip=" + ip + ", mac=" + mac + ", fechaCompra=" + fechaCompra + ", precioCompra="
-				+ precioCompra + ", estadoEquipo=" + estadoEquipo + ", observacionEquipo=" + observacionEquipo
-				+ ", estado=" + estado + ", fkDepartamento=" + fkDepartamento + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "Equipos [idEquipo=" + idEquipo + ", codigoSap=" + codigoSap + ", tipoEquipo=" + tipoEquipo
+                + ", modelo=" + modelo + ", serial=" + serial + ", estado=" + estado + "]";
+    }
 }

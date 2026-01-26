@@ -4,51 +4,34 @@ import java.time.LocalDate;
 
 public class CustodiasResponseDTO {
 
-	private int idCustodiaEquipo;
-	private LocalDate fechaInicio;
-	private LocalDate fechaFin;
-	private String observacion;
-	private boolean estado;
+    private int idCustodiaEquipo;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private String observacion;
+    private boolean estado;
 
-	public int getIdCustodiaEquipo() {
-		return idCustodiaEquipo;
-	}
+    // ✅ reutiliza tus Response DTO existentes
+    private EquiposResponseDTO fkEquipo;
+    private CustodiosResponseDTO fkCustodio;
 
-	public void setIdCustodiaEquipo(int idCustodiaEquipo) {
-		this.idCustodiaEquipo = idCustodiaEquipo;
-	}
+    public int getIdCustodiaEquipo() { return idCustodiaEquipo; }
+    public void setIdCustodiaEquipo(int idCustodiaEquipo) { this.idCustodiaEquipo = idCustodiaEquipo; }
 
-	public LocalDate getFechaInicio() {
-		return fechaInicio;
-	}
+    public LocalDate getFechaInicio() { return fechaInicio; }
+    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
 
-	public void setFechaInicio(LocalDate fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
+    public LocalDate getFechaFin() { return fechaFin; }
+    public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
 
-	public LocalDate getFechaFin() {
-		return fechaFin;
-	}
+    public String getObservacion() { return observacion; }
+    public void setObservacion(String observacion) { this.observacion = observacion; }
 
-	public void setFechaFin(LocalDate fechaFin) {
-		this.fechaFin = fechaFin;
-	}
+    public boolean isEstado() { return estado; }
+    public void setEstado(boolean estado) { this.estado = estado; }
 
-	public String getObservacion() {
-		return observacion;
-	}
+    public EquiposResponseDTO getFkEquipo() { return fkEquipo; }
+    public void setFkEquipo(EquiposResponseDTO fkEquipo) { this.fkEquipo = fkEquipo; }
 
-	public void setObservacion(String observacion) {
-		this.observacion = observacion;
-	}
-
-	public boolean isEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-	
-
+    public CustodiosResponseDTO getFkCustodio() { return fkCustodio; }
+    public void setFkCustodio(CustodiosResponseDTO fkCustodio) { this.fkCustodio = fkCustodio; }
 }

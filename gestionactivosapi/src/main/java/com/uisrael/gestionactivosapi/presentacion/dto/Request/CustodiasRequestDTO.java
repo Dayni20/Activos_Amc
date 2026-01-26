@@ -2,7 +2,7 @@ package com.uisrael.gestionactivosapi.presentacion.dto.Request;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -10,14 +10,21 @@ public class CustodiasRequestDTO {
 
     private int idCustodiaEquipo;
 
-    @NotBlank
+    @NotNull
     private LocalDate fechaInicio;
 
-    @NotBlank
+    // si puede ser null, no le pongas NotNull
     private LocalDate fechaFin;
 
-    @NotBlank
+    @NotNull
     private String observacion;
-    
+
     private boolean estado;
+
+    // ✅ AGREGA ESTO (para relación)
+    @NotNull
+    private EquiposRequestDTO fkEquipo;
+
+    @NotNull
+    private CustodiosRequestDTO fkCustodio;
 }
