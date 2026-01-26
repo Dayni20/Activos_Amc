@@ -17,7 +17,7 @@
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a th:href="@{/categorias-equipo}">Home</a></li>
-                    <li class="breadcrumb-item">Crear Marca</li>
+                    <li class="breadcrumb-item">Editar Marcas</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -26,7 +26,7 @@
                         class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
                         <a href="javascript:void(0);"
                             class="btn btn-primary successAlertMessage"> <i
-                            class="feather-save me-2"></i> <span>Guardar</span>
+                            class="feather-save me-2"></i> <span>Editar</span>
                         </a>
                     </div>
                 </div>
@@ -43,16 +43,16 @@
                 <div class="card-body">
                     <div class="mb-4">
                         <label class="form-label">Nombre <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nombre de la marca">
+                        <input type="text" class="form-control" placeholder="Nombre de la categoría" value=" ">
                     </div>
                     <div class="mb-4">
                         <label class="form-label">Descripción </label>
-                        <input type="text" class="form-control" placeholder="Descripción">
+                        <input type="text" class="form-control" placeholder="Descripción" value=" ">
                     </div>
                     <div class="row mb-4">
                         <div class="form-check form-switch form-switch-sm ps-5">
                             <input class="form-check-input c-pointer" type="checkbox"
-                                id="estadoSwitch"> <label
+                                id="estadoSwitch" checked> <label
                                 class="form-check-label fw-500 text-dark c-pointer"
                                 for="estadoSwitch">Activo</label>
                         </div>

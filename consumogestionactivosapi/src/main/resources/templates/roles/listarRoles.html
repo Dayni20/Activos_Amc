@@ -5,7 +5,7 @@
 
 <head>
 
-<title>Marcas</title>
+<title>Roles</title>
 
 </head>
 
@@ -14,11 +14,11 @@
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Marcas</h5>
+                    <h5 class="m-b-10">Roles</h5>
                 </div>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/categorias-equipo}">Home</a></li>
-                    <li class="breadcrumb-item">Marcas</li>
+                    <li class="breadcrumb-item"><a th:href="@{/roles}">Home</a></li>
+                    <li class="breadcrumb-item">Roles</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
@@ -38,8 +38,8 @@
                                 </a>
                             </div>
                         </div>
-                        <a th:href="@{/categorias-equipo/nueva-categoria}" class="btn btn-primary"> <i class="feather-plus me-2"></i> <span>Agregar Nueva
-                                Marca</span>
+                        <a th:href="@{/roles/nuevo-rol}" class="btn btn-primary"> <i class="feather-plus me-2"></i> <span>Nuevo
+                                Rol</span>
                         </a>
                     </div>
                 </div>
@@ -88,14 +88,14 @@
                                                 </div>
                                             </td>
                                             <td><a href="javascript:void(0);" class="fw-bold">#1</a></td>
-                                            <td>Lenovo</td>
-                                            <td>Equipo portátil</td>
+                                            <td>ADMIN</td>
+                                            <td>Rol administrador</td>
                                             <td>
                                                 <div class="badge bg-soft-success text-success">Activo</div>
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-                                                    <a th:href="@{/categorias-equipo/editar-categoria}"
+                                                    <a th:href="@{/roles/editar-rol}"
                                                         class="avatar-text avatar-md"> <i
                                                         class="feather feather-edit"></i>
                                                     </a>
