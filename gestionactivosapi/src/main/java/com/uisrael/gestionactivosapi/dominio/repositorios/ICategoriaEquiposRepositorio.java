@@ -14,5 +14,4 @@ public interface ICategoriaEquiposRepositorio {
 	List<CategoriaEquipos> listarTodos();
 
 	void eliminar(int id);
-
 }
