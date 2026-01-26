@@ -17,5 +17,10 @@ public class DepartamentosControlador {
 	public String nuevoDepartamento() {
 		return "departamentos/nuevoDepartamento"; // ubicacion fisica page
 	}
+	
+	@GetMapping("/editar-departamento")
+	public String modificarDepartamento() {
+		return "departamentos/editarDepartamento"; // ubicacion fisica page
+	}
 
 }
