@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
-import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
+
 import com.uisrael.gestionactivosapi.dominio.repositorios.IMarcasRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.RolesJpa;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.UbicacionesJpa;
+
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IMarcasJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IMarcasJpaRepositorio;
 
