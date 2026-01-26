@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IProveedoresUseCase;
-import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
+
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
-import com.uisrael.gestionactivosapi.presentacion.dto.Request.MarcasRequestDTO;
+
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.ProveedoresRequestDTO;
-import com.uisrael.gestionactivosapi.presentacion.dto.Response.MarcasResponseDTO;
+
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.ProveedoresResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.mapeadores.IProveedoresDtoMapper;
 

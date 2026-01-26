@@ -3,10 +3,9 @@ package com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores;
 import java.util.List;
 import java.util.Optional;
 
-import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IProveedoresRepositorio;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
+
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.ProveedoresJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IProveedoresJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IProveedoresJpaRepositorio;
