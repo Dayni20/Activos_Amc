@@ -33,7 +33,7 @@ public class ProveedoresUseCaseImpl implements IProveedoresUseCase{
 	
 	@Override
 	public Proveedores actualizar(int id, Proveedores proveedores) {
-		return repositorio.guardar(proveedores);
+		return repositorio.actualizar(id, proveedores);
 	}
 
 	@Override

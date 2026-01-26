@@ -30,7 +30,7 @@ public class MarcasJpa implements Serializable {
 	@Column(name = "id_marca")
 	private int idMarca;
 
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String nombre;
 	
 	private boolean estado;

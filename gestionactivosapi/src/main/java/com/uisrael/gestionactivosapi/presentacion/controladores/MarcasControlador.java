@@ -21,6 +21,7 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Request.DepartamentosReque
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.MarcasRequestDTO;
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.DepartamentosResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.MarcasResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.RolesResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.mapeadores.IMarcasDtoMapper;
 
 import jakarta.validation.Valid;
@@ -61,4 +62,9 @@ public class MarcasControlador {
 	public void eliminar(@PathVariable int id) {
 		marcasUseCase.eliminar(id);
     }
+    
+    @GetMapping("/{id}")
+	public MarcasResponseDTO obtenerPorId(@PathVariable int id) {
+		return mapper.toResponseDto(marcasUseCase.obtenerPorId(id));
+	}
 }

@@ -32,7 +32,7 @@ public class MarcasUseCaseImpl implements IMarcasUseCase {
 	
 	@Override
 	public Marcas actualizar(int id, Marcas marcas) {
-		return repositorio.guardar(marcas);
+		return repositorio.actualizar(id, marcas);
 	}
 
 	@Override

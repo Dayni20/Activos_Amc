@@ -61,4 +61,9 @@ public class ProveedoresControlador {
 	public void eliminar(@PathVariable int id) {
 		proveedoresUseCase.eliminar(id);
     }
+    
+    @GetMapping("/{id}")
+  	public ProveedoresResponseDTO obtenerPorId(@PathVariable int id) {
+  		return mapper.toResponseDto(proveedoresUseCase.obtenerPorId(id));
+  	}
 }

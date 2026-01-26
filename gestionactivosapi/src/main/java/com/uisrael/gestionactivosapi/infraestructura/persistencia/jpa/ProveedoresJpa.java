@@ -31,10 +31,10 @@ public class ProveedoresJpa implements Serializable {
     @Column(name = "id_proveedor")
     private int idProveedor;
 
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(length = 100, nullable = false)
     private String nombre;
 
-    @Column(length = 20, unique = true)
+    @Column(length = 20)
     private String ruc;
 
     @Column(length = 20)
@@ -48,6 +48,4 @@ public class ProveedoresJpa implements Serializable {
 
     private boolean estado;
     
-    @OneToMany(mappedBy = "proveedor")
-    private List<EquiposJpa> equipos;
 }
