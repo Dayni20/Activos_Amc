@@ -12,29 +12,26 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.CustodiasResponse
 @Mapper(componentModel = "spring")
 public interface ICustodiasDtoMapper {
 
-    // ✅ Construye las FKs (JPA) usando SOLO los IDs que vienen en el DTO
     @Mapping(target = "fkEquipo", expression = "java(mapEquipo(dto))")
     @Mapping(target = "fkCustodio", expression = "java(mapCustodio(dto))")
     Custodias toDomain(CustodiasRequestDTO dto);
 
+    // ✅ Response SOLO con IDs
+    @Mapping(target = "idEquipo", source = "fkEquipo.idEquipo")
+    @Mapping(target = "idCustodio", source = "fkCustodio.idCustodio")
     CustodiasResponseDTO toResponseDto(Custodias custodia);
 
-    // -------------------------
-    // Helpers para MapStruct
-    // -------------------------
     default EquiposJpa mapEquipo(CustodiasRequestDTO dto) {
         if (dto == null || dto.getFkEquipo() == null) return null;
-
         EquiposJpa e = new EquiposJpa();
-        e.setIdEquipo(dto.getFkEquipo().getIdEquipo()); // <- debe existir en EquiposRequestDTO
+        e.setIdEquipo(dto.getFkEquipo().getIdEquipo());
         return e;
     }
 
     default CustodiosJpa mapCustodio(CustodiasRequestDTO dto) {
         if (dto == null || dto.getFkCustodio() == null) return null;
-
         CustodiosJpa c = new CustodiosJpa();
-        c.setIdCustodio(dto.getFkCustodio().getIdCustodio()); // <- debe existir en CustodiosRequestDTO
+        c.setIdCustodio(dto.getFkCustodio().getIdCustodio());
         return c;
     }
 }

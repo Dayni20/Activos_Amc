@@ -45,4 +45,9 @@ public class RolesRepositorioImpl implements IRolesRepositorio {
 		jpaRepository.save(entity);
 	}
 
+	@Override
+	public Optional<Roles> buscarPorNombre(String nombre) {
+		return jpaRepository.findByNombre(nombre).map(entityMapper::toDomain);
+	}
+
 }

@@ -3,6 +3,7 @@ package com.uisrael.gestionactivosapi.infraestructura.configuracion;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IDepartamentosUseCase;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUbicacionesUseCase;
@@ -168,8 +169,8 @@ public class ConfiguracionGeneral {
 
     @Bean
     IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio, IRolesRepositorio rolesRepositorio,
-            IDepartamentosRepositorio departamentosRepositorio) {
-        return new UsuariosUseCaseImpl(repositorio, rolesRepositorio, departamentosRepositorio);
+            IDepartamentosRepositorio departamentosRepositorio, PasswordEncoder passwordEncoder) {
+        return new UsuariosUseCaseImpl(repositorio, rolesRepositorio, departamentosRepositorio, passwordEncoder);
     }
 
     @Bean

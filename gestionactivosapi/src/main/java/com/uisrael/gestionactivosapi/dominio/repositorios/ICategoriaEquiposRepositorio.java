@@ -14,4 +14,6 @@ public interface ICategoriaEquiposRepositorio {
 	List<CategoriaEquipos> listarTodos();
 
 	void eliminar(int id);
+	
+	Optional<CategoriaEquipos> buscarPorNombre(String nombre);
 }

@@ -33,6 +33,8 @@ public class EquiposRequestDTO {
     private DepartamentosRequestDTO fkDepartamento;
     private MarcasRequestDTO fkMarca;
     private ProveedoresRequestDTO fkProveedor;
+    private CategoriaEquiposRequestDTO fkCategoria;
+
 
     
 }
