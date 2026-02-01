@@ -26,7 +26,7 @@ public class MarcasServicioImpl  implements IMarcasServicio{
 
 	@Override
 	public void nuevaMarca(MarcasRequestDTO dto) {
-		clienteweb.post().uri("/marcas/nuevaMarcas").bodyValue(dto).retrieve().toBodilessEntity().block();
+		clienteweb.post().uri("/marcas").bodyValue(dto).retrieve().toBodilessEntity().block();
 		
 	}
 
