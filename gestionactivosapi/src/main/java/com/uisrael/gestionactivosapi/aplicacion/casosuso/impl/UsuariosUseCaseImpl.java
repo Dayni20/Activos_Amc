@@ -41,6 +41,10 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 				throw new RuntimeException("Departamento no encontrado");
 			}
 		}
+		
+		if (repositorio.buscarPorCorreo(usuario.getCorreo()).isPresent()) {
+			throw new IllegalArgumentException("Ya existe un usuario con el correo: " + usuario.getCorreo());
+		}
 
 		String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
 		
@@ -76,6 +80,9 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 
 	@Override
 	public Usuarios actualizar(Usuarios usuario) {
+		Usuarios usuarioExistente = repositorio.buscarPorId(usuario.getIdUsuario())
+			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuario.getIdUsuario()));
+		
 		if (usuario.getFkRol() != null) {
 			int idRol = usuario.getFkRol().getIdRol();
 			if (rolesRepositorio.buscarPorId(idRol).isEmpty()) {
@@ -88,22 +95,31 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 				throw new RuntimeException("Departamento no encontrado");
 			}
 		}
+		
+		repositorio.buscarPorCorreo(usuario.getCorreo()).ifPresent(usuarioConCorreo -> {
+			if (usuarioConCorreo.getIdUsuario() != usuario.getIdUsuario()) {
+				throw new IllegalArgumentException("Ya existe otro usuario con el correo: " + usuario.getCorreo());
+			}
+		});
 
-		String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
+		String contrasenaFinal = usuarioExistente.getContrasena();
+		if (!usuario.getContrasena().equals(usuarioExistente.getContrasena())) {
+			contrasenaFinal = passwordEncoder.encode(usuario.getContrasena());
+		}
 		
 		RolesJpa rol = usuario.getFkRol();
 		DepartamentosJpa departamento = usuario.getFkDepartamento();
-		Usuarios usuarioConContrasenaEncriptada = new Usuarios(
+		Usuarios usuarioActualizado = new Usuarios(
 			usuario.getIdUsuario(),
 			usuario.getNombre(),
 			usuario.getCorreo(),
-			contrasenaEncriptada,
+			contrasenaFinal,
 			usuario.isEstado(),
 			departamento,
 			rol
 		);
 
-		return repositorio.guardar(usuarioConContrasenaEncriptada);
+		return repositorio.guardar(usuarioActualizado);
 	}
 
 }

@@ -45,4 +45,9 @@ public class CategoriaEquiposRepositorioImpl implements ICategoriaEquiposReposit
 		jpaRepository.save(entity);
 	}
 
+	@Override
+	public Optional<CategoriaEquipos> buscarPorNombre(String nombre) {
+		return jpaRepository.findByNombre(nombre).map(entityMapper::toDomain);
+	}
+
 }

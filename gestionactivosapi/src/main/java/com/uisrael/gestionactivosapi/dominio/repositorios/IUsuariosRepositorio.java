@@ -14,5 +14,7 @@ public interface IUsuariosRepositorio {
 	List<Usuarios> listarTodos();
 	
 	void eliminar(int id);
+	
+	Optional<Usuarios> buscarPorCorreo(String correo);
 
 }

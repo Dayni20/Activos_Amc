@@ -16,6 +16,9 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public CategoriaEquipos crear(CategoriaEquipos categoriaEquipo) {
+		if (repositorio.buscarPorNombre(categoriaEquipo.getNombre()).isPresent()) {
+			throw new IllegalArgumentException("Ya existe una categoría con el nombre: " + categoriaEquipo.getNombre());
+		}
 		return repositorio.guardar(categoriaEquipo);
 	}
 
@@ -31,11 +34,24 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public CategoriaEquipos actualizar(CategoriaEquipos categoriaEquipo) {
+		if (repositorio.buscarPorId(categoriaEquipo.getIdCategoria()).isEmpty()) {
+			throw new RuntimeException("Categoría no encontrada con ID: " + categoriaEquipo.getIdCategoria());
+		}
+		
+		repositorio.buscarPorNombre(categoriaEquipo.getNombre()).ifPresent(categoriaExistente -> {
+			if (categoriaExistente.getIdCategoria() != categoriaEquipo.getIdCategoria()) {
+				throw new IllegalArgumentException("Ya existe otra categoría con el nombre: " + categoriaEquipo.getNombre());
+			}
+		});
+		
 		return repositorio.guardar(categoriaEquipo);
 	}
 
 	@Override
 	public void eliminar(int id) {
+		if (repositorio.buscarPorId(id).isEmpty()) {
+			throw new RuntimeException("Categoría no encontrada con ID: " + id);
+		}
 		repositorio.eliminar(id);
 	}
 
