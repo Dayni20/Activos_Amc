@@ -21,12 +21,12 @@ public class CategoriaEquiposServicioImpl implements ICategoriaEquiposServicio {
 
 	@Override
 	public List<CategoriaEquiposResponseDTO> listarCategoriaEquipo() {
-		return clienteweb.get().uri("/categoriaequipos").retrieve().bodyToFlux(CategoriaEquiposResponseDTO.class).collectList().block();
+		return clienteweb.get().uri("/categorias-equipo").retrieve().bodyToFlux(CategoriaEquiposResponseDTO.class).collectList().block();
 	}
 
 	@Override
 	public void nuevoCategoriaEquipo(CategoriaEquiposRequestDTO dto) {
-		clienteweb.post().uri("/categoriaequipos").bodyValue(dto).retrieve().toBodilessEntity().block();
+		clienteweb.post().uri("/categorias-equipo").bodyValue(dto).retrieve().toBodilessEntity().block();
 	}
 
 	@Override
