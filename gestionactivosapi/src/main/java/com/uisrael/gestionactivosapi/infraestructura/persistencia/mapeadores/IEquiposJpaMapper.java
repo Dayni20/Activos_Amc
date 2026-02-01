@@ -3,10 +3,11 @@ package com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.uisrael.gestionactivosapi.dominio.entidades.CategoriaEquipos;
 import com.uisrael.gestionactivosapi.dominio.entidades.Equipos;
 import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
-
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CategoriaEquiposJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.EquiposJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.ProveedoresJpa;
@@ -15,14 +16,17 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.Proveedore
 public interface IEquiposJpaMapper {
 
 
-    @Mapping(source = "fkMarca", target = "fkMarcas")
-    @Mapping(source = "fkProveedor", target = "proveedor")
-    EquiposJpa toEntity(Equipos equipo);
+	@Mapping(source = "fkMarca", target = "fkMarcas")
+	@Mapping(source = "fkProveedor", target = "fkProveedor")
+	@Mapping(source = "fkCategoria", target = "fkCategoria")
+	EquiposJpa toEntity(Equipos equipo);
 
 
-    @Mapping(source = "fkMarcas", target = "fkMarca")
-    @Mapping(source = "proveedor", target = "fkProveedor")
-    Equipos toDomain(EquiposJpa entity);
+
+	@Mapping(source = "fkMarcas", target = "fkMarca")
+	@Mapping(source = "fkProveedor", target = "fkProveedor")
+	@Mapping(source = "fkCategoria", target = "fkCategoria")
+	Equipos toDomain(EquiposJpa entity);
 
 
 
@@ -45,6 +49,7 @@ public interface IEquiposJpaMapper {
         j.setIdProveedor(p.getIdProveedor());
         return j;
     }
+    
 
     default Proveedores map(ProveedoresJpa j) {
         if (j == null) return null;
@@ -56,6 +61,22 @@ public interface IEquiposJpaMapper {
             j.getTelefono(),
             j.getCorreo(),
             j.getDireccion(),
+            j.isEstado()
+        );
+    }
+    
+    default CategoriaEquiposJpa map(CategoriaEquipos c) {
+        if (c == null) return null;
+        CategoriaEquiposJpa j = new CategoriaEquiposJpa();
+        j.setIdCategoria(c.getIdCategoria());
+        return j;
+    }
+
+    default CategoriaEquipos map(CategoriaEquiposJpa j) {
+        if (j == null) return null;
+        return new CategoriaEquipos(
+            j.getIdCategoria(),
+            j.getNombre(),
             j.isEstado()
         );
     }

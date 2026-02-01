@@ -45,7 +45,7 @@ public class EquiposRepositorioImpl implements IEquiposRepositorio {
         if (equipo.getFkProveedor() != null) {
             ProveedoresJpa prov = new ProveedoresJpa();
             prov.setIdProveedor(equipo.getFkProveedor().getIdProveedor());
-            entity.setProveedor(prov);
+            entity.setFkProveedor(prov);
         }
 
         EquiposJpa guardado = jpaRepository.save(entity);
@@ -109,7 +109,7 @@ public class EquiposRepositorioImpl implements IEquiposRepositorio {
         if (equipo.getFkProveedor() != null) {
             ProveedoresJpa prov = new ProveedoresJpa();
             prov.setIdProveedor(equipo.getFkProveedor().getIdProveedor());
-            existente.setProveedor(prov);
+            existente.setFkProveedor(prov);
         }
 
         EquiposJpa guardado = jpaRepository.save(existente);

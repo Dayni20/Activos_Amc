@@ -102,5 +102,10 @@ public class EquiposJpa implements Serializable {
         
     @ManyToOne
     @JoinColumn(name = "id_proveedor", nullable = false)
-    private ProveedoresJpa proveedor;
+    private ProveedoresJpa fkProveedor;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private CategoriaEquiposJpa fkCategoria;
+
+
 }
