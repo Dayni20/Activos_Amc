@@ -53,12 +53,19 @@ public class DepartamentosControlador {
 		Departamentos actualizado = departamentoUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}
-	
+
 	@PutMapping("/estado/{id}")
 	public ResponseEntity<DepartamentosResponseDTO> actualizarEstado(@PathVariable int id,
-			@Valid @RequestBody DepartamentosRequestDTO request) {
+			@RequestBody java.util.Map<String, Boolean> body) {
 
-		Departamentos actualizadoEstado = departamentoUseCase.actualizarEstado(id, mapper.toDomain(request));
-		return ResponseEntity.ok(mapper.toResponseDto(actualizadoEstado));
+		boolean estado = Boolean.TRUE.equals(body.get("estado"));
+		Departamentos actualizado = departamentoUseCase.actualizarEstado(id, estado);
+		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<DepartamentosResponseDTO> obtenerPorId(@PathVariable int id) {
+		Departamentos departamento = departamentoUseCase.obtenerPorId(id);
+		return ResponseEntity.ok(mapper.toResponseDto(departamento));
 	}
 }

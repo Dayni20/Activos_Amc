@@ -14,6 +14,6 @@ public interface IDepartamentosUseCase {
 	
 	Departamentos actualizar(int id, Departamentos departamento);
 	
-	Departamentos actualizarEstado(int id, Departamentos departamento);
+	Departamentos actualizarEstado(int id, boolean estado);
 
 }

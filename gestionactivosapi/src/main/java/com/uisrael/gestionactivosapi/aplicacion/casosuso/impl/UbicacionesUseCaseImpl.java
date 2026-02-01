@@ -41,11 +41,14 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 	}
 
 	@Override
-	public Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion) {
-		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+	public Ubicaciones actualizarEstado(int id, boolean estado) {
 
-		Ubicaciones actualizado = new Ubicaciones(id, ubicacion.getNombre(), ubicacion.getAgencia(),
-				ubicacion.isEstado());
+		Ubicaciones actual = repositorio.buscarPorId(id)
+				.orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+
+		// ✅ Solo cambia el estado, mantiene nombre/agencia
+		Ubicaciones actualizado = new Ubicaciones(actual.getIdUbicacion(), // o id, según tu constructor
+				actual.getNombre(), actual.getAgencia(), estado);
 
 		return repositorio.actualizarEstado(id, actualizado);
 	}

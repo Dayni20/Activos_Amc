@@ -54,10 +54,18 @@ public class UbicacionesControlador {
 	}
 	
 	@PutMapping("/estado/{id}")
-	public ResponseEntity<UbicacionesResponseDTO> actualizarEstado(@PathVariable int id,
-			@Valid @RequestBody UbicacionesRequestDTO request) {
+	public ResponseEntity<UbicacionesResponseDTO> actualizarEstado(
+	        @PathVariable int id,
+	        @RequestBody java.util.Map<String, Boolean> body) {
 
-		Ubicaciones actualizadoEstado = ubicacionUseCase.actualizarEstado(id, mapper.toDomain(request));
-		return ResponseEntity.ok(mapper.toResponseDto(actualizadoEstado));
+	    boolean estado = Boolean.TRUE.equals(body.get("estado"));
+	    Ubicaciones actualizado = ubicacionUseCase.actualizarEstado(id, estado);
+	    return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<UbicacionesResponseDTO> obtenerPorId(@PathVariable int id) {
+	    Ubicaciones ubicacion = ubicacionUseCase.obtenerPorId(id);
+	    return ResponseEntity.ok(mapper.toResponseDto(ubicacion));
 	}
 }

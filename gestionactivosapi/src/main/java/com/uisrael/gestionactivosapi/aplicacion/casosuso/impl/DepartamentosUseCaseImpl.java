@@ -40,11 +40,14 @@ public class DepartamentosUseCaseImpl implements IDepartamentosUseCase {
 	}
 
 	@Override
-	public Departamentos actualizarEstado(int id, Departamentos departamento) {
-		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+	public Departamentos actualizarEstado(int id, boolean estado) {
 
-		Departamentos actualizado = new Departamentos(id, departamento.getNombre(), departamento.isEstado(),
-				departamento.getFkUbicacion());
+		Departamentos actual = repositorio.buscarPorId(id)
+				.orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+
+		// ✅ Solo cambia el estado, mantiene nombre/agencia
+		Departamentos actualizado = new Departamentos(actual.getIdDepartamento(), // o id, según tu constructor
+				actual.getNombre(), estado, actual.getFkUbicacion());
 
 		return repositorio.actualizarEstado(id, actualizado);
 	}
