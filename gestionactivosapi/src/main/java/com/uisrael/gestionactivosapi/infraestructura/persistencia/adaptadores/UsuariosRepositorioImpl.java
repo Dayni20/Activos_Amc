@@ -45,4 +45,9 @@ public class UsuariosRepositorioImpl implements IUsuariosRepositorio {
 		jpaRepository.save(entity);
 	}
 
+	@Override
+	public Optional<Usuarios> buscarPorCorreo(String correo) {
+		return jpaRepository.findByCorreo(correo).map(entityMapper::toDomain);
+	}
+
 }

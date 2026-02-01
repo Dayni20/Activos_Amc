@@ -32,7 +32,7 @@ public class Equipos implements Serializable {
     private final String observacionEquipo;
     private final boolean estado;
 
-    private DepartamentosJpa fkDepartamento;
+    private Departamentos fkDepartamento;
 
     // ✅ AGREGA ESTOS 3 (DOMINIO)
     private Marcas fkMarca;
@@ -61,7 +61,7 @@ public class Equipos implements Serializable {
             String estadoEquipo,
             String observacionEquipo,
             boolean estado,
-            DepartamentosJpa fkDepartamento,
+            Departamentos fkDepartamento,
             Marcas fkMarca,
             CategoriaEquipos fkCategoria,
             Proveedores fkProveedor
@@ -115,8 +115,8 @@ public class Equipos implements Serializable {
     public String getObservacionEquipo() { return observacionEquipo; }
     public boolean isEstado() { return estado; }
 
-    public DepartamentosJpa getFkDepartamento() { return fkDepartamento; }
-    public void setFkDepartamento(DepartamentosJpa fkDepartamento) { this.fkDepartamento = fkDepartamento; }
+    public Departamentos getFkDepartamento() { return fkDepartamento; }
+    public void setFkDepartamento(Departamentos fkDepartamento) { this.fkDepartamento = fkDepartamento; }
 
     // ✅ GETTERS/SETTERS NUEVOS
     public Marcas getFkMarca() { return fkMarca; }

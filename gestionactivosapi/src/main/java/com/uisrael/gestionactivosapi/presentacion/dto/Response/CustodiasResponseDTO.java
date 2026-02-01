@@ -10,9 +10,8 @@ public class CustodiasResponseDTO {
     private String observacion;
     private boolean estado;
 
-    // ✅ reutiliza tus Response DTO existentes
-    private EquiposResponseDTO fkEquipo;
-    private CustodiosResponseDTO fkCustodio;
+    private int idEquipo;
+    private int idCustodio;
 
     public int getIdCustodiaEquipo() { return idCustodiaEquipo; }
     public void setIdCustodiaEquipo(int idCustodiaEquipo) { this.idCustodiaEquipo = idCustodiaEquipo; }
@@ -29,9 +28,9 @@ public class CustodiasResponseDTO {
     public boolean isEstado() { return estado; }
     public void setEstado(boolean estado) { this.estado = estado; }
 
-    public EquiposResponseDTO getFkEquipo() { return fkEquipo; }
-    public void setFkEquipo(EquiposResponseDTO fkEquipo) { this.fkEquipo = fkEquipo; }
+    public int getIdEquipo() { return idEquipo; }
+    public void setIdEquipo(int idEquipo) { this.idEquipo = idEquipo; }
 
-    public CustodiosResponseDTO getFkCustodio() { return fkCustodio; }
-    public void setFkCustodio(CustodiosResponseDTO fkCustodio) { this.fkCustodio = fkCustodio; }
+    public int getIdCustodio() { return idCustodio; }
+    public void setIdCustodio(int idCustodio) { this.idCustodio = idCustodio; }
 }
