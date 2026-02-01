@@ -2,23 +2,29 @@ package com.uisrael.gestionactivosapi.aplicacion.casosuso.impl;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUsuariosUseCase;
 import com.uisrael.gestionactivosapi.dominio.entidades.Usuarios;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IUsuariosRepositorio;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IDepartamentosRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.DepartamentosJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.RolesJpa;
 
 public class UsuariosUseCaseImpl implements IUsuariosUseCase {
     
 	private final IUsuariosRepositorio repositorio;
 	private final IRolesRepositorio rolesRepositorio;
 	private final IDepartamentosRepositorio departamentosRepositorio;
+	private final PasswordEncoder passwordEncoder;
 
 	public UsuariosUseCaseImpl(IUsuariosRepositorio repositorio, IRolesRepositorio rolesRepositorio,
-			IDepartamentosRepositorio departamentosRepositorio) {
+			IDepartamentosRepositorio departamentosRepositorio, PasswordEncoder passwordEncoder) {
 		this.repositorio = repositorio;
 		this.rolesRepositorio = rolesRepositorio;
 		this.departamentosRepositorio = departamentosRepositorio;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -36,7 +42,21 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 			}
 		}
 
-		return repositorio.guardar(usuario);
+		String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
+		
+		RolesJpa rol = usuario.getFkRol();
+		DepartamentosJpa departamento = usuario.getFkDepartamento();
+		Usuarios usuarioConContrasenaEncriptada = new Usuarios(
+			usuario.getIdUsuario(),
+			usuario.getNombre(),
+			usuario.getCorreo(),
+			contrasenaEncriptada,
+			usuario.isEstado(),
+			departamento,
+			rol
+		);
+
+		return repositorio.guardar(usuarioConContrasenaEncriptada);
 	}
 
 	@Override
@@ -69,7 +89,21 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 			}
 		}
 
-		return repositorio.guardar(usuario);
+		String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
+		
+		RolesJpa rol = usuario.getFkRol();
+		DepartamentosJpa departamento = usuario.getFkDepartamento();
+		Usuarios usuarioConContrasenaEncriptada = new Usuarios(
+			usuario.getIdUsuario(),
+			usuario.getNombre(),
+			usuario.getCorreo(),
+			contrasenaEncriptada,
+			usuario.isEstado(),
+			departamento,
+			rol
+		);
+
+		return repositorio.guardar(usuarioConContrasenaEncriptada);
 	}
 
 }
