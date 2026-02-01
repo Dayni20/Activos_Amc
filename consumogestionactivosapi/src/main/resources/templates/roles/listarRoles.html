@@ -77,25 +77,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="single-item">
+                                        <tr class="single-item" th:each="rol : ${listarroles}">
                                             <td>
                                                 <div class="item-checkbox ms-1">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
-                                                            class="custom-control-input checkbox" id="checkBox_1">
-                                                        <label class="custom-control-label" for="checkBox_1"></label>
+                                                            class="custom-control-input checkbox" 
+                                                            th:id="'checkBox_' + ${rol.idRol}">
+                                                        <label class="custom-control-label" 
+                                                               th:for="'checkBox_' + ${rol.idRol}"></label>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><a href="javascript:void(0);" class="fw-bold">#1</a></td>
-                                            <td>ADMIN</td>
-                                            <td>Rol administrador</td>
+                                            <td><a href="javascript:void(0);" class="fw-bold" th:text="'#' + ${rol.idRol}"></a></td>
+                                            <td th:text="${rol.nombre}"></td>
+                                            <td>-</td>
                                             <td>
-                                                <div class="badge bg-soft-success text-success">Activo</div>
+                                                <div class="badge bg-soft-success text-success" 
+                                                     th:text="${rol.estado ? 'Activo' : 'Inactivo'}">
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-                                                    <a th:href="@{/roles/editar-rol}"
+                                                    <a th:href="@{/roles/editar-rol/{id}(id=${rol.idRol})}"
                                                         class="avatar-text avatar-md"> <i
                                                         class="feather feather-edit"></i>
                                                     </a>

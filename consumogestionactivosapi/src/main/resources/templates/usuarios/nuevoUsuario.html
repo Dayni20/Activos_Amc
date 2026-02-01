@@ -10,30 +10,13 @@
 
 <body>
     <div layout:fragment="contenidopaginas">
+    
+        <form th:action="@{/usuarios}" th:object="${nuevousuario}" method="post">
+        
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Usuarios</h5>
-                </div>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/usuarios}">Home</a></li>
-                    <li class="breadcrumb-item">Crear</li>
-                </ul>
-            </div>
-            <div class="page-header-right ms-auto">
-                <div class="page-header-right-items">
-                    <div
-                        class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <a href="javascript:void(0);"
-                            class="btn btn-primary successAlertMessage"> <i
-                            class="feather-save me-2"></i> <span>Guardar</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="d-md-none d-flex align-items-center">
-                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
-                        <i class="feather-align-right fs-20"></i>
-                    </a>
+                    <h5 class="m-b-10">CREAR USUARIO</h5>
                 </div>
             </div>
         </div>
@@ -41,39 +24,73 @@
         <div class="main-content">
             <div class="card stretch stretch-full">
                 <div class="card-body">
+                
+                    <input type="hidden" th:field="*{idUsuario}" />
+                    
                     <div class="mb-4">
-                        <label class="form-label">Nombre <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Nombre completo">
+                        <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" 
+                               placeholder="Ingrese el nombre completo"
+                               th:field="*{nombre}"
+                               required
+                               minlength="3"
+                               maxlength="100">
                     </div>
+                    
                     <div class="mb-4">
-                        <label class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" placeholder="usuario@dominio.com">
+                        <label class="form-label">CORREO <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" 
+                               placeholder="Ingrese el correo electrónico"
+                               th:field="*{correo}"
+                               required>
                     </div>
+                    
                     <div class="mb-4">
-                        <label class="form-label">Rol </label> <select
-                            class="form-control" data-select2-selector="rol">
-                            <option>ADMIN</option>
-                            <option>USER</option>
+                        <label class="form-label">CONTRASEÑA <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" 
+                               placeholder="Ingrese la contraseña"
+                               th:field="*{contrasena}"
+                               required
+                               minlength="8">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">ROL <span class="text-danger">*</span></label>
+                        <select class="form-control" th:field="*{fkRol}" required>
+                            <option value="">Seleccione un rol</option>
+                            <option th:each="rol : ${roles}" 
+                                    th:value="${rol.idRol}" 
+                                    th:text="${rol.nombre}"></option>
                         </select>
                     </div>
+                    
                     <div class="mb-4">
-                        <label class="form-label">Departamento </label> <select
-                            class="form-control" data-select2-selector="departamento">
-                            <option>Sistemas</option>
-                            <option>Recursos Humanos</option>
-                        </select>
-                    </div>
-                    <div class="row mb-4">
                         <div class="form-check form-switch form-switch-sm ps-5">
                             <input class="form-check-input c-pointer" type="checkbox"
-                                id="estadoSwitch"> <label
-                                class="form-check-label fw-500 text-dark c-pointer"
-                                for="estadoSwitch">Activo</label>
+                                   id="estadoSwitch"
+                                   th:field="*{estado}">
+                            <label class="form-check-label fw-500 text-dark c-pointer"
+                                   for="estadoSwitch">ACTIVO</label>
                         </div>
                     </div>
+                    
+                    <div class="d-flex justify-content-end mt-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="feather-save me-2"></i>
+                                Guardar
+                            </button>
+                            <a th:href="@{/usuarios}" class="btn btn-danger">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
+        
+        </form>
     </div>
 
 </body>
