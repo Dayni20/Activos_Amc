@@ -53,8 +53,10 @@ public class CustodiasControlador {
     }
 
     @PutMapping("/estado/{id}")
-    public ResponseEntity<CustodiasResponseDTO> actualizarEstado(@PathVariable int id,
-            @Valid @RequestBody CustodiasRequestDTO request) {
+    public ResponseEntity<CustodiasResponseDTO> actualizarEstado(
+        @PathVariable int id,
+        @RequestBody CustodiasRequestDTO request
+    ){
 
         return ResponseEntity.ok(
             mapper.toResponseDto(

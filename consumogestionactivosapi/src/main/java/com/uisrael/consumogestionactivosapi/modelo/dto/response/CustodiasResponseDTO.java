@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CustodiasResponseDTO {
-
     private int idCustodiaEquipo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
