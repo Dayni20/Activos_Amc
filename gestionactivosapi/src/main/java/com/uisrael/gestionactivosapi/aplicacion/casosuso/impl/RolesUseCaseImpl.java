@@ -16,9 +16,18 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 
 	@Override
 	public Roles crear(Roles rol) {
-		if (repositorio.buscarPorNombre(rol.getNombre()).isPresent()) {
-			throw new IllegalArgumentException("Ya existe un rol con el nombre: " + rol.getNombre());
+		// Validación case-insensitive: convierte a minúsculas para comparar
+		String nombreNormalizado = rol.getNombre().trim().toLowerCase();
+		
+		// Busca si existe algún rol con el mismo nombre (ignorando mayúsculas/minúsculas)
+		List<Roles> todosLosRoles = repositorio.listarTodos();
+		boolean existe = todosLosRoles.stream()
+			.anyMatch(r -> r.getNombre().trim().toLowerCase().equals(nombreNormalizado));
+		
+		if (existe) {
+			throw new IllegalArgumentException("Ya existe un rol con el nombre '" + rol.getNombre() + "' (sin importar mayúsculas/minúsculas)");
 		}
+		
 		return repositorio.guardar(rol);
 	}
 
@@ -38,11 +47,17 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 			throw new RuntimeException("Rol no encontrado con ID: " + rol.getIdRol());
 		}
 		
-		repositorio.buscarPorNombre(rol.getNombre()).ifPresent(rolExistente -> {
-			if (rolExistente.getIdRol() != rol.getIdRol()) {
-				throw new IllegalArgumentException("Ya existe otro rol con el nombre: " + rol.getNombre());
-			}
-		});
+		// Validación case-insensitive para actualización
+		String nombreNormalizado = rol.getNombre().trim().toLowerCase();
+		List<Roles> todosLosRoles = repositorio.listarTodos();
+		
+		boolean existeOtro = todosLosRoles.stream()
+			.anyMatch(r -> r.getIdRol() != rol.getIdRol() && 
+			             r.getNombre().trim().toLowerCase().equals(nombreNormalizado));
+		
+		if (existeOtro) {
+			throw new IllegalArgumentException("Ya existe otro rol con el nombre '" + rol.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+		}
 		
 		return repositorio.guardar(rol);
 	}

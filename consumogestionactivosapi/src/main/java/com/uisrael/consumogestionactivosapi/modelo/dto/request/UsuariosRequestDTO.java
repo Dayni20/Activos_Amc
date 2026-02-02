@@ -9,6 +9,6 @@ public class UsuariosRequestDTO {
 	private String correo;
 	private String contrasena;
 	private boolean estado;
-	private Integer fkDepartamento;
-	private Integer fkRol;
+	private DepartamentosRequestDTO fkDepartamento;
+	private RolesRequestDTO fkRol;
 }

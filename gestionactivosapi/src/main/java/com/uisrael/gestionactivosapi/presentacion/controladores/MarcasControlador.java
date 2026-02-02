@@ -38,6 +38,9 @@ public class MarcasControlador {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public MarcasResponseDTO crear(@Valid @RequestBody MarcasRequestDTO request) {
+        if (request.getNombre() == null || request.getNombre().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de la marca es obligatorio");
+        }
         return mapper.toResponseDto(marcasUseCase.crear(mapper.toDomain(request)));
     }
 
@@ -49,7 +52,9 @@ public class MarcasControlador {
     @PutMapping("/{id}")
 	public ResponseEntity<MarcasResponseDTO> actualizar(@PathVariable int id,
 			@Valid @RequestBody MarcasRequestDTO request) {
-
+		if (request.getNombre() == null || request.getNombre().trim().isEmpty()) {
+			throw new IllegalArgumentException("El nombre de la marca es obligatorio");
+		}
 		Marcas actualizado = marcasUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}

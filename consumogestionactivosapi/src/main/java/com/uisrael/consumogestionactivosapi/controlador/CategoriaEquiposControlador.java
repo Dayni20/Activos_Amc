@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,13 +36,31 @@ public class CategoriaEquiposControlador {
 	}
 	
 	@PostMapping
-	public String guardarCategoria(@ModelAttribute CategoriaEquiposRequestDTO nuevacategoria) {
-		servicioCategoriaEquipos.nuevoCategoriaEquipo(nuevacategoria);
-		return "redirect:/categorias-equipo"; 
+	public String guardarCategoria(@ModelAttribute CategoriaEquiposRequestDTO nuevacategoria, Model model) {
+		try {
+			if (nuevacategoria.getIdCategoria() > 0) {
+				servicioCategoriaEquipos.actualizarCategoriaEquipo(nuevacategoria.getIdCategoria(), nuevacategoria);
+			} else {
+				servicioCategoriaEquipos.nuevoCategoriaEquipo(nuevacategoria);
+			}
+			return "redirect:/categorias-equipo";
+		} catch (RuntimeException e) {
+			model.addAttribute("errorNombre", e.getMessage());
+			model.addAttribute("nuevacategoria", nuevacategoria);
+			return nuevacategoria.getIdCategoria() > 0 ? "categorias_equipo/editarCategoria" : "categorias_equipo/nuevaCategoria";
+		}
 	}
 	
-	@GetMapping("/editar-categoria")
-	public String modificarCategoria() {
+	@GetMapping("/editar-categoria/{id}")
+	public String editarCategoria(@PathVariable Integer id, Model model) {
+		CategoriaEquiposResponseDTO categoria = servicioCategoriaEquipos.obtenerCategoriaEquipo(id);
+		model.addAttribute("nuevacategoria", categoria);
 		return "categorias_equipo/editarCategoria";
+	}
+	
+	@PostMapping("/eliminar/{id}")
+	public String eliminarCategoria(@PathVariable Integer id) {
+		servicioCategoriaEquipos.eliminarCategoriaEquipo(id);
+		return "redirect:/categorias-equipo";
 	}
 }

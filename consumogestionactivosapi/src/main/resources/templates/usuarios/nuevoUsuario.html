@@ -27,6 +27,9 @@
                 
                     <input type="hidden" th:field="*{idUsuario}" />
                     
+                    <!-- Alerta de error desde el backend -->
+                    <div class="alert alert-danger" role="alert" th:if="${errorGeneral}" th:text="${errorGeneral}"></div>
+                    
                     <div class="mb-4">
                         <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" 
@@ -56,11 +59,21 @@
                     
                     <div class="mb-4">
                         <label class="form-label">ROL <span class="text-danger">*</span></label>
-                        <select class="form-control" th:field="*{fkRol}" required>
+                        <select class="form-control" name="fkRolId" required>
                             <option value="">Seleccione un rol</option>
                             <option th:each="rol : ${roles}" 
                                     th:value="${rol.idRol}" 
                                     th:text="${rol.nombre}"></option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">DEPARTAMENTO <span class="text-danger">*</span></label>
+                        <select class="form-control" name="fkDepartamentoId" required>
+                            <option value="">Seleccione un departamento</option>
+                            <option th:each="departamento : ${departamentos}" 
+                                    th:value="${departamento.idDepartamento}" 
+                                    th:text="${departamento.nombre}"></option>
                         </select>
                     </div>
                     

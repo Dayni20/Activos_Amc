@@ -95,7 +95,7 @@
                                             <td th:text="${usuario.nombre}"></td>
                                             <td th:text="${usuario.correo}"></td>
                                             <td th:text="${usuario.fkRol != null ? usuario.fkRol.nombre : '-'}"></td>
-                                            <td>-</td>
+                                            <td th:text="${usuario.fkDepartamento != null ? usuario.fkDepartamento.nombre : '-'}"></td>
                                             <td>
                                                 <div class="badge bg-soft-success text-success" 
                                                      th:text="${usuario.estado ? 'Activo' : 'Inactivo'}">

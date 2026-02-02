@@ -16,9 +16,18 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public CategoriaEquipos crear(CategoriaEquipos categoriaEquipo) {
-		if (repositorio.buscarPorNombre(categoriaEquipo.getNombre()).isPresent()) {
-			throw new IllegalArgumentException("Ya existe una categoría con el nombre: " + categoriaEquipo.getNombre());
+		// Validación case-insensitive: convierte a minúsculas para comparar
+		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
+		
+		// Busca si existe alguna categoría con el mismo nombre (ignorando mayúsculas/minúsculas)
+		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
+		boolean existe = todasLasCategorias.stream()
+			.anyMatch(c -> c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
+		
+		if (existe) {
+			throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
 		}
+		
 		return repositorio.guardar(categoriaEquipo);
 	}
 
@@ -38,11 +47,17 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			throw new RuntimeException("Categoría no encontrada con ID: " + categoriaEquipo.getIdCategoria());
 		}
 		
-		repositorio.buscarPorNombre(categoriaEquipo.getNombre()).ifPresent(categoriaExistente -> {
-			if (categoriaExistente.getIdCategoria() != categoriaEquipo.getIdCategoria()) {
-				throw new IllegalArgumentException("Ya existe otra categoría con el nombre: " + categoriaEquipo.getNombre());
-			}
-		});
+		// Validación case-insensitive para actualización
+		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
+		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
+		
+		boolean existeOtra = todasLasCategorias.stream()
+			.anyMatch(c -> c.getIdCategoria() != categoriaEquipo.getIdCategoria() && 
+			             c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
+		
+		if (existeOtra) {
+			throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+		}
 		
 		return repositorio.guardar(categoriaEquipo);
 	}
