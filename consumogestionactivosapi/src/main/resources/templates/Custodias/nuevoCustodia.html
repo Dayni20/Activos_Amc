@@ -4,91 +4,128 @@
 	layout:decorate="~{plantilla/plantillaui}">
 
 <head>
-<meta charset="utf-8">
-<title>Custodias</title>
+	<meta charset="utf-8">
+	<title>Custodias</title>
 </head>
 
 <body>
 	<div layout:fragment="contenidopaginas">
-		<div class="page-header">
-			<div class="page-header-left d-flex align-items-center">
-				<div class="page-header-title">
-					<h5 class="m-b-10">Custodias</h5>
-				</div>
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/custodias}">Home</a></li>
-					<li class="breadcrumb-item">Crear</li>
-				</ul>
-			</div>
 
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="javascript:void(0);" class="btn btn-primary successAlertMessage">
-							<i class="feather-save me-2"></i> <span>Guardar</span>
+		<form th:action="@{/custodias}" th:object="${custodia}" method="post">
+
+			<div class="page-header">
+				<div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Custodias</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a th:href="@{/custodias}">Home</a></li>
+						<li class="breadcrumb-item">Crear</li>
+					</ul>
+				</div>
+
+				<div class="page-header-right ms-auto">
+					<div class="page-header-right-items">
+						<div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<button type="submit" class="btn btn-primary">
+								<i class="feather-save me-2"></i>
+								<span>Guardar</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="d-md-none d-flex align-items-center">
+						<a href="javascript:void(0)" class="page-header-right-open-toggle">
+							<i class="feather-align-right fs-20"></i>
 						</a>
 					</div>
 				</div>
+			</div>
 
-				<div class="d-md-none d-flex align-items-center">
-					<a href="javascript:void(0)" class="page-header-right-open-toggle">
-						<i class="feather-align-right fs-20"></i>
-					</a>
+			<div class="main-content">
+				<div class="card stretch stretch-full">
+					<div class="card-body">
+
+						<input type="hidden" th:field="*{idCustodiaEquipo}">
+
+						<!-- Equipo -->
+						<div class="mb-4">
+							<label class="form-label">Equipo <span class="text-danger">*</span></label>
+
+							<select class="form-control" th:field="*{fkEquipo.idEquipo}">
+								<option value="0">Seleccione un equipo</option>
+								<option th:each="e : ${listaequipos}"
+									th:value="${e.idEquipo}"
+									th:text="${e.codigoSap + ' - ' + e.tipoEquipo + ' - ' + e.modelo}">
+								</option>
+							</select>
+
+							<div class="text-danger small" th:if="${errorSeleccionEquipo}">
+								<span th:text="${errorSeleccionEquipo}"></span>
+							</div>
+						</div>
+
+						<!-- Custodio -->
+						<div class="mb-4">
+							<label class="form-label">Custodio <span class="text-danger">*</span></label>
+
+							<select class="form-control" th:field="*{fkCustodio.idCustodio}">
+								<option value="0">Seleccione un custodio</option>
+								<option th:each="c : ${listacustodios}"
+									th:value="${c.idCustodio}"
+									th:text="${c.nombre + ' - ' + c.cedula}">
+								</option>
+							</select>
+
+							<div class="text-danger small" th:if="${errorSeleccionCustodio}">
+								<span th:text="${errorSeleccionCustodio}"></span>
+							</div>
+						</div>
+
+						<!-- Fechas -->
+						<div class="row">
+							<div class="col-md-6 mb-4">
+								<label class="form-label">Fecha Inicio <span class="text-danger">*</span></label>
+								<input type="date" class="form-control" th:field="*{fechaInicio}">
+								<div class="text-danger small" th:if="${errorFechaInicio}">
+									<span th:text="${errorFechaInicio}"></span>
+								</div>
+							</div>
+
+							<div class="col-md-6 mb-4">
+								<label class="form-label">Fecha Fin</label>
+								<input type="date" class="form-control" th:field="*{fechaFin}">
+							</div>
+						</div>
+
+						<!-- Observación -->
+						<div class="mb-4">
+							<label class="form-label">Observación <span class="text-danger">*</span></label>
+							<textarea class="form-control" rows="3" th:field="*{observacion}"
+								placeholder="Observación"></textarea>
+
+							<div class="text-danger small" th:if="${errorObservacion}">
+								<span th:text="${errorObservacion}"></span>
+							</div>
+						</div>
+
+						<!-- Estado -->
+						<div class="row mb-4">
+							<div class="form-check form-switch form-switch-sm ps-5">
+								<input class="form-check-input c-pointer" type="checkbox"
+									id="estadoSwitch" th:field="*{estado}">
+								<label class="form-check-label fw-500 text-dark c-pointer"
+									for="estadoSwitch">Activo</label>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="main-content">
-			<div class="card stretch stretch-full">
-				<div class="card-body">
+		</form>
 
-					<div class="mb-4">
-						<label class="form-label">Equipo <span class="text-danger">*</span></label>
-						<select class="form-control" data-select2-selector="status">
-							<option value="1" data-bg="bg-teal">EQ-001 - Laptop Dell</option>
-							<option value="2" data-bg="bg-secondary">EQ-002 - Desktop HP</option>
-							<option value="3" data-bg="bg-primary">EQ-003 - Impresora Epson</option>
-						</select>
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Custodio <span class="text-danger">*</span></label>
-						<select class="form-control" data-select2-selector="status">
-							<option value="10" data-bg="bg-teal">CU-010 - Juan Pérez</option>
-							<option value="11" data-bg="bg-secondary">CU-011 - María López</option>
-							<option value="12" data-bg="bg-primary">CU-012 - Carlos Ruiz</option>
-						</select>
-					</div>
-
-					<div class="row">
-						<div class="col-lg-6 mb-4">
-							<label class="form-label">Fecha Inicio <span class="text-danger">*</span></label>
-							<input type="date" class="form-control">
-						</div>
-
-						<div class="col-lg-6 mb-4">
-							<label class="form-label">Fecha Fin</label>
-							<input type="date" class="form-control">
-						</div>
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Observación</label>
-						<input type="text" class="form-control" placeholder="Detalle de la asignación">
-					</div>
-
-					<div class="row mb-4">
-						<div class="form-check form-switch form-switch-sm ps-5">
-							<input class="form-check-input c-pointer" type="checkbox" id="estadoCustodia" checked>
-							<label class="form-check-label fw-500 text-dark c-pointer" for="estadoCustodia">Activo</label>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
 	</div>
-
 </body>
 
 </html>
