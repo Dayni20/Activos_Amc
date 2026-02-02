@@ -10,7 +10,7 @@
 <body>
 	<div layout:fragment="contenidopaginas">
 
-		<!-- HEADER -->
+		
 		<div class="page-header">
 			<div class="page-header-left d-flex align-items-center">
 				<div class="page-header-title">
@@ -128,14 +128,14 @@
 											<td>
 												<div class="hstack gap-2 justify-content-end">
 
-													<!-- ✅ BOTÓN EDITAR -->
+													
 													<a
 														th:href="@{/equipos/editar-equipo/{id}(id=${equipo.idEquipo})}"
 														class="avatar-text avatar-md" title="Editar"> <i
 														class="feather feather-edit"></i>
 													</a>
 
-													<!-- ✅ BOTÓN ACTIVAR / DESACTIVAR (ABRE MODAL) -->
+											
 													<a href="javascript:void(0)" class="avatar-text avatar-md"
 														title="Activar / Desactivar" data-bs-toggle="modal"
 														data-bs-target="#modalToggleEquipo"
@@ -158,7 +158,7 @@
 			</div>
 		</div>
 
-		<!-- ✅ MODAL CONFIRMACIÓN -->
+	
 		<div class="modal fade" id="modalToggleEquipo" tabindex="-1"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -176,7 +176,7 @@
 						<button type="button" class="btn btn-light"
 							data-bs-dismiss="modal">No</button>
 
-						<!-- ✅ FORM SIN ACTION FIJO (lo setea JS según estado) -->
+						
 						<form id="formEstadoEquipo" method="post">
 							<input type="hidden" name="idEquipo" id="idEquipoToggle">
 							<button type="submit" class="btn" id="btnToggle">Sí</button>
@@ -211,13 +211,13 @@
 										.getElementById('btnToggle');
 
 								if (estado) {
-									// Activo => Desactivar
+									
 									form.action = '/equipos/eliminar-equipo';
 									texto.innerText = "¿Está seguro de DESACTIVAR este equipo?";
 									btn.innerText = "Sí, desactivar";
 									btn.className = "btn btn-danger";
 								} else {
-									// Inactivo => Activar
+								
 									form.action = '/equipos/activar-equipo';
 									texto.innerText = "¿Está seguro de ACTIVAR este equipo?";
 									btn.innerText = "Sí, activar";
@@ -225,7 +225,7 @@
 								}
 							});
 
-			// ✅ por si el modal queda dentro del layout y no abre bien
+		
 			document.addEventListener("DOMContentLoaded", function() {
 				const modal = document.getElementById("modalToggleEquipo");
 				if (modal && modal.parentElement !== document.body) {

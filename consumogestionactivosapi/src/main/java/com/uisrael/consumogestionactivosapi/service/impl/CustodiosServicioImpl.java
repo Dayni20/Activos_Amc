@@ -50,14 +50,14 @@ public class CustodiosServicioImpl implements ICustodiosServicio {
 	@Override
 	public void actualizarEstado(Integer idCustodio, boolean estado) {
 
-		// 1) Traer datos actuales (para no violar @NotBlank de la API)
+
 		CustodiosResponseDTO actual = obtenerPorId(idCustodio);
 
 		if (actual == null) {
 			throw new RuntimeException("No existe el custodio con id: " + idCustodio);
 		}
 
-		// 2) Armar RequestDTO completo, cambiando solo estado
+	
 		CustodiosRequestDTO body = new CustodiosRequestDTO();
 		body.setIdCustodio(actual.getIdCustodio());
 		body.setNombre(actual.getNombre());
@@ -66,7 +66,7 @@ public class CustodiosServicioImpl implements ICustodiosServicio {
 		body.setTelefono(actual.getTelefono());
 		body.setEstado(estado);
 
-		// 3) PUT /estado/{id} con TODO el body
+		
 		webClient.put().uri("/custodios/estado/{id}", idCustodio).contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(body).retrieve().bodyToMono(Void.class).block();
 	}

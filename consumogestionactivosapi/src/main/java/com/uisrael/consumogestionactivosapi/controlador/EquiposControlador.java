@@ -42,9 +42,7 @@ public class EquiposControlador {
     @Autowired
     private ICategoriaEquiposServicio servicioCategoriaEquipos;
 
-    // =========================
-    // LISTAR
-    // =========================
+ 
     @GetMapping
     public String listarEquipos(Model model) {
         List<EquiposResponseDTO> contenidoBD = servicioEquipos.listarEquipos();
@@ -53,16 +51,14 @@ public class EquiposControlador {
         return "Equipos/listarEquipos";
     }
 
-    // =========================
-    // FORM NUEVO
-    // =========================
+
     @GetMapping("/nuevo-equipo")
     public String nuevoEquipo(Model model) {
 
         EquiposRequestDTO equipo = new EquiposRequestDTO();
         equipo.setEstado(true);
 
-        // 🔒 Objetos anidados para que funcione th:field="*{fkX.idX}"
+     
         equipo.setFkDepartamento(new DepartamentosRequestDTO());
         equipo.getFkDepartamento().setIdDepartamento(0);
 
@@ -82,13 +78,11 @@ public class EquiposControlador {
         return "Equipos/nuevoEquipo";
     }
 
-    // =========================
-    // GUARDAR (CREAR / EDITAR)
-    // =========================
+
     @PostMapping
     public String guardarEquipo(@ModelAttribute EquiposRequestDTO equipo, Model model) {
 
-        // 🔒 asegurar objetos anidados para evitar null pointer
+     
         if (equipo.getFkDepartamento() == null) {
             equipo.setFkDepartamento(new DepartamentosRequestDTO());
             equipo.getFkDepartamento().setIdDepartamento(0);
@@ -108,9 +102,7 @@ public class EquiposControlador {
 
         boolean hayErrores = false;
 
-        // =========================
-        // VALIDACIONES (estilo Departamentos)
-        // =========================
+      
         if (equipo.getTipoEquipo() == null || equipo.getTipoEquipo().trim().isEmpty()) {
             model.addAttribute("errorTipoEquipo", "El tipo de equipo es obligatorio");
             hayErrores = true;
@@ -126,7 +118,7 @@ public class EquiposControlador {
             hayErrores = true;
         }
 
-        // combos obligatorios
+        
         if (equipo.getFkDepartamento().getIdDepartamento() <= 0) {
             model.addAttribute("errorDepartamento", "Debe seleccionar un departamento");
             hayErrores = true;
@@ -144,9 +136,7 @@ public class EquiposControlador {
             hayErrores = true;
         }
 
-        // =========================
-        // SI HAY ERRORES => VOLVER AL FORM
-        // =========================
+        
         if (hayErrores) {
             int idDep = equipo.getFkDepartamento().getIdDepartamento();
             int idMarca = equipo.getFkMarca().getIdMarca();
@@ -158,9 +148,7 @@ public class EquiposControlador {
             return "Equipos/nuevoEquipo"; // solo nuevo (si luego haces editar, se ajusta)
         }
 
-        // =========================
-        // GUARDAR
-        // =========================
+   
         if (equipo.getIdEquipo() > 0) {
             servicioEquipos.actualizarEquipo(equipo.getIdEquipo(), equipo);
         } else {
@@ -170,9 +158,7 @@ public class EquiposControlador {
         return "redirect:/equipos";
     }
 
-    // =========================
-    // ELIMINAR LÓGICO
-    // =========================
+
     @PostMapping("/eliminar-equipo")
     public String eliminarLogico(@RequestParam Integer idEquipo) {
         servicioEquipos.actualizarEstado(idEquipo, false);
@@ -185,9 +171,7 @@ public class EquiposControlador {
         return "redirect:/equipos";
     }
 
-    // =========================
-    // CARGAR COMBOS (filtra activos pero mantiene seleccionado)
-    // =========================
+
     private void cargarCombos(Model model, int idDepSel, int idMarcaSel, int idProvSel, int idCatSel) {
 
         model.addAttribute("listadepartamentos",
@@ -197,7 +181,7 @@ public class EquiposControlador {
         );
 
         model.addAttribute("listamarcas",
-            servicioMarcas.listarMarca().stream() // ✅ tu método real
+            servicioMarcas.listarMarca().stream() 
                 .filter(m -> m.isEstado() || m.getIdMarca() == idMarcaSel)
                 .collect(Collectors.toList())
         );

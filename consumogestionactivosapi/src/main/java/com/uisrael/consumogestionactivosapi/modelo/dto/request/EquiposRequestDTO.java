@@ -39,7 +39,7 @@ public class EquiposRequestDTO {
 
     private boolean estado;
 
-    // FKs (solo id)
+
     private DepartamentosRequestDTO fkDepartamento;
     private MarcasRequestDTO fkMarca;
     private CategoriaEquiposRequestDTO fkCategoria;

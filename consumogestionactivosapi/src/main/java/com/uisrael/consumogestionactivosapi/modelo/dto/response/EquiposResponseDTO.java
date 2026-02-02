@@ -39,7 +39,7 @@ public class EquiposResponseDTO {
 
     private boolean estado;
 
-    // FKs (para mostrar nombres)
+
    private DepartamentosResponseDTO fkDepartamento;
     private MarcasResponseDTO fkMarca;
     private CategoriaEquiposResponseDTO fkCategoria;

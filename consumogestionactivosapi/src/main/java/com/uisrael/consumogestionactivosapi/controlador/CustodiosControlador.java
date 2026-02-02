@@ -19,9 +19,7 @@ public class CustodiosControlador {
 	@Autowired
 	private ICustodiosServicio servicioCustodios;
 
-	// =========================
-	// LISTAR
-	// =========================
+
 	@GetMapping
 	public String listar(Model model) {
 		List<CustodiosResponseDTO> lista = servicioCustodios.listarCustodios();
@@ -30,9 +28,7 @@ public class CustodiosControlador {
 		return "Custodios/listarCustodios";
 	}
 
-	// =========================
-	// FORM NUEVO
-	// =========================
+
 	@GetMapping("/nuevo-custodio")
 	public String nuevo(Model model) {
 		CustodiosRequestDTO dto = new CustodiosRequestDTO();
@@ -41,9 +37,7 @@ public class CustodiosControlador {
 		return "Custodios/nuevoCustodio";
 	}
 
-	// =========================
-	// GUARDAR (CREAR / EDITAR)
-	// =========================
+
 	@PostMapping
 	public String guardar(@ModelAttribute CustodiosRequestDTO custodio, Model model) {
 
@@ -64,7 +58,7 @@ public class CustodiosControlador {
 			return "Custodios/nuevoCustodio";
 		}
 
-		// crear / editar
+		
 		if (custodio.getIdCustodio() > 0) {
 			servicioCustodios.actualizarCustodio(custodio.getIdCustodio(), custodio);
 		} else {
@@ -74,9 +68,7 @@ public class CustodiosControlador {
 		return "redirect:/custodios";
 	}
 
-	// =========================
-	// EDITAR (GET) - si lo tienes
-	// =========================
+
 	@GetMapping("/editar-custodio/{id}")
 	public String editar(@PathVariable Integer id, Model model) {
 		CustodiosResponseDTO dto = servicioCustodios.obtenerPorId(id);
@@ -93,20 +85,16 @@ public class CustodiosControlador {
 		return "Custodios/editarCustodio";
 	}
 
-	// =========================
-	// TOGGLE (ACTIVAR / DESACTIVAR) - PARA MODAL
-	// =========================
+
 	@PostMapping("/toggle-custodio")
 	public String toggle(@RequestParam Integer idCustodio, @RequestParam boolean estado) {
 
-		// estado viene del modal (true/false)
+	
 		servicioCustodios.actualizarEstado(idCustodio, estado);
 		return "redirect:/custodios";
 	}
 
-	// =========================
-	// (Si quieres mantener rutas separadas)
-	// =========================
+
 	@PostMapping("/eliminar-custodio")
 	public String desactivar(@RequestParam Integer idCustodio) {
 		servicioCustodios.actualizarEstado(idCustodio, false);

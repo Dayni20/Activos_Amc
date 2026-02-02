@@ -46,7 +46,7 @@ public class CustodiasServicioImpl implements ICustodiasServicio {
 		CustodiasRequestDTO dto = new CustodiasRequestDTO();
 		dto.setEstado(estado);
 
-		// ⚠️ tu API backend debe permitir actualizar solo con estado
+	
 		clienteWeb.put().uri("/custodias/estado/{id}", id).bodyValue(dto).retrieve().toBodilessEntity().block();
 	}
 }

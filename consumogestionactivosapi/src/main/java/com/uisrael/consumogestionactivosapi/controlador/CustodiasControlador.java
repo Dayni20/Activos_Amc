@@ -29,7 +29,7 @@ public class CustodiasControlador {
     @Autowired
     private ICustodiosServicio servicioCustodios;
 
-    // LISTAR
+  
     @GetMapping
     public String listarCustodias(Model model) {
         List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias();
@@ -38,14 +38,14 @@ public class CustodiasControlador {
         return "custodias/listarCustodias";
     }
 
-    // NUEVO
+    
     @GetMapping("/nueva-custodia")
     public String nuevaCustodia(Model model) {
 
         CustodiasRequestDTO custodia = new CustodiasRequestDTO();
         custodia.setEstado(true);
 
-        // ✅ IMPORTANTE: objetos anidados para que th:field funcione
+
         custodia.setFkEquipo(new EquiposRequestDTO());
         custodia.getFkEquipo().setIdEquipo(0);
 
@@ -67,7 +67,7 @@ public class CustodiasControlador {
         return "custodias/nuevocustodia";
     }
 
-    // EDITAR (opcional pero igual que tu compañero)
+
     @GetMapping("/editar-custodia/{id}")
     public String editarCustodia(@PathVariable Integer id, Model model) {
 
@@ -91,41 +91,41 @@ public class CustodiasControlador {
         return "custodias/editarCustodia";
     }
 
-    // GUARDAR (crea / actualiza)
+
     @PostMapping
     public String guardarCustodia(@ModelAttribute CustodiasRequestDTO custodia, Model model) {
 
-        // 🔒 asegura objetos anidados
+ 
         if (custodia.getFkEquipo() == null) custodia.setFkEquipo(new EquiposRequestDTO());
         if (custodia.getFkCustodio() == null) custodia.setFkCustodio(new CustodiosRequestDTO());
 
         boolean hayErrores = false;
 
-        // 1) Fecha inicio obligatoria
+  
         if (custodia.getFechaInicio() == null) {
             model.addAttribute("errorFechaInicio", "La fecha de inicio es obligatoria");
             hayErrores = true;
         }
 
-        // 2) Observación obligatoria
+      
         if (custodia.getObservacion() == null || custodia.getObservacion().trim().isEmpty()) {
             model.addAttribute("errorObservacion", "La observación es obligatoria");
             hayErrores = true;
         }
 
-        // 3) Equipo obligatorio
+    
         if (custodia.getFkEquipo().getIdEquipo() <= 0) {
             model.addAttribute("errorSeleccionEquipo", "Debe seleccionar un equipo");
             hayErrores = true;
         }
 
-        // 4) Custodio obligatorio
+    
         if (custodia.getFkCustodio().getIdCustodio() <= 0) {
             model.addAttribute("errorSeleccionCustodio", "Debe seleccionar un custodio");
             hayErrores = true;
         }
 
-        // 🔴 si hay errores, vuelve al formulario
+   
         if (hayErrores) {
             model.addAttribute("listaequipos",
                     servicioEquipos.listarEquipos().stream().filter(e -> e.isEstado()).toList());
@@ -135,7 +135,7 @@ public class CustodiasControlador {
             return formularioCustodia(custodia);
         }
 
-        // Guardar (create/update)
+     
         if (custodia.getIdCustodiaEquipo() > 0) {
             servicioCustodias.actualizarCustodia(custodia.getIdCustodiaEquipo(), custodia);
         } else {
@@ -149,7 +149,7 @@ public class CustodiasControlador {
         return (dto.getIdCustodiaEquipo() > 0) ? "custodias/editarCustodia" : "custodias/nuevaCustodia";
     }
 
-    // ELIMINAR LÓGICO
+  
     @PostMapping("/eliminar-custodia")
     public String eliminarLogico(@RequestParam Integer idCustodiaEquipo) {
         servicioCustodias.actualizarEstado(idCustodiaEquipo, false);
