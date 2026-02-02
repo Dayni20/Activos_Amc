@@ -11,25 +11,36 @@ public class EquiposResponseDTO {
     private String modelo;
     private String serial;
     private String procesador;
+
     private Integer memoriaRamGb;
     private Integer capacidadAlmacenamientoGb;
+
     private String sistemaOperativo;
     private Boolean licenciaWindowsActivada;
     private Boolean etiquetaActivoFijo;
+
     private String tipoLicenciaOffice;
     private String versionOffice;
+
     private Boolean unionDominio;
+
     private String ip;
     private String mac;
+
     private LocalDate fechaCompra;
     private BigDecimal precioCompra;
+
     private String estadoEquipo;
     private String observacionEquipo;
+
     private boolean estado;
 
+    // ✅ FKs completas para que en el consumo se vea el NOMBRE
     private DepartamentosResponseDTO fkDepartamento;
+    private MarcasResponseDTO fkMarca;
+    private ProveedoresResponseDTO fkProveedor;
+    private CategoriaEquiposResponseDTO fkCategoria;
 
-    // getters y setters (puedes usar Lombok si quieres)
     public int getIdEquipo() { return idEquipo; }
     public void setIdEquipo(int idEquipo) { this.idEquipo = idEquipo; }
 
@@ -95,4 +106,13 @@ public class EquiposResponseDTO {
 
     public DepartamentosResponseDTO getFkDepartamento() { return fkDepartamento; }
     public void setFkDepartamento(DepartamentosResponseDTO fkDepartamento) { this.fkDepartamento = fkDepartamento; }
+
+    public MarcasResponseDTO getFkMarca() { return fkMarca; }
+    public void setFkMarca(MarcasResponseDTO fkMarca) { this.fkMarca = fkMarca; }
+
+    public ProveedoresResponseDTO getFkProveedor() { return fkProveedor; }
+    public void setFkProveedor(ProveedoresResponseDTO fkProveedor) { this.fkProveedor = fkProveedor; }
+
+    public CategoriaEquiposResponseDTO getFkCategoria() { return fkCategoria; }
+    public void setFkCategoria(CategoriaEquiposResponseDTO fkCategoria) { this.fkCategoria = fkCategoria; }
 }
