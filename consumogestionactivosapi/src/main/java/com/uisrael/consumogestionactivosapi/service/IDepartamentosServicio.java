@@ -16,5 +16,9 @@ public interface IDepartamentosServicio {
 	void actualizarDepartamento(Integer idDepartamento, DepartamentosRequestDTO dto);
 	
 	void actualizarEstado(Integer idDepartamento, boolean estado);
+	
+	boolean nombreExiste(String nombre);
+	
+	boolean nombreExisteParaOtro(String nombre, int idDepartamento);
 
 }

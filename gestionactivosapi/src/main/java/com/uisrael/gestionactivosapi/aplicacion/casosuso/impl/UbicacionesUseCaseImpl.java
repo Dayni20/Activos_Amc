@@ -11,7 +11,6 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 	private final IUbicacionesRepositorio repositorio;
 
 	public UbicacionesUseCaseImpl(IUbicacionesRepositorio repositorio) {
-		super();
 		this.repositorio = repositorio;
 	}
 
@@ -51,6 +50,16 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 				actual.getNombre(), actual.getAgencia(), estado);
 
 		return repositorio.actualizarEstado(id, actualizado);
+	}
+	
+	@Override
+	public boolean nombreExiste(String nombre) {
+		return repositorio.existeNombre(nombre.trim());
+	}
+
+	@Override
+	public boolean nombreExisteParaOtro(String nombre, Integer idUbicacion) {
+		return repositorio.existeNombreParaOtro(nombre.trim(), idUbicacion);
 	}
 
 }

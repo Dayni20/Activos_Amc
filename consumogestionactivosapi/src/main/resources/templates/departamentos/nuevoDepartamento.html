@@ -42,6 +42,7 @@
 			<div class="main-content">
 				<div class="card stretch stretch-full">
 					<div class="card-body">
+						<input type="hidden" th:field="*{idDepartamento}">
 						<div class="mb-4">
 							<label class="form-label">Nombre <span
 								class="text-danger">*</span></label> <input type="text"
@@ -55,9 +56,15 @@
 								id="cbubicaciones" class="form-control"
 								data-select2-selector="status"
 								th:field="*{fkUbicacion.idUbicacion}">
+								<option data-bg="bg-dark" value="0">Seleccione una
+									ubicación</option>
 								<option data-bg="bg-teal" th:each="ubi : ${listaubicacion}"
 									th:value="${ubi.idUbicacion}" th:text="${ubi.nombre}"></option>
 							</select>
+
+							<div class="text-danger small" th:if="${errorSeleccionUbicacion}">
+								<span th:text="${errorSeleccionUbicacion}"></span>
+							</div>
 						</div>
 						<div class="row mb-4">
 							<div class="form-check form-switch form-switch-sm ps-5">

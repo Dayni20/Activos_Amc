@@ -62,6 +62,15 @@ public class UbicacionesRepositorioImpl implements IUbicacionesRepositorio {
 		return entityMapper.toDomain(guardado);
 	}
 	
+    @Override
+    public boolean existeNombre(String nombre) {
+        return jpaRepository.existsByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public boolean existeNombreParaOtro(String nombre, int idUbicacion) {
+        return jpaRepository.existsByNombreIgnoreCaseAndIdUbicacionNot(nombre, idUbicacion);
+    }
 	
 
 }

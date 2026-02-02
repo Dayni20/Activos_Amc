@@ -64,4 +64,44 @@ public class DepartamentosServicioImpl implements IDepartamentosServicio {
 
 	}
 
+	@Override
+	public boolean nombreExiste(String nombre) {
+	    try {
+	        Boolean resp = clienteWeb.get()
+	                .uri(uriBuilder -> uriBuilder
+	                        .path("/departamentos/existe-nombre")
+	                        .queryParam("nombre", nombre)
+	                        .build())
+	                .retrieve()
+	                .bodyToMono(Boolean.class)
+	                .block();
+
+	        return resp != null && resp;
+
+	    } catch (WebClientResponseException e) {
+	        // si tu API responde 404 o algo raro, por seguridad asumimos "no existe"
+	        return false;
+	    }
+	}
+
+	@Override
+	public boolean nombreExisteParaOtro(String nombre, int idDepartamento) {
+	    try {
+	        Boolean resp = clienteWeb.get()
+	                .uri(uriBuilder -> uriBuilder
+	                        .path("/departamentos/existe-nombre")
+	                        .queryParam("nombre", nombre)
+	                        .queryParam("id", idDepartamento)
+	                        .build())
+	                .retrieve()
+	                .bodyToMono(Boolean.class)
+	                .block();
+
+	        return resp != null && resp;
+
+	    } catch (WebClientResponseException e) {
+	        return false;
+	    }
+	}
+
 }

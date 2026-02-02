@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUbicacionesUseCase;
@@ -34,20 +34,31 @@ public class UbicacionesControlador {
 		this.mapper = mapper;
 	}
 	
+	
 	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public UbicacionesResponseDTO crear(@Valid @RequestBody UbicacionesRequestDTO request) {
-		return mapper.toResponseDto(ubicacionUseCase.crear(mapper.toDomain(request)));
+	public ResponseEntity<?> crear(@Valid @RequestBody UbicacionesRequestDTO request) {
+
+		// ✅ si ya existe, no intentes guardar
+		if (ubicacionUseCase.nombreExiste(request.getNombre().trim())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe una ubicación con ese nombre");
+		}
+
+		UbicacionesResponseDTO creado = mapper.toResponseDto(ubicacionUseCase.crear(mapper.toDomain(request)));
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
 	
 	@GetMapping
 	public List<UbicacionesResponseDTO> listar() {
 		return ubicacionUseCase.listar().stream().map(mapper::toResponseDto).toList();
 	}
-	
+		
 	@PutMapping("/{id}")
-	public ResponseEntity<UbicacionesResponseDTO> actualizar(@PathVariable int id,
-			@Valid @RequestBody UbicacionesRequestDTO request) {
+	public ResponseEntity<?> actualizar(@PathVariable int id, @Valid @RequestBody UbicacionesRequestDTO request) {
+
+		if (ubicacionUseCase.nombreExisteParaOtro(request.getNombre().trim(), id)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe otro departamento con ese nombre");
+		}
 
 		Ubicaciones actualizado = ubicacionUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
@@ -67,5 +78,14 @@ public class UbicacionesControlador {
 	public ResponseEntity<UbicacionesResponseDTO> obtenerPorId(@PathVariable int id) {
 	    Ubicaciones ubicacion = ubicacionUseCase.obtenerPorId(id);
 	    return ResponseEntity.ok(mapper.toResponseDto(ubicacion));
+	}
+	
+	@GetMapping("/existe-nombre")
+	public ResponseEntity<Boolean> existeNombre(@RequestParam String nombre,
+			@RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? ubicacionUseCase.nombreExiste(nombre)
+				: ubicacionUseCase.nombreExisteParaOtro(nombre, id);
+
+		return ResponseEntity.ok(existe);
 	}
 }

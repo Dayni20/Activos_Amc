@@ -1,5 +1,6 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class UbicacionesControlador {
 	@GetMapping
 	public String listarUbicaciones(Model model) {
 		List<UbicacionesResponseDTO> contenidoBD = servicioUbicacion.listarUbicaciones();
+		contenidoBD.sort(Comparator.comparing(UbicacionesResponseDTO::getIdUbicacion));
 		model.addAttribute("listaubicacion", contenidoBD);
 		return "ubicaciones/listarUbicaciones"; // ubicacion fisica page
 	}
@@ -55,6 +57,23 @@ public class UbicacionesControlador {
 		if (ubicacion.getNombre() == null || ubicacion.getNombre().trim().isEmpty()) {
 			model.addAttribute("errorNombre", "El nombre es obligatorio");
 			hayErrores = true;
+		} else {
+			// 2️⃣ Nombre no repetido
+			boolean nombreRepetido;
+
+			if (ubicacion.getIdUbicacion() > 0) {
+				// edición
+				nombreRepetido = servicioUbicacion.nombreExisteParaOtro(ubicacion.getNombre().trim(),
+						ubicacion.getIdUbicacion());
+			} else {
+				// creación
+				nombreRepetido = servicioUbicacion.nombreExiste(ubicacion.getNombre().trim());
+			}
+
+			if (nombreRepetido) {
+				model.addAttribute("errorNombre", "Ya existe una ubicación con ese nombre");
+				hayErrores = true;
+			}
 		}
 
 		if (ubicacion.getAgencia() == null || ubicacion.getAgencia().trim().isEmpty()) {

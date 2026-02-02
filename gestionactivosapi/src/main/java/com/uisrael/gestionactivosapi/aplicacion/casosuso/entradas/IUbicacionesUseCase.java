@@ -15,5 +15,9 @@ public interface IUbicacionesUseCase {
 	Ubicaciones actualizar(int id, Ubicaciones ubicacion);
 
 	Ubicaciones actualizarEstado(int id, boolean estado);
+	
+	boolean nombreExiste(String nombre);
+	
+    boolean nombreExisteParaOtro(String nombre, Integer idUbicacion);
 
 }
