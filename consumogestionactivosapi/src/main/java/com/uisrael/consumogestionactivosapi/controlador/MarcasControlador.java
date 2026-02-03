@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,9 +43,28 @@ public class MarcasControlador {
 		return "redirect:/marcas"; 
 	}
 	
-	@GetMapping("/editarMarcas")
-	public String modificarMarcas() {
-	return "marcas/editarMarcas"; // ubicacion fisica page
+	//GET EDITAR 
+	@GetMapping("/editarMarcas/{id}")
+	public String modificarMarcas(@PathVariable Integer id, Model model) {
+
+	    MarcasResponseDTO marca = servicioMarcas.obtenerMarca(id);
+
+	    MarcasRequestDTO dto = new MarcasRequestDTO();
+	    dto.setIdMarca(marca.getIdMarca());
+	    dto.setNombre(marca.getNombre());
+	    dto.setEstado(marca.isEstado());
+
+	    model.addAttribute("editarmarca", dto);
+	    return "marcas/editarMarcas";
 	}
+	
+	  // POST EDITAR
+    @PostMapping("/editarMarcas")
+    public String actualizarMarca(
+            @ModelAttribute("editarmarca") MarcasRequestDTO dto) {
+
+        servicioMarcas.actualizarMarca(dto.getIdMarca(), dto);
+        return "redirect:/marcas";
+    }
 
 }
