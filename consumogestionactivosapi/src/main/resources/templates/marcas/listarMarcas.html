@@ -49,11 +49,11 @@
 								    <div class="hstack gap-2 justify-content-end">
 								
 								       
-								        <a th:href="@{/marcas/editar/{id}(id=${marca.idMarca})}"
-								           class="avatar-text avatar-md text-primary"
-								           title="Editar">
-								            <i class="feather feather-edit"></i>
-								        </a>
+								        <a th:href="@{/marcas/editarMarcas/{id}(id=${marca.idMarca})}"
+										   class="avatar-text avatar-md text-primary"
+										   title="Editar">
+										    <i class="feather feather-edit"></i>
+										</a>
 								
 								        <form th:action="@{/marcas/eliminar/{id}(id=${marca.idMarca})}"
 								              method="post"
