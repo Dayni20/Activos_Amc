@@ -14,6 +14,10 @@ public interface IDepartamentosUseCase {
 	
 	Departamentos actualizar(int id, Departamentos departamento);
 	
-	Departamentos actualizarEstado(int id, Departamentos departamento);
+	Departamentos actualizarEstado(int id, boolean estado);
+	
+	boolean nombreExiste(String nombre);
+	
+    boolean nombreExisteParaOtro(String nombre, Integer idDepartamento);
 
 }

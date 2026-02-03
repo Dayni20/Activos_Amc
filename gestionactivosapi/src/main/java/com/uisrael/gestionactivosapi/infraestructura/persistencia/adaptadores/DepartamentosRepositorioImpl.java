@@ -67,4 +67,14 @@ public class DepartamentosRepositorioImpl implements IDepartamentosRepositorio{
 		return entityMapper.toDomain(guardado);
 	}
 	
+    @Override
+    public boolean existeNombre(String nombre) {
+        return jpaRepository.existsByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public boolean existeNombreParaOtro(String nombre, int idDepartamento) {
+        return jpaRepository.existsByNombreIgnoreCaseAndIdDepartamentoNot(nombre, idDepartamento);
+    }
+	
 }

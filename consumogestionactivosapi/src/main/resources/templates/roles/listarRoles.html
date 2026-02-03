@@ -71,7 +71,6 @@
                                             </th>
                                             <th>Id</th>
                                             <th>Nombre</th>
-                                            <th>Descripción</th>
                                             <th>Estado</th>
                                             <th class="text-end">Acciones</th>
                                         </tr>
@@ -91,7 +90,6 @@
                                             </td>
                                             <td><a href="javascript:void(0);" class="fw-bold" th:text="'#' + ${rol.idRol}"></a></td>
                                             <td th:text="${rol.nombre}"></td>
-                                            <td>-</td>
                                             <td>
                                                 <div class="badge bg-soft-success text-success" 
                                                      th:text="${rol.estado ? 'Activo' : 'Inactivo'}">

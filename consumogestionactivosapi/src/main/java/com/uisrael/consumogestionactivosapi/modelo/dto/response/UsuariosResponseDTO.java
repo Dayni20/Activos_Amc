@@ -8,6 +8,6 @@ public class UsuariosResponseDTO {
 	private String nombre;
 	private String correo;
 	private boolean estado;
-	private Integer fkDepartamento;
+	private DepartamentosResponseDTO fkDepartamento;
 	private RolesResponseDTO fkRol;
 }

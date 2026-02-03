@@ -16,6 +16,9 @@ public class DepartamentosUseCaseImpl implements IDepartamentosUseCase {
 
 	@Override
 	public Departamentos crear(Departamentos departamento) {
+		if (repositorio.existeNombre(departamento.getNombre().trim())) {
+			throw new RuntimeException("Ya existe un departamento con ese nombre");
+		}
 		return repositorio.guardar(departamento);
 	}
 
@@ -33,6 +36,10 @@ public class DepartamentosUseCaseImpl implements IDepartamentosUseCase {
 	public Departamentos actualizar(int id, Departamentos departamento) {
 		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
 
+		if (repositorio.existeNombreParaOtro(departamento.getNombre().trim(), id)) {
+			throw new RuntimeException("Ya existe otro departamento con ese nombre");
+		}
+
 		Departamentos actualizado = new Departamentos(id, departamento.getNombre(), departamento.isEstado(),
 				departamento.getFkUbicacion());
 
@@ -40,13 +47,26 @@ public class DepartamentosUseCaseImpl implements IDepartamentosUseCase {
 	}
 
 	@Override
-	public Departamentos actualizarEstado(int id, Departamentos departamento) {
-		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+	public Departamentos actualizarEstado(int id, boolean estado) {
 
-		Departamentos actualizado = new Departamentos(id, departamento.getNombre(), departamento.isEstado(),
-				departamento.getFkUbicacion());
+		Departamentos actual = repositorio.buscarPorId(id)
+				.orElseThrow(() -> new RuntimeException("Departamento no encontrado"));
+
+		// ✅ Solo cambia el estado, mantiene nombre/agencia
+		Departamentos actualizado = new Departamentos(actual.getIdDepartamento(), // o id, según tu constructor
+				actual.getNombre(), estado, actual.getFkUbicacion());
 
 		return repositorio.actualizarEstado(id, actualizado);
+	}
+
+	@Override
+	public boolean nombreExiste(String nombre) {
+		return repositorio.existeNombre(nombre.trim());
+	}
+
+	@Override
+	public boolean nombreExisteParaOtro(String nombre, Integer idDepartamento) {
+		return repositorio.existeNombreParaOtro(nombre.trim(), idDepartamento);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.uisrael.gestionactivosapi.presentacion.dto.Request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -10,7 +9,6 @@ public class RolesRequestDTO {
 	
 	private int idRol;
 	
-	@NotBlank(message = "El nombre del rol es obligatorio")
 	@Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
 	@Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El nombre solo puede contener letras y espacios")
 	private String nombre;

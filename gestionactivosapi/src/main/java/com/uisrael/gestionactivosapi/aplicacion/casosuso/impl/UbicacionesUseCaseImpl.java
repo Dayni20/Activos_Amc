@@ -11,7 +11,6 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 	private final IUbicacionesRepositorio repositorio;
 
 	public UbicacionesUseCaseImpl(IUbicacionesRepositorio repositorio) {
-		super();
 		this.repositorio = repositorio;
 	}
 
@@ -41,13 +40,26 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 	}
 
 	@Override
-	public Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion) {
-		repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+	public Ubicaciones actualizarEstado(int id, boolean estado) {
 
-		Ubicaciones actualizado = new Ubicaciones(id, ubicacion.getNombre(), ubicacion.getAgencia(),
-				ubicacion.isEstado());
+		Ubicaciones actual = repositorio.buscarPorId(id)
+				.orElseThrow(() -> new RuntimeException("Ubicación no encontrada"));
+
+		// ✅ Solo cambia el estado, mantiene nombre/agencia
+		Ubicaciones actualizado = new Ubicaciones(actual.getIdUbicacion(), // o id, según tu constructor
+				actual.getNombre(), actual.getAgencia(), estado);
 
 		return repositorio.actualizarEstado(id, actualizado);
+	}
+	
+	@Override
+	public boolean nombreExiste(String nombre) {
+		return repositorio.existeNombre(nombre.trim());
+	}
+
+	@Override
+	public boolean nombreExisteParaOtro(String nombre, Integer idUbicacion) {
+		return repositorio.existeNombreParaOtro(nombre.trim(), idUbicacion);
 	}
 
 }

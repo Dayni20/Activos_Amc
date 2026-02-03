@@ -27,6 +27,9 @@
                 
                     <input type="hidden" th:field="*{idCategoria}" />
                     
+                    <!-- Alerta de error desde el backend -->
+                    <div class="alert alert-danger" role="alert" th:if="${errorNombre}" th:text="${errorNombre}"></div>
+                    
                     <div class="mb-4">
                         <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +36,31 @@ public class RolesControlador {
 	}
 	
 	@PostMapping
-	public String guardarRol(@ModelAttribute RolesRequestDTO nuevorol) {
-		servicioRoles.nuevoRol(nuevorol);
-		return "redirect:/roles"; 
+	public String guardarRol(@ModelAttribute RolesRequestDTO nuevorol, Model model) {
+		try {
+			if (nuevorol.getIdRol() > 0) {
+				servicioRoles.actualizarRol(nuevorol.getIdRol(), nuevorol);
+			} else {
+				servicioRoles.nuevoRol(nuevorol);
+			}
+			return "redirect:/roles";
+		} catch (RuntimeException e) {
+			model.addAttribute("errorNombre", e.getMessage());
+			model.addAttribute("nuevorol", nuevorol);
+			return nuevorol.getIdRol() > 0 ? "roles/editarRol" : "roles/nuevoRol";
+		}
 	}
 	
-	@GetMapping("/editar-rol")
-	public String modificarRol() {
+	@GetMapping("/editar-rol/{id}")
+	public String editarRol(@PathVariable Integer id, Model model) {
+		RolesResponseDTO rol = servicioRoles.obtenerRol(id);
+		model.addAttribute("nuevorol", rol);
 		return "roles/editarRol";
+	}
+	
+	@PostMapping("/eliminar/{id}")
+	public String eliminarRol(@PathVariable Integer id) {
+		servicioRoles.eliminarRol(id);
+		return "redirect:/roles";
 	}
 }

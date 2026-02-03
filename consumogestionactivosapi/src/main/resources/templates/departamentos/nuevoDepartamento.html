@@ -10,64 +10,74 @@
 
 <body>
 	<div layout:fragment="contenidopaginas">
-		<div class="page-header">
-			<div class="page-header-left d-flex align-items-center">
-				<div class="page-header-title">
-					<h5 class="m-b-10">Departamentos</h5>
+		<form th:action="@{/departamentos}" th:object="${departamento}"
+			method="post">
+			<div class="page-header">
+				<div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Departamentos</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a th:href="@{/departamentos}">Home</a></li>
+						<li class="breadcrumb-item">Crear</li>
+					</ul>
 				</div>
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/equipos}">Home</a></li>
-					<li class="breadcrumb-item">Crear</li>
-				</ul>
-			</div>
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div
-						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="javascript:void(0);"
-							class="btn btn-primary successAlertMessage"> <i
-							class="feather-save me-2"></i> <span>Guardar</span>
+				<div class="page-header-right ms-auto">
+					<div class="page-header-right-items">
+						<div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<button type="submit" class="btn btn-primary">
+								<i class="feather-save me-2"></i> <span>Guardar</span>
+							</button>
+						</div>
+					</div>
+					<div class="d-md-none d-flex align-items-center">
+						<a href="javascript:void(0)" class="page-header-right-open-toggle">
+							<i class="feather-align-right fs-20"></i>
 						</a>
 					</div>
 				</div>
-				<div class="d-md-none d-flex align-items-center">
-					<a href="javascript:void(0)" class="page-header-right-open-toggle">
-						<i class="feather-align-right fs-20"></i>
-					</a>
-				</div>
 			</div>
-		</div>
 
-		<div class="main-content">
-			<div class="card stretch stretch-full">
-				<div class="card-body">
-					<div class="mb-4">
-						<label class="form-label">Nombre <span class="text-danger">*</span></label>
-						<input type="text" class="form-control" placeholder="Subject">
-					</div>
-					<div class="mb-4">
-						<label class="form-label">Ubicaciones </label> <select
-							class="form-control" data-select2-selector="status">
-							<option value="teal" data-bg="bg-teal">Ubicación 1</option>
-							<option value="secondary" data-bg="bg-secondary">Ubicación
-								2</option>
-							<option value="primary" data-bg="bg-primary">Ubicación 3</option>
-							<option value="warning" data-bg="bg-warning">Ubicación 4</option>
-							<option value="danger" data-bg="bg-danger">Ubicación 5</option>
-							<option value="success" data-bg="bg-success">Ubicación 6</option>
-						</select>
-					</div>
-					<div class="row mb-4">
-						<div class="form-check form-switch form-switch-sm ps-5">
-							<input class="form-check-input c-pointer" type="checkbox"
-								id="commentSwitch"> <label
-								class="form-check-label fw-500 text-dark c-pointer"
-								for="commentSwitch">Activo</label>
+			<div class="main-content">
+				<div class="card stretch stretch-full">
+					<div class="card-body">
+						<input type="hidden" th:field="*{idDepartamento}">
+						<div class="mb-4">
+							<label class="form-label">Nombre <span
+								class="text-danger">*</span></label> <input type="text"
+								class="form-control" placeholder="Nombre" th:field="*{nombre}">
+							<div class="text-danger small" th:if="${errorNombre}">
+								<span th:text="${errorNombre}"></span>
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="form-label">Ubicaciones </label> <select
+								id="cbubicaciones" class="form-control"
+								data-select2-selector="status"
+								th:field="*{fkUbicacion.idUbicacion}">
+								<option data-bg="bg-dark" value="0">Seleccione una
+									ubicación</option>
+								<option data-bg="bg-teal" th:each="ubi : ${listaubicacion}"
+									th:value="${ubi.idUbicacion}" th:text="${ubi.nombre}"></option>
+							</select>
+
+							<div class="text-danger small" th:if="${errorSeleccionUbicacion}">
+								<span th:text="${errorSeleccionUbicacion}"></span>
+							</div>
+						</div>
+						<div class="row mb-4">
+							<div class="form-check form-switch form-switch-sm ps-5">
+								<input class="form-check-input c-pointer" type="checkbox"
+									id="commentSwitch" th:field="*{estado}"> <label
+									class="form-check-label fw-500 text-dark c-pointer"
+									for="commentSwitch">Activo</label>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 
 </body>

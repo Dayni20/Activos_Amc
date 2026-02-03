@@ -6,5 +6,9 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.Ubicacione
 
 public interface IUbicacionesJpaRepositorio
         extends JpaRepository<UbicacionesJpa, Integer> {
+	
+	boolean existsByNombreIgnoreCase(String nombre);
+
+	boolean existsByNombreIgnoreCaseAndIdUbicacionNot(String nombre, Integer idDepartamento);
 
 }

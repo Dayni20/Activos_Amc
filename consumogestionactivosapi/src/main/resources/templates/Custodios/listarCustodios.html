@@ -4,11 +4,13 @@
 	layout:decorate="~{plantilla/plantillaui}">
 
 <head>
-	<title>Custodios</title>
+<title>Custodios</title>
 </head>
 
 <body>
 	<div layout:fragment="contenidopaginas">
+
+		<!-- HEADER -->
 		<div class="page-header">
 			<div class="page-header-left d-flex align-items-center">
 				<div class="page-header-title">
@@ -22,38 +24,17 @@
 
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
-					<div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-
-						<div class="dropdown">
-							<a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown"
-								data-bs-offset="0, 12" data-bs-auto-close="outside">
-								<i class="feather-paperclip"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-end">
-								<a href="javascript:void(0);" class="dropdown-item">
-									<i class="bi bi-filetype-pdf me-3"></i> <span>PDF</span>
-								</a>
-								<a href="javascript:void(0);" class="dropdown-item">
-									<i class="bi bi-filetype-exe me-3"></i> <span>Excel</span>
-								</a>
-							</div>
-						</div>
-
+					<div
+						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 						<a th:href="@{/custodios/nuevo-custodio}" class="btn btn-primary">
-							<i class="feather-plus me-2"></i>
-							<span>Nuevo Custodio</span>
+							<i class="feather-plus me-2"></i> <span>Nuevo Custodio</span>
 						</a>
 					</div>
-				</div>
-
-				<div class="d-md-none d-flex align-items-center">
-					<a href="javascript:void(0)" class="page-header-right-open-toggle">
-						<i class="feather-align-right fs-20"></i>
-					</a>
 				</div>
 			</div>
 		</div>
 
+		<!-- TABLE -->
 		<div class="main-content">
 			<div class="row">
 				<div class="col-lg-12">
@@ -63,45 +44,52 @@
 								<table class="table table-hover" id="proposalList">
 									<thead>
 										<tr>
-											<th class="wd-30">
-												<div class="btn-group mb-1">
-													<div class="custom-control custom-checkbox ms-1">
-														<input type="checkbox" class="custom-control-input" id="checkAllProposal">
-														<label class="custom-control-label" for="checkAllProposal"></label>
-													</div>
-												</div>
-											</th>
 											<th>ID</th>
 											<th>Nombre</th>
+											<th>Cédula</th>
 											<th>Correo</th>
-											<th>Departamento</th>
+											<th>Teléfono</th>
 											<th>Estado</th>
 											<th class="text-end">Acciones</th>
 										</tr>
 									</thead>
 
 									<tbody>
-										<tr class="single-item">
+										<tr th:each="custodio : ${listarcustodios}"
+											class="single-item">
+											<td th:text="${custodio.idCustodio}"></td>
+											<td th:text="${custodio.nombre} ?: '-'"></td>
+											<td th:text="${custodio.cedula} ?: '-'"></td>
+											<td th:text="${custodio.correo} ?: '-'"></td>
+											<td th:text="${custodio.telefono} ?: '-'"></td>
+
 											<td>
-												<div class="item-checkbox ms-1">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input checkbox" id="checkBox_1">
-														<label class="custom-control-label" for="checkBox_1"></label>
-													</div>
-												</div>
+												<div th:if="${custodio.estado}"
+													class="badge bg-soft-success text-success">Activo</div>
+												<div th:unless="${custodio.estado}"
+													class="badge bg-soft-danger text-danger">Inactivo</div>
 											</td>
-											<td><a href="javascript:void(0);" class="fw-bold">#1</a></td>
-											<td>Juan Pérez</td>
-											<td>juan.perez@empresa.com</td>
-											<td>Sistemas</td>
+
 											<td>
-												<div class="badge bg-soft-success text-success">Activo</div>
-											</td>
-											<td class="text-end">
 												<div class="hstack gap-2 justify-content-end">
-													<a th:href="@{/custodios/editar-custodio}" class="avatar-text avatar-md">
-														<i class="feather feather-edit"></i>
+
+													<!-- EDITAR (dejas como lo tengas) -->
+													<a
+														th:href="@{/custodios/editar-custodio/{id}(id=${custodio.idCustodio})}"
+														class="avatar-text avatar-md"> <i
+														class="feather feather-edit"></i>
 													</a>
+
+													<!-- BOTÓN QUE ABRE MODAL (sirve para activar y desactivar) -->
+													<button type="button" class="avatar-text avatar-md"
+														data-bs-toggle="modal"
+														data-bs-target="#modalToggleCustodio"
+														th:attr="data-id=${custodio.idCustodio}, data-estado=${custodio.estado}">
+														<!-- ícono cambia según estado -->
+														<i class="feather"
+															th:classappend="${custodio.estado} ? ' feather-trash-2 text-danger' : ' feather-check-circle text-success'"></i>
+													</button>
+
 												</div>
 											</td>
 										</tr>
@@ -115,7 +103,85 @@
 			</div>
 		</div>
 
+		<!-- MODAL -->
+		<div class="modal fade" id="modalToggleCustodio" tabindex="-1"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">Confirmar</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+
+					<div class="modal-body" id="textoModalToggleCustodio">¿Está
+						seguro?</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light"
+							data-bs-dismiss="modal">No</button>
+
+						<!-- OJO: aquí NO dejamos action fijo, lo cambia el JS -->
+						<form id="formToggleCustodio" method="post">
+							<input type="hidden" name="idCustodio" id="idCustodioToggle">
+							<button type="submit" class="btn" id="btnToggleCustodio">Sí</button>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- SCRIPTS -->
+		<script>
+			const modalToggleCustodio = document
+					.getElementById('modalToggleCustodio');
+
+			modalToggleCustodio
+					.addEventListener(
+							'show.bs.modal',
+							function(event) {
+								const button = event.relatedTarget;
+
+								const id = button.getAttribute('data-id');
+								const estadoActual = button
+										.getAttribute('data-estado') === 'true';
+
+								// set id hidden
+								document.getElementById('idCustodioToggle').value = id;
+
+								// referencia form y botón
+								const form = document
+										.getElementById('formToggleCustodio');
+								const btn = document
+										.getElementById('btnToggleCustodio');
+
+								// cambia texto y action según estado
+								if (estadoActual) {
+									document
+											.getElementById('textoModalToggleCustodio').innerText = "¿Está seguro de DESACTIVAR este custodio?";
+									form.action = "/custodios/eliminar-custodio"; // ✅ TU NOMBRE
+									btn.innerText = "Sí, desactivar";
+									btn.className = "btn btn-danger";
+								} else {
+									document
+											.getElementById('textoModalToggleCustodio').innerText = "¿Está seguro de ACTIVAR este custodio?";
+									form.action = "/custodios/activar-custodio"; // ✅ TU NOMBRE
+									btn.innerText = "Sí, activar";
+									btn.className = "btn btn-success";
+								}
+							});
+
+			// por si el layout mete el modal dentro de un contenedor
+			document.addEventListener("DOMContentLoaded", function() {
+				const modal = document.getElementById("modalToggleCustodio");
+				if (modal && modal.parentElement !== document.body) {
+					document.body.appendChild(modal);
+				}
+			});
+		</script>
+
 	</div>
 </body>
-
 </html>

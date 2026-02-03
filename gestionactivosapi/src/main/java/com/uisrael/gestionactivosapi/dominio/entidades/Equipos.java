@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.DepartamentosJpa;
-
 public class Equipos implements Serializable {
 
     private static final long serialVersionUID = 1L;
