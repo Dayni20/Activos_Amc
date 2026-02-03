@@ -86,6 +86,7 @@ body {
 .modal, .modal * {
 	pointer-events: auto !important;
 }
+
 </style>
 </head>
 
@@ -180,47 +181,6 @@ body {
 									Departamento</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-user"></i></span> <span class="nxl-mtext">Custodios</span>
-							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-					</a>
-						<ul class="nxl-submenu">
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/custodios}">Listar Custodios</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/custodios/nuevo-custodio}">Crear Custodios</a></li>
-						</ul></li>
-
-
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-clipboard"></i></span> <span class="nxl-mtext">Custodias</span>
-							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-					</a>
-						<ul class="nxl-submenu">
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/custodias}">Listar Custodias</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/custodias/nueva-custodia}">Crear Custodias</a></li>
-						</ul></li>
-
-
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-monitor"></i></span> <span class="nxl-mtext">Equipos</span>
-							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-					</a>
-						<ul class="nxl-submenu">
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/equipos}">Listar Equipos</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								th:href="@{/equipos/nuevo-equipo}">Crear Equipos</a></li>
-						</ul></li>
-
-
-
-
 					<!-- CODIGO GEOVANNA VELASCO MARCAS Y PROVEEDORES -->
 
 
@@ -235,7 +195,7 @@ body {
 								th:href="@{/marcas}">Listar Marcas</a></li>
 							<li class="nxl-item"><a class="nxl-link"
 								th:href="@{/marcas/nuevaMarcas}">Crear Marcas</a></li>
-							
+
 						</ul></li>
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
@@ -247,23 +207,56 @@ body {
 								th:href="@{/proveedores}">Listar Proveedores</a></li>
 							<li class="nxl-item"><a class="nxl-link"
 								th:href="@{/proveedores/nuevoProveedores}">Crear Proveedores</a></li>
-							
+
 						</ul></li>
 
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-cast"></i></span> <span class="nxl-mtext">Reports</span><span
+								class="feather-user"></i></span> <span class="nxl-mtext">Custodios</span>
+							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodios}">Listar Custodios</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodios/nuevo-custodio}">Crear Custodios</a></li>
+						</ul></li>
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather-monitor"></i></span> <span class="nxl-mtext">Equipos</span>
+							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/equipos}">Listar Equipos</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/equipos/nuevo-equipo}">Crear Equipos</a></li>
+						</ul></li>
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather-clipboard"></i></span> <span class="nxl-mtext">Custodias</span>
+							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					</a>
+						<ul class="nxl-submenu">
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodias}">Listar Custodias</a></li>
+							<li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodias/nueva-custodia}">Crear Custodias</a></li>
+						</ul></li>
+
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+						class="nxl-link"> <span class="nxl-micon"><i
+								class="feather-cast"></i></span> <span class="nxl-mtext">Reportes</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
 					</a>
 						<ul class="nxl-submenu">
 							<li class="nxl-item"><a class="nxl-link"
-								href="reports-sales.html">Sales Report</a></li>
+								th:href="@{/equipos/reporte-equipo}">Reporte Equipos</a></li>
 							<li class="nxl-item"><a class="nxl-link"
-								href="reports-leads.html">Leads Report</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								href="reports-project.html">Project Report</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								href="reports-timesheets.html">Timesheets Report</a></li>
+								href="reports-leads.html">Reporte Custodias</a></li>
+
 						</ul></li>
 				</ul>
 			</div>
