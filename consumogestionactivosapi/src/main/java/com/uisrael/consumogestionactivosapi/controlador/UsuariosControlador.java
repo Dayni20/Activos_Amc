@@ -85,18 +85,46 @@ public class UsuariosControlador {
 	
 	@GetMapping("/editar-usuario/{id}")
 	public String editarUsuario(@PathVariable Integer id, Model model) {
-		UsuariosResponseDTO usuario = servicioUsuarios.obtenerUsuario(id);
+		UsuariosResponseDTO usuarioResponse = servicioUsuarios.obtenerUsuario(id);
+		
+		UsuariosRequestDTO usuarioRequest = new UsuariosRequestDTO();
+		usuarioRequest.setIdUsuario(usuarioResponse.getIdUsuario());
+		usuarioRequest.setNombre(usuarioResponse.getNombre());
+		usuarioRequest.setCorreo(usuarioResponse.getCorreo());
+		usuarioRequest.setEstado(usuarioResponse.isEstado());
+
+		if (usuarioResponse.getFkRol() != null) {
+			RolesRequestDTO rol = new RolesRequestDTO();
+			rol.setIdRol(usuarioResponse.getFkRol().getIdRol());
+			rol.setNombre(usuarioResponse.getFkRol().getNombre());
+			usuarioRequest.setFkRol(rol);
+		}
+		
+		if (usuarioResponse.getFkDepartamento() != null) {
+			DepartamentosRequestDTO departamento = new DepartamentosRequestDTO();
+			departamento.setIdDepartamento(usuarioResponse.getFkDepartamento().getIdDepartamento());
+			departamento.setNombre(usuarioResponse.getFkDepartamento().getNombre());
+			usuarioRequest.setFkDepartamento(departamento);
+		}
+		
 		List<RolesResponseDTO> roles = servicioRoles.listarRol();
 		List<DepartamentosResponseDTO> departamentos = servicioDepartamentos.listarDepartamentos();
-		model.addAttribute("nuevousuario", usuario);
+		model.addAttribute("nuevousuario", usuarioRequest);
 		model.addAttribute("roles", roles);
 		model.addAttribute("departamentos", departamentos);
 		return "usuarios/editarUsuario";
 	}
 	
 	@PostMapping("/eliminar/{id}")
-	public String eliminarUsuario(@PathVariable Integer id) {
-		servicioUsuarios.eliminarUsuario(id);
-		return "redirect:/usuarios";
+	public String eliminarUsuario(@PathVariable Integer id, Model model) {
+		try {
+			servicioUsuarios.eliminarUsuario(id);
+			return "redirect:/usuarios";
+		} catch (RuntimeException e) {
+			List<UsuariosResponseDTO> contenidoBD = servicioUsuarios.listarUsuario();
+			model.addAttribute("listarusuarios", contenidoBD);
+			model.addAttribute("errorEliminar", e.getMessage());
+			return "usuarios/listarUsuarios";
+		}
 	}
 }

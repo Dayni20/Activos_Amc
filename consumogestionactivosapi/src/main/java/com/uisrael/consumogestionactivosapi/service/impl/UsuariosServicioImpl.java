@@ -55,7 +55,13 @@ public class UsuariosServicioImpl implements IUsuariosServicio {
 
 	@Override
 	public void eliminarUsuario(Integer id) {
-		clienteweb.delete().uri("/usuarios/" + id).retrieve().toBodilessEntity().block();
+		try {
+			clienteweb.delete().uri("/usuarios/" + id).retrieve().toBodilessEntity().block();
+		} catch (WebClientResponseException ex) {
+			String errorBody = ex.getResponseBodyAsString();
+			String mensaje = extraerMensajeError(errorBody);
+			throw new RuntimeException(mensaje);
+		}
 	}
 	
 	private String extraerMensajeError(String errorBody) {
