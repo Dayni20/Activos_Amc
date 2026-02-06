@@ -55,7 +55,13 @@ public class RolesServicioImpl implements IRolesServicio {
 
 	@Override
 	public void eliminarRol(Integer id) {
-		clienteweb.delete().uri("/roles/" + id).retrieve().toBodilessEntity().block();
+		try {
+			clienteweb.delete().uri("/roles/" + id).retrieve().toBodilessEntity().block();
+		} catch (WebClientResponseException ex) {
+			String errorBody = ex.getResponseBodyAsString();
+			String mensaje = extraerMensajeError(errorBody);
+			throw new RuntimeException(mensaje);
+		}
 	}
 	
 	private String extraerMensajeError(String errorBody) {

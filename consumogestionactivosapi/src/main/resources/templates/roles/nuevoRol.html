@@ -27,17 +27,16 @@
                 
                     <input type="hidden" th:field="*{idRol}" />
                     
-                    <!-- Alerta de error desde el backend -->
                     <div class="alert alert-danger" role="alert" th:if="${errorNombre}" th:text="${errorNombre}"></div>
                     
                     <div class="mb-4">
                         <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" 
-                               placeholder="Ingrese el nombre del rol"
-                               th:field="*{nombre}"
-                               required
-                               minlength="2"
-                               maxlength="60">
+                        <select class="form-select" th:field="*{nombre}" required>
+                            <option value="">Seleccione un rol</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Tecnico">Técnico</option>
+                            <option value="Auditor">Auditor</option>
+                        </select>
                     </div>
                     
                     <div class="mb-4">

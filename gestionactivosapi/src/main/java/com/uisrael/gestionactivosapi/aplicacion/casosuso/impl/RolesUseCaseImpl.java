@@ -1,6 +1,7 @@
 package com.uisrael.gestionactivosapi.aplicacion.casosuso.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IRolesUseCase;
 import com.uisrael.gestionactivosapi.dominio.entidades.Roles;
@@ -16,18 +17,9 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 
 	@Override
 	public Roles crear(Roles rol) {
-		// Validación case-insensitive: convierte a minúsculas para comparar
-		String nombreNormalizado = rol.getNombre().trim().toLowerCase();
-		
-		// Busca si existe algún rol con el mismo nombre (ignorando mayúsculas/minúsculas)
-		List<Roles> todosLosRoles = repositorio.listarTodos();
-		boolean existe = todosLosRoles.stream()
-			.anyMatch(r -> r.getNombre().trim().toLowerCase().equals(nombreNormalizado));
-		
-		if (existe) {
-			throw new IllegalArgumentException("Ya existe un rol con el nombre '" + rol.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+		if (repositorio.buscarPorNombre(rol.getNombre()).isPresent()) {
+			throw new IllegalArgumentException("Ya existe un rol con el nombre '" + rol.getNombre() + "'");
 		}
-		
 		return repositorio.guardar(rol);
 	}
 
@@ -47,16 +39,9 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 			throw new RuntimeException("Rol no encontrado con ID: " + rol.getIdRol());
 		}
 		
-		// Validación case-insensitive para actualización
-		String nombreNormalizado = rol.getNombre().trim().toLowerCase();
-		List<Roles> todosLosRoles = repositorio.listarTodos();
-		
-		boolean existeOtro = todosLosRoles.stream()
-			.anyMatch(r -> r.getIdRol() != rol.getIdRol() && 
-			             r.getNombre().trim().toLowerCase().equals(nombreNormalizado));
-		
-		if (existeOtro) {
-			throw new IllegalArgumentException("Ya existe otro rol con el nombre '" + rol.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+		Optional<Roles> rolExistente = repositorio.buscarPorNombre(rol.getNombre());
+		if (rolExistente.isPresent() && rolExistente.get().getIdRol() != rol.getIdRol()) {
+			throw new IllegalArgumentException("Ya existe otro rol con el nombre '" + rol.getNombre() + "'");
 		}
 		
 		return repositorio.guardar(rol);
@@ -64,10 +49,15 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 
 	@Override
 	public void eliminar(int id) {
-		if (repositorio.buscarPorId(id).isEmpty()) {
-			throw new RuntimeException("Rol no encontrado con ID: " + id);
+		Roles rol = repositorio.buscarPorId(id)
+			.orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + id));
+		
+		if (!rol.isEstado()) {
+			throw new IllegalArgumentException("Este rol ya se encuentra inactivo");
 		}
-		repositorio.eliminar(id);
+		
+		Roles rolInactivo = new Roles(rol.getIdRol(), rol.getNombre(), false);
+		repositorio.guardar(rolInactivo);
 	}
 
 }

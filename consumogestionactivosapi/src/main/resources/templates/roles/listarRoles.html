@@ -42,6 +42,12 @@
 		<div class="main-content">
 			<div class="row">
 				<div class="col-lg-12">
+					
+					<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorEliminar}">
+						<strong>Error:</strong> <span th:text="${errorEliminar}"></span>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+					
 					<div class="card stretch stretch-full">
 						<div class="card-body p-0">
 							<div class="table-responsive">
@@ -60,7 +66,7 @@
 												th:text="'#' + ${rol.idRol}"></a></td>
 											<td th:text="${rol.nombre}"></td>
 											<td>
-												<div class="badge bg-soft-success text-success"
+												<div th:class="${rol.estado ? 'badge bg-soft-success text-success' : 'badge bg-soft-danger text-danger'}"
 													th:text="${rol.estado ? 'Activo' : 'Inactivo'}"></div>
 											</td>
 											<td>
@@ -69,6 +75,22 @@
 														class="avatar-text avatar-md"> <i
 														class="feather feather-edit"></i>
 													</a>
+													<form th:action="@{/roles/eliminar/{id}(id=${rol.idRol})}" 
+														  method="post" 
+														  style="display: inline;">
+														<button th:if="${rol.estado}" 
+															type="submit" 
+															class="avatar-text avatar-md border-0 bg-transparent"
+															onclick="return confirm('¿Está seguro de desactivar este rol?');">
+															<i class="feather feather-trash-2 text-danger"></i>
+														</button>
+														<button th:if="${!rol.estado}" 
+															type="button" 
+															class="avatar-text avatar-md border-0 bg-transparent"
+															onclick="alert('Este rol ya se encuentra inactivo');">
+															<i class="feather feather-trash-2 text-danger"></i>
+														</button>
+													</form>
 												</div>
 											</td>
 										</tr>

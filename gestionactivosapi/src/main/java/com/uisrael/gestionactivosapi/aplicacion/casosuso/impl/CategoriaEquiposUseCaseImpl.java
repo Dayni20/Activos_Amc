@@ -16,10 +16,8 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public CategoriaEquipos crear(CategoriaEquipos categoriaEquipo) {
-		// Validación case-insensitive: convierte a minúsculas para comparar
 		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
 		
-		// Busca si existe alguna categoría con el mismo nombre (ignorando mayúsculas/minúsculas)
 		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
 		boolean existe = todasLasCategorias.stream()
 			.anyMatch(c -> c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
@@ -47,7 +45,6 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			throw new RuntimeException("Categoría no encontrada con ID: " + categoriaEquipo.getIdCategoria());
 		}
 		
-		// Validación case-insensitive para actualización
 		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
 		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
 		
