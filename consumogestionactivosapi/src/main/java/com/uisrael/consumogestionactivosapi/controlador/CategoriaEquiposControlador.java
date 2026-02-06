@@ -59,8 +59,15 @@ public class CategoriaEquiposControlador {
 	}
 	
 	@PostMapping("/eliminar/{id}")
-	public String eliminarCategoria(@PathVariable Integer id) {
-		servicioCategoriaEquipos.eliminarCategoriaEquipo(id);
-		return "redirect:/categorias-equipo";
+	public String eliminarCategoria(@PathVariable Integer id, Model model) {
+		try {
+			servicioCategoriaEquipos.eliminarCategoriaEquipo(id);
+			return "redirect:/categorias-equipo";
+		} catch (RuntimeException e) {
+			List<CategoriaEquiposResponseDTO> contenidoBD = servicioCategoriaEquipos.listarCategoriaEquipo();
+			model.addAttribute("listarcategorias", contenidoBD);
+			model.addAttribute("errorEliminar", e.getMessage());
+			return "categorias_equipo/listarCategorias";
+		}
 	}
 }

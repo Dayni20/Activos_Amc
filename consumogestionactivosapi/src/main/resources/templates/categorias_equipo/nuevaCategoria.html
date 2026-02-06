@@ -26,8 +26,7 @@
                 <div class="card-body">
                 
                     <input type="hidden" th:field="*{idCategoria}" />
-                    
-                    <!-- Alerta de error desde el backend -->
+                   
                     <div class="alert alert-danger" role="alert" th:if="${errorNombre}" th:text="${errorNombre}"></div>
                     
                     <div class="mb-4">
@@ -37,7 +36,9 @@
                                th:field="*{nombre}"
                                required
                                minlength="2"
-                               maxlength="60">
+                               maxlength="15"
+                               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                               title="Solo se permiten letras y espacios, máximo 15 caracteres">
                     </div>
                     
                     <div class="mb-4">

@@ -23,7 +23,7 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			.anyMatch(c -> c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
 		
 		if (existe) {
-			throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+			throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + categoriaEquipo.getNombre());
 		}
 		
 		return repositorio.guardar(categoriaEquipo);
@@ -53,7 +53,7 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			             c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
 		
 		if (existeOtra) {
-			throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+			throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + categoriaEquipo.getNombre());
 		}
 		
 		return repositorio.guardar(categoriaEquipo);
@@ -61,10 +61,14 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public void eliminar(int id) {
-		if (repositorio.buscarPorId(id).isEmpty()) {
-			throw new RuntimeException("Categoría no encontrada con ID: " + id);
+		CategoriaEquipos categoria = repositorio.buscarPorId(id)
+			.orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
+		
+		if (!categoria.isEstado()) {
+			throw new IllegalArgumentException("Esta categoría ya se encuentra inactiva");
 		}
-		repositorio.eliminar(id);
+		CategoriaEquipos categoriaInactiva = new CategoriaEquipos(categoria.getIdCategoria(), categoria.getNombre(), false);
+		repositorio.guardar(categoriaInactiva);
 	}
 
 }

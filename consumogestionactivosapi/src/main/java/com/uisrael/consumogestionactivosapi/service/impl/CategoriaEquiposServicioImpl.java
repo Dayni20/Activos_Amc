@@ -55,7 +55,13 @@ public class CategoriaEquiposServicioImpl implements ICategoriaEquiposServicio {
 
 	@Override
 	public void eliminarCategoriaEquipo(Integer id) {
-		clienteweb.delete().uri("/categorias-equipo/" + id).retrieve().toBodilessEntity().block();
+		try {
+			clienteweb.delete().uri("/categorias-equipo/" + id).retrieve().toBodilessEntity().block();
+		} catch (WebClientResponseException ex) {
+			String errorBody = ex.getResponseBodyAsString();
+			String mensaje = extraerMensajeError(errorBody);
+			throw new RuntimeException(mensaje);
+		}
 	}
 
 	private String extraerMensajeError(String errorBody) {
