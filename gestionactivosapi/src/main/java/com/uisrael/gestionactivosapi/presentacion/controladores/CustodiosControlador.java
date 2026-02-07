@@ -18,43 +18,80 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/custodios")
 public class CustodiosControlador {
 
-    private final ICustodiosUseCase custodiosUseCase;
-    private final ICustodiosDtoMapper mapper;
+	private final ICustodiosUseCase custodiosUseCase;
+	private final ICustodiosDtoMapper mapper;
 
-    public CustodiosControlador(ICustodiosUseCase custodiosUseCase, ICustodiosDtoMapper mapper) {
-        this.custodiosUseCase = custodiosUseCase;
-        this.mapper = mapper;
-    }
+	public CustodiosControlador(ICustodiosUseCase custodiosUseCase, ICustodiosDtoMapper mapper) {
+		this.custodiosUseCase = custodiosUseCase;
+		this.mapper = mapper;
+	}
 
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public CustodiosResponseDTO crear(@Valid @RequestBody CustodiosRequestDTO request) {
-        return mapper.toResponseDto(custodiosUseCase.crear(mapper.toDomain(request)));
-    }
+	@PostMapping
+	public ResponseEntity<?> crear(@Valid @RequestBody CustodiosRequestDTO request) {
 
-    @GetMapping
-    public List<CustodiosResponseDTO> listar() {
-        return custodiosUseCase.listar().stream().map(mapper::toResponseDto).toList();
-    }
+		// ✅ si ya existe, no intentes guardar
+		if (custodiosUseCase.existeCedula(request.getCedula().trim())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un empleado con esa cédula");
+		}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustodiosResponseDTO> obtenerPorId(@PathVariable int id) {
-        Custodios c = custodiosUseCase.obtenerPorId(id);
-        return ResponseEntity.ok(mapper.toResponseDto(c));
-    }
+		if (custodiosUseCase.existeCorreo(request.getCorreo().trim())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un empleado con ese correo");
+		}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CustodiosResponseDTO> actualizar(@PathVariable int id,
-                                                           @Valid @RequestBody CustodiosRequestDTO request) {
-        Custodios actualizado = custodiosUseCase.actualizar(id, mapper.toDomain(request));
-        return ResponseEntity.ok(mapper.toResponseDto(actualizado));
-    }
+		CustodiosResponseDTO creado = mapper.toResponseDto(custodiosUseCase.crear(mapper.toDomain(request)));
 
-    @PutMapping("/estado/{id}")
-    public ResponseEntity<CustodiosResponseDTO> actualizarEstado(@PathVariable int id,
-    		@RequestBody java.util.Map<String, Boolean> body) {
-    	boolean estado = Boolean.TRUE.equals(body.get("estado"));
-        Custodios actualizado = custodiosUseCase.actualizarEstado(id, estado);
-        return ResponseEntity.ok(mapper.toResponseDto(actualizado));
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+	}
+
+	@GetMapping
+	public List<CustodiosResponseDTO> listar() {
+		return custodiosUseCase.listar().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> actualizar(@PathVariable int id, @Valid @RequestBody CustodiosRequestDTO request) {
+
+		if (custodiosUseCase.existeCedulaParaOtro(request.getCedula().trim(), id)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe otro empleado con esa cédula");
+		}
+
+		if (custodiosUseCase.existeCorreoParaOtro(request.getCorreo().trim(), id)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe otro empleado con ese correo");
+		}
+
+		Custodios actualizado = custodiosUseCase.actualizar(id, mapper.toDomain(request));
+		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+
+	@PutMapping("/estado/{id}")
+	public ResponseEntity<CustodiosResponseDTO> actualizarEstado(@PathVariable int id,
+			@RequestBody java.util.Map<String, Boolean> body) {
+		boolean estado = Boolean.TRUE.equals(body.get("estado"));
+		Custodios actualizado = custodiosUseCase.actualizarEstado(id, estado);
+		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<CustodiosResponseDTO> obtenerPorId(@PathVariable int id) {
+		Custodios c = custodiosUseCase.obtenerPorId(id);
+		return ResponseEntity.ok(mapper.toResponseDto(c));
+	}
+
+	@GetMapping("/existe-cedula")
+	public ResponseEntity<Boolean> existeCedula(@RequestParam String cedula,
+			@RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? custodiosUseCase.existeCedula(cedula)
+				: custodiosUseCase.existeCedulaParaOtro(cedula, id);
+
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/existe-correo")
+	public ResponseEntity<Boolean> existeCorreo(@RequestParam String correo,
+			@RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? custodiosUseCase.existeCorreo(correo)
+				: custodiosUseCase.existeCorreoParaOtro(correo, id);
+
+		return ResponseEntity.ok(existe);
+	}
 }

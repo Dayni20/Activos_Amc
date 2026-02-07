@@ -85,7 +85,7 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
 
 	@Override
 	public boolean existeCorreoParaOtro(String correo, int idCustodio) {
-		return jpaRepository.existsByCorreoIgnoreCaseAndIdCustoodioNot(correo, idCustodio);
+		return jpaRepository.existsByCorreoIgnoreCaseAndIdCustodioNot(correo, idCustodio);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
 
 	@Override
 	public boolean existeCedulaParaOtro(String cedula, int idCustodio) {
-		return jpaRepository.existsByCedulaIgnoreCaseAndIdCustoodioNot(cedula, idCustodio);
+		return jpaRepository.existsByCedulaIgnoreCaseAndIdCustodioNot(cedula, idCustodio);
 		
 	}
 }
