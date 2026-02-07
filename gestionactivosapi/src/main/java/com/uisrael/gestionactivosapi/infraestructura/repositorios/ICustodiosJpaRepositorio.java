@@ -8,10 +8,10 @@ public interface ICustodiosJpaRepositorio extends JpaRepository<CustodiosJpa, In
 	
 	boolean existsByCedulaIgnoreCase(String cedula);
 
-	boolean existsByCedulaIgnoreCaseAndIdCustoodioNot(String cedula, Integer idCustodio);
+	boolean existsByCedulaIgnoreCaseAndIdCustodioNot(String cedula, Integer idCustodio);
 
 	boolean existsByCorreoIgnoreCase(String correo);
 
-	boolean existsByCorreoIgnoreCaseAndIdCustoodioNot(String correo, Integer idCustodio);
+	boolean existsByCorreoIgnoreCaseAndIdCustodioNot(String correo, Integer idCustodio);
 
 }
