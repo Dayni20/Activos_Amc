@@ -4,8 +4,8 @@
 	layout:decorate="~{plantilla/plantillaui}">
 
 <head>
-	<meta charset="utf-8">
-	<title>Nuevo Custodio</title>
+<meta charset="utf-8">
+<title>Nuevo Custodio</title>
 </head>
 
 <body>
@@ -26,16 +26,15 @@
 
 				<div class="page-header-right ms-auto">
 					<div class="page-header-right-items">
-						<div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+						<div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 
 							<button type="submit" class="btn btn-primary">
-								<i class="feather-save me-2"></i>
-								<span>Guardar</span>
+								<i class="feather-save me-2"></i> <span>Guardar</span>
 							</button>
 
-							<a th:href="@{/custodios}" class="btn btn-light">
-								<i class="feather-arrow-left me-2"></i>
-								<span>Volver</span>
+							<a th:href="@{/custodios}" class="btn btn-light"> <i
+								class="feather-arrow-left me-2"></i> <span>Volver</span>
 							</a>
 
 						</div>
@@ -58,32 +57,38 @@
 						<div class="row">
 
 							<div class="col-md-6 mb-4">
-								<label class="form-label">Nombre <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" placeholder="Nombre completo" th:field="*{nombre}">
+								<label class="form-label">Nombre <span
+									class="text-danger">*</span></label> <input type="text"
+									class="form-control" placeholder="Nombre completo"
+									th:field="*{nombre}" maxlength="50">
 								<div class="text-danger small" th:if="${errorNombre}">
 									<span th:text="${errorNombre}"></span>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-4">
-								<label class="form-label">Cédula <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" placeholder="Ej: 0999999999" th:field="*{cedula}">
+								<label class="form-label">Cédula <span
+									class="text-danger">*</span></label> <input type="text"
+									class="form-control" placeholder="Ej: 0999999999"
+									th:field="*{cedula}" maxlength="10">
 								<div class="text-danger small" th:if="${errorCedula}">
 									<span th:text="${errorCedula}"></span>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-4">
-								<label class="form-label">Correo</label>
-								<input type="email" class="form-control" placeholder="correo@dominio.com" th:field="*{correo}">
+								<label class="form-label">Correo</label> <input type="email"
+									class="form-control" placeholder="correo@dominio.com"
+									th:field="*{correo}">
 								<div class="text-danger small" th:if="${errorCorreo}">
 									<span th:text="${errorCorreo}"></span>
 								</div>
 							</div>
 
 							<div class="col-md-6 mb-4">
-								<label class="form-label">Teléfono</label>
-								<input type="text" class="form-control" placeholder="Ej: 09xxxxxxxx" th:field="*{telefono}">
+								<label class="form-label">Teléfono</label> <input type="text"
+									class="form-control" placeholder="Ej: 09xxxxxxxx"
+									th:field="*{telefono}" maxlength="10">
 								<div class="text-danger small" th:if="${errorTelefono}">
 									<span th:text="${errorTelefono}"></span>
 								</div>
@@ -91,14 +96,6 @@
 
 						</div>
 
-						<div class="row mb-2">
-							<div class="form-check form-switch form-switch-sm ps-5">
-								<input class="form-check-input c-pointer" type="checkbox"
-									id="estadoSwitch" th:field="*{estado}">
-								<label class="form-check-label fw-500 text-dark c-pointer"
-									for="estadoSwitch">Activo</label>
-							</div>
-						</div>
 
 					</div>
 				</div>

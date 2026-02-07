@@ -34,6 +34,7 @@
 
                     <!-- Nombre -->
                     <div class="mb-4">
+
                         <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
                         <input type="text" class="form-control"
                                th:field="*{nombre}" required
@@ -42,6 +43,12 @@
 
                     <!-- Estado -->
                     <div class="mb-4">
+
+                        <label class="form-label">Nombre <span class="text-danger">*</span></label>
+                        <input type="text" maxlength="100" class="form-control" placeholder="Nombre de la categoría" value=" ">
+                    </div>
+                    <div class="row mb-4">
+
                         <div class="form-check form-switch form-switch-sm ps-5">
                             <input class="form-check-input c-pointer" type="checkbox"
                                    id="estadoSwitch"

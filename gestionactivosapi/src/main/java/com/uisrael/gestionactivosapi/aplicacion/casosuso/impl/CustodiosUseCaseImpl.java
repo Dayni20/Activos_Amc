@@ -16,6 +16,15 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
 
     @Override
     public Custodios crear(Custodios custodio) {
+    	
+    	if (repositorio.existeCedula(custodio.getCorreo().trim())) {
+			throw new RuntimeException("Ya existe un empleado con ese correo");
+		}
+    	
+    	if (repositorio.existeCedula(custodio.getCedula().trim())) {
+			throw new RuntimeException("Ya existe un empleado con esa cédula");
+		}
+    	
         return repositorio.guardar(custodio);
     }
 
@@ -34,6 +43,15 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
     public Custodios actualizar(int id, Custodios custodio) {
         repositorio.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
+        
+        
+    	if (repositorio.existeCedulaParaOtro(custodio.getCedula().trim(), id)) {
+			throw new RuntimeException("Ya existe otro empleado con esa cédula");
+		}
+    	
+    	if (repositorio.existeCorreoParaOtro(custodio.getCorreo().trim(), id)) {
+			throw new RuntimeException("Ya existe otro empleado con ese correo");
+		}
 
         Custodios actualizado = new Custodios(
                 id,
@@ -41,15 +59,18 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
                 custodio.getCedula(),
                 custodio.getCorreo(),
                 custodio.getTelefono(),
-                custodio.isEstado()
+                custodio.getFechaIngreso(),
+                custodio.isEstado(),
+                custodio.getFkDepartamento(),
+                custodio.getFkCargo()
         );
 
         return repositorio.actualizar(id, actualizado);
     }
 
     @Override
-    public Custodios actualizarEstado(int id, Custodios custodio) {
-        repositorio.buscarPorId(id)
+    public Custodios actualizarEstado(int id, boolean estado) {
+    	Custodios custodio = repositorio.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
 
         Custodios actualizado = new Custodios(
@@ -58,9 +79,32 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
                 custodio.getCedula(),
                 custodio.getCorreo(),
                 custodio.getTelefono(),
-                custodio.isEstado()
+                custodio.getFechaIngreso(),
+                estado,
+                custodio.getFkDepartamento(),
+                custodio.getFkCargo()
         );
 
         return repositorio.actualizarEstado(id, actualizado);
     }
+
+	@Override
+	public boolean existeCorreo(String correo) {
+		return repositorio.existeCorreo(correo.trim());
+	}
+
+	@Override
+	public boolean existeCorreoParaOtro(String correo, int idCustodio) {
+		return repositorio.existeCorreoParaOtro(correo.trim(), idCustodio);
+	}
+
+	@Override
+	public boolean existeCedula(String cedula) {
+		return repositorio.existeCedula(cedula.trim());
+	}
+
+	@Override
+	public boolean existeCedulaParaOtro(String cedula, int idCustodio) {
+		return repositorio.existeCedulaParaOtro(cedula.trim(), idCustodio);
+	}
 }

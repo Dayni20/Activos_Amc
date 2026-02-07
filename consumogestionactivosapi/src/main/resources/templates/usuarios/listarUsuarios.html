@@ -65,7 +65,7 @@
 									<tbody>
 										<tr class="single-item" th:each="usuario : ${listarusuarios}">
 											<td><a href="javascript:void(0);" class="fw-bold"
-												th:text="'#' + ${usuario.idUsuario}"></a></td>
+												th:text="${usuario.idUsuario}"></a></td>
 											<td th:text="${usuario.nombre}"></td>
 											<td th:text="${usuario.correo}"></td>
 											<td
@@ -91,12 +91,6 @@
 														type="submit" 
 														class="avatar-text avatar-md border-0 bg-transparent"
 														onclick="return confirm('¿Está seguro de desactivar este usuario?');">
-														<i class="feather feather-trash-2 text-danger"></i>
-													</button>
-													<button th:if="${!usuario.estado}" 
-														type="button" 
-														class="avatar-text avatar-md border-0 bg-transparent"
-														onclick="alert('Este usuario ya se encuentra inactivo');">
 														<i class="feather feather-trash-2 text-danger"></i>
 													</button>
 												</form>												

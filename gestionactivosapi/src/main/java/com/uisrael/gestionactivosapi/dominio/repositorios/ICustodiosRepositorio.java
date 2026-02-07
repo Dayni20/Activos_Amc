@@ -7,13 +7,21 @@ import com.uisrael.gestionactivosapi.dominio.entidades.Custodios;
 
 public interface ICustodiosRepositorio {
 
-    Custodios guardar(Custodios custodio);
+	Custodios guardar(Custodios custodio);
 
-    Optional<Custodios> buscarPorId(int id);
+	Optional<Custodios> buscarPorId(int id);
 
-    List<Custodios> listarTodos();
+	List<Custodios> listarTodos();
 
-    Custodios actualizar(int id, Custodios custodio);
+	Custodios actualizar(int id, Custodios custodio);
 
-    Custodios actualizarEstado(int id, Custodios custodio);
+	Custodios actualizarEstado(int id, Custodios custodio);
+
+	boolean existeCorreo(String correo);
+
+	boolean existeCorreoParaOtro(String correo, int idCustodio);
+
+	boolean existeCedula(String cedula);
+
+	boolean existeCedulaParaOtro(String cedula, int idCustodio);
 }

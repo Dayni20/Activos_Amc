@@ -92,6 +92,7 @@ public class UbicacionesControlador {
 		if (ubicacion.getIdUbicacion() > 0) {
 			servicioUbicacion.actualizarUbicacion(ubicacion.getIdUbicacion(), ubicacion);
 		} else {
+			ubicacion.setEstado(true);
 			servicioUbicacion.crearUbicacion(ubicacion);
 		}
 

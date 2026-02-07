@@ -49,7 +49,7 @@
 								<table class="table table-hover" id="proposalList">
 									<thead>
 										<tr>
-											<th>Departamento</th>
+											<th>ID</th>
 											<th>Nombre</th>
 											<th>Ubicación</th>
 											<th>Estado</th>
@@ -59,7 +59,7 @@
 									<tbody>
 										<tr th:each="departamento : ${listadepartamento}"
 											class="single-item">
-											<td th:text="${departamento.idDepartamento}"></td>
+											<td class="fw-bold" th:text="${departamento.idDepartamento}"></td>
 											<td th:text="${departamento.nombre}"></td>
 											<td th:text="${departamento.fkUbicacion.nombre}"></td>
 											<td>
@@ -75,7 +75,7 @@
 														th:href="@{/departamentos/editar-departamento/{id}(id=${departamento.idDepartamento})}"
 														class="avatar-text avatar-md"> <i
 														class="feather feather-edit"></i>
-													</a> <a href="javascript:void(0)" class="avatar-text avatar-md"
+													</a> <a th:if="${departamento.estado}" href="javascript:void(0)" class="avatar-text avatar-md"
 														data-bs-toggle="modal"
 														data-bs-target="#modalEliminarDepartamento"
 														th:attr="data-id=${departamento.idDepartamento}"> <i

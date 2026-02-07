@@ -57,7 +57,7 @@
 									<tbody>
 										<tr th:each="custodio : ${listarcustodios}"
 											class="single-item">
-											<td th:text="${custodio.idCustodio}"></td>
+											<td class="fw-bold" th:text="${custodio.idCustodio}"></td>
 											<td th:text="${custodio.nombre} ?: '-'"></td>
 											<td th:text="${custodio.cedula} ?: '-'"></td>
 											<td th:text="${custodio.correo} ?: '-'"></td>

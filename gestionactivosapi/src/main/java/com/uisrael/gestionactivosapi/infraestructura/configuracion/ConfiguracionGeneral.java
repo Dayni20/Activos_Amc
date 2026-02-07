@@ -62,21 +62,27 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICu
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IRolesUseCase;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUsuariosUseCase;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.ICargosUseCase;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.ICategoriaEquiposUseCase;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.RolesUseCaseImpl;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.UsuariosUseCaseImpl;
+import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.CargosUseCaseImpl;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.impl.CategoriaEquiposUseCaseImpl;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IUsuariosRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.ICargosRepositorio;
 import com.uisrael.gestionactivosapi.dominio.repositorios.ICategoriaEquiposRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.RolesRepositorioImpl;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.UsuariosRepositorioImpl;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.CargosRepositorioImpl;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.adaptadores.CategoriaEquiposRepositorioImpl;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IRolesJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IUsuariosJpaMapper;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICargosJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICategoriaEquiposJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IRolesJpaRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IUsuariosJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICargosJpaRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICategoriaEquiposJpaRepositorio;
 
 @Configuration
@@ -93,6 +99,11 @@ public class ConfiguracionGeneral {
 	}
 	
 	@Bean
+	ICargosUseCase cargoUseCase(ICargosRepositorio repositorio) {
+		return new CargosUseCaseImpl(repositorio);
+	}
+	
+	@Bean
 	IDepartamentosRepositorio departamentoRepositorio(IDepartamentosJpaRepositorio jpaRepositorio, IDepartamentosJpaMapper mapper) {
 		return new DepartamentosRepositorioImpl(jpaRepositorio, mapper);
 	}
@@ -100,6 +111,11 @@ public class ConfiguracionGeneral {
 	@Bean
 	IUbicacionesRepositorio ubicacionRepositorio(IUbicacionesJpaRepositorio jpaRepositorio, IUbicacionesJpaMapper mapper) {
 		return new UbicacionesRepositorioImpl(jpaRepositorio, mapper);
+	}
+	
+	@Bean
+	ICargosRepositorio cargoRepositorio(ICargosJpaRepositorio jpaRepositorio, ICargosJpaMapper mapper) {
+		return new CargosRepositorioImpl(jpaRepositorio, mapper);
 	}
 	
 	@Bean

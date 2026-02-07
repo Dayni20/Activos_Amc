@@ -13,5 +13,13 @@ public interface ICustodiosUseCase {
 
     Custodios actualizar(int id, Custodios custodio);
 
-    Custodios actualizarEstado(int id, Custodios custodio);
+    Custodios actualizarEstado(int id, boolean estado);
+    
+	boolean existeCorreo(String correo);
+
+	boolean existeCorreoParaOtro(String correo, int idCustodio);
+
+	boolean existeCedula(String cedula);
+
+	boolean existeCedulaParaOtro(String cedula, int idCustodio);
 }

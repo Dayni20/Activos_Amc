@@ -45,7 +45,7 @@
 						<div class="mb-4">
 							<label class="form-label">Nombre <span
 								class="text-danger">*</span></label> <input type="text"
-								class="form-control" placeholder="Nombre" th:field="*{nombre}">
+								class="form-control" placeholder="Nombre" th:field="*{nombre}" maxlength="100">
 							<div class="text-danger small" th:if="${errorNombre}">
 								<span th:text="${errorNombre}"></span>
 							</div>
@@ -53,18 +53,10 @@
 						<div class="mb-4">
 							<label class="form-label">Agencia <span
 								class="text-danger">*</span></label> <input type="text"
-								class="form-control" placeholder="Agencia" th:field="*{agencia}"
+								class="form-control" placeholder="Agencia" th:field="*{agencia}" maxlength="100"
 								>
 							<div class="text-danger small" th:if="${errorAgencia}">
 								<span th:text="${errorAgencia}"></span>
-							</div>
-						</div>
-						<div class="row mb-4">
-							<div class="form-check form-switch form-switch-sm ps-5">
-								<input class="form-check-input c-pointer" type="checkbox"
-									id="commentSwitch" th:field="*{estado}"> <label
-									class="form-check-label fw-500 text-dark c-pointer"
-									for="commentSwitch">Activo</label>
 							</div>
 						</div>
 					</div>

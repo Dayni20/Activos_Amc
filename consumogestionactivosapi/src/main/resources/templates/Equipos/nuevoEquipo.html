@@ -42,15 +42,15 @@
           ========================== -->
 						<div class="row">
 							<div class="col-md-4 mb-4">
-								<label class="form-label">Código SAP</label> <input type="text"
-									class="form-control" th:field="*{codigoSap}"
-									placeholder="Código SAP" />
+								<label class="form-label">Código SAP</label> <input
+									maxlength="20" type="text" class="form-control"
+									th:field="*{codigoSap}" placeholder="Código SAP" />
 							</div>
 
 							<div class="col-md-4 mb-4">
 								<label class="form-label">Tipo de equipo <span
 									class="text-danger">*</span></label> <input type="text"
-									class="form-control" th:field="*{tipoEquipo}"
+									class="form-control" th:field="*{tipoEquipo}" maxlength="100"
 									placeholder="Ej: Laptop" />
 								<div class="text-danger small" th:if="${errorTipoEquipo}">
 									<span th:text="${errorTipoEquipo}"></span>
@@ -60,7 +60,7 @@
 							<div class="col-md-4 mb-4">
 								<label class="form-label">Modelo <span
 									class="text-danger">*</span></label> <input type="text"
-									class="form-control" th:field="*{modelo}"
+									class="form-control" th:field="*{modelo}" maxlength="100"
 									placeholder="Ej: ThinkPad" />
 								<div class="text-danger small" th:if="${errorModelo}">
 									<span th:text="${errorModelo}"></span>
@@ -70,7 +70,8 @@
 							<div class="col-md-4 mb-4">
 								<label class="form-label">Serial <span
 									class="text-danger">*</span></label> <input type="text"
-									class="form-control" th:field="*{serial}" placeholder="Serial" />
+									class="form-control" th:field="*{serial}" maxlength="100"
+									placeholder="Serial" />
 								<div class="text-danger small" th:if="${errorSerial}">
 									<span th:text="${errorSerial}"></span>
 								</div>
@@ -78,7 +79,7 @@
 
 							<div class="col-md-4 mb-4">
 								<label class="form-label">Procesador</label> <input type="text"
-									class="form-control" th:field="*{procesador}"
+									class="form-control" th:field="*{procesador}" maxlength="100"
 									placeholder="Procesador" />
 							</div>
 						</div>
@@ -102,7 +103,7 @@
 							<div class="col-md-3 mb-4">
 								<label class="form-label">Sistema Operativo</label> <input
 									type="text" class="form-control" th:field="*{sistemaOperativo}"
-									placeholder="Windows 11" />
+									maxlength="100" placeholder="Windows 11" />
 							</div>
 						</div>
 
@@ -130,14 +131,14 @@
 
 							<div class="col-md-3 mb-4">
 								<label class="form-label">Tipo licencia Office</label> <input
-									type="text" class="form-control"
+									type="text" class="form-control" maxlength="50"
 									th:field="*{tipoLicenciaOffice}" placeholder="Ej: 365 / 2019" />
 							</div>
 
 							<div class="col-md-3 mb-4">
 								<label class="form-label">Versión Office</label> <input
-									type="text" class="form-control" th:field="*{versionOffice}"
-									placeholder="Ej: ProPlus" />
+									type="text" class="form-control" maxlength="150"
+									th:field="*{versionOffice}" placeholder="Ej: ProPlus" />
 							</div>
 
 							<div class="col-md-3 mb-4">

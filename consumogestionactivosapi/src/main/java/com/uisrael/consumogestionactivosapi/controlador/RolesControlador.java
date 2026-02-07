@@ -1,5 +1,6 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class RolesControlador {
 	@GetMapping
 	public String listarRoles(Model model) {	
 		List<RolesResponseDTO> contenidoBD = servicioRoles.listarRol();
+		contenidoBD.sort(Comparator.comparing(RolesResponseDTO::getIdRol));
 		model.addAttribute("listarroles", contenidoBD);
 		return "roles/listarRoles";
 	}
@@ -41,6 +43,7 @@ public class RolesControlador {
 			if (nuevorol.getIdRol() > 0) {
 				servicioRoles.actualizarRol(nuevorol.getIdRol(), nuevorol);
 			} else {
+				nuevorol.setEstado(true);
 				servicioRoles.nuevoRol(nuevorol);
 			}
 			return "redirect:/roles";

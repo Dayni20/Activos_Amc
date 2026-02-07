@@ -63,7 +63,7 @@
 									<tbody>
 										<tr class="single-item" th:each="rol : ${listarroles}">
 											<td><a href="javascript:void(0);" class="fw-bold"
-												th:text="'#' + ${rol.idRol}"></a></td>
+												th:text="${rol.idRol}"></a></td>
 											<td th:text="${rol.nombre}"></td>
 											<td>
 												<div th:class="${rol.estado ? 'badge bg-soft-success text-success' : 'badge bg-soft-danger text-danger'}"
@@ -82,12 +82,6 @@
 															type="submit" 
 															class="avatar-text avatar-md border-0 bg-transparent"
 															onclick="return confirm('¿Está seguro de desactivar este rol?');">
-															<i class="feather feather-trash-2 text-danger"></i>
-														</button>
-														<button th:if="${!rol.estado}" 
-															type="button" 
-															class="avatar-text avatar-md border-0 bg-transparent"
-															onclick="alert('Este rol ya se encuentra inactivo');">
 															<i class="feather feather-trash-2 text-danger"></i>
 														</button>
 													</form>

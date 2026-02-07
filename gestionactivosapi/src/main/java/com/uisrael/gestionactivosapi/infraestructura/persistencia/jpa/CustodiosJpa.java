@@ -1,6 +1,7 @@
 package com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +32,17 @@ public class CustodiosJpa implements Serializable {
 
     @Column(name = "telefono", length = 20)
     private String telefono;
-
+    
+    @Column(name = "fecha_ingreso")
+    private LocalDate fechaIngreso;
+    
     private boolean estado;
+    
+    @ManyToOne
+    @JoinColumn(name = "fkDepartamento")
+    private DepartamentosJpa fkDepartamento;
+    
+    @ManyToOne
+    @JoinColumn(name = "fkCargo")
+    private CargosJpa fkCargo;
 }
