@@ -8,6 +8,6 @@ public interface ICargosJpaRepositorio extends JpaRepository<CargosJpa, Integer>
 	
 	boolean existsByNombreIgnoreCase(String nombre);
 
-	boolean existsByNombreIgnoreCaseAndIdCargoNot(String nombre, Integer idDepartamento);
+	boolean existsByNombreIgnoreCaseAndIdCargoNot(String nombre, Integer idCargo);
 
 }

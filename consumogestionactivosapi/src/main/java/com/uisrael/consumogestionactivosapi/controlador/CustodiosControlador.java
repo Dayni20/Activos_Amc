@@ -62,6 +62,7 @@ public class CustodiosControlador {
 		if (custodio.getIdCustodio() > 0) {
 			servicioCustodios.actualizarCustodio(custodio.getIdCustodio(), custodio);
 		} else {
+			custodio.setEstado(true);
 			servicioCustodios.crearCustodio(custodio);
 		}
 

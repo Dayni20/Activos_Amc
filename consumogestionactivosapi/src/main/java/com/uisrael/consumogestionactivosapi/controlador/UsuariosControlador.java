@@ -1,5 +1,6 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class UsuariosControlador {
 	@GetMapping
 	public String listarUsuarios(Model model) {	
 		List<UsuariosResponseDTO> contenidoBD = servicioUsuarios.listarUsuario();
+		contenidoBD.sort(Comparator.comparing(UsuariosResponseDTO::getIdUsuario));
 		model.addAttribute("listarusuarios", contenidoBD);
 		return "usuarios/listarUsuarios";
 	}

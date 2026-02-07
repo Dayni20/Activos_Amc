@@ -17,7 +17,7 @@
 					<h5 class="m-b-10">Ubicaciones</h5>
 				</div>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item"><a th:href="@{/ubicaciones}">Home</a></li>
 					<li class="breadcrumb-item">Ubicaciones</li>
 				</ul>
 			</div>
@@ -48,7 +48,7 @@
 								<table class="table table-hover" id="proposalList">
 									<thead>
 										<tr>
-											<th>Ubicación</th>
+											<th>ID</th>
 											<th>Nombre</th>
 											<th>Agencia</th>
 											<th>Estado</th>
@@ -58,7 +58,7 @@
 									<tbody>
 										<tr th:each="ubicaciones : ${listaubicacion}"
 											class="single-item">
-											<td th:text="${ubicaciones.idUbicacion}"></td>
+											<td class="fw-bold" th:text="${ubicaciones.idUbicacion}"></td>
 											<td th:text="${ubicaciones.nombre}"></td>
 											<td th:text="${ubicaciones.agencia}"></td>
 											<td>
@@ -74,7 +74,7 @@
 														th:href="@{/ubicaciones/editar-ubicacion/{id}(id=${ubicaciones.idUbicacion})}"
 														class="avatar-text avatar-md"> <i
 														class="feather feather-edit"></i>
-													</a> <a href="javascript:void(0)" class="avatar-text avatar-md"
+													</a> <a th:if="${ubicaciones.estado}" href="javascript:void(0)" class="avatar-text avatar-md"
 														data-bs-toggle="modal"
 														data-bs-target="#modalEliminarUbicacion"
 														th:attr="data-id=${ubicaciones.idUbicacion}"> <i

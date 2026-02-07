@@ -5,21 +5,20 @@
 
 <head>
 <meta charset="utf-8">
-<title>Ubicaciones</title>
+<title>Cargos</title>
 </head>
 
 <body>
 	<div layout:fragment="contenidopaginas">
-		<form th:action="@{/ubicaciones}" th:object="${ubicacion}"
-			method="post">
+		<form th:action="@{/cargos}" th:object="${cargo}" method="post">
 			<div class="page-header">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
-						<h5 class="m-b-10">Ubicaciones</h5>
+						<h5 class="m-b-10">Cargos</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a th:href="@{/ubicaciones}">Home</a></li>
-						<li class="breadcrumb-item">Crear</li>
+						<li class="breadcrumb-item"><a th:href="@{/cargos}">Home</a></li>
+						<li class="breadcrumb-item">Editar</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -42,21 +41,22 @@
 			<div class="main-content">
 				<div class="card stretch stretch-full">
 					<div class="card-body">
+						<input type="hidden" th:field="*{idCargo}" />
 						<div class="mb-4">
 							<label class="form-label">Nombre <span
 								class="text-danger">*</span></label> <input type="text"
-								class="form-control" placeholder="Nombre" th:field="*{nombre}" maxlength="100">
+								class="form-control" placeholder="Nombre" th:field="*{nombre}"
+								maxlength="50">
 							<div class="text-danger small" th:if="${errorNombre}">
 								<span th:text="${errorNombre}"></span>
 							</div>
 						</div>
-						<div class="mb-4">
-							<label class="form-label">Agencia <span
-								class="text-danger">*</span></label> <input type="text"
-								class="form-control" placeholder="Agencia" th:field="*{agencia}" maxlength="100"
-								>
-							<div class="text-danger small" th:if="${errorAgencia}">
-								<span th:text="${errorAgencia}"></span>
+						<div class="row mb-4">
+							<div class="form-check form-switch form-switch-sm ps-5">
+								<input class="form-check-input c-pointer" type="checkbox"
+									id="commentSwitch" th:field="*{estado}"> <label
+									class="form-check-label fw-500 text-dark c-pointer"
+									for="commentSwitch">Activo</label>
 							</div>
 						</div>
 					</div>

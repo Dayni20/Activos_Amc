@@ -64,7 +64,7 @@
 										<tr class="single-item"
 											th:each="categoria : ${listarcategorias}">
 											<td><a href="javascript:void(0);" class="fw-bold"
-												th:text="'#' + ${categoria.idCategoria}"></a></td>
+												th:text="${categoria.idCategoria}"></a></td>
 											<td th:text="${categoria.nombre}"></td>
 											<td>
 												<div th:class="${categoria.estado ? 'badge bg-soft-success text-success' : 'badge bg-soft-danger text-danger'}"
@@ -85,12 +85,6 @@
 															type="submit" 
 															class="avatar-text avatar-md border-0 bg-transparent"
 															onclick="return confirm('¿Está seguro de desactivar esta categoría?');">
-															<i class="feather feather-trash-2 text-danger"></i>
-														</button>
-														<button th:if="${!categoria.estado}" 
-															type="button" 
-															class="avatar-text avatar-md border-0 bg-transparent"
-															onclick="alert('Esta categoría ya se encuentra inactiva');">
 															<i class="feather feather-trash-2 text-danger"></i>
 														</button>
 													</form>

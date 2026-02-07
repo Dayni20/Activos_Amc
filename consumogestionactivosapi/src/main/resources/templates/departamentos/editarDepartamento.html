@@ -46,7 +46,8 @@
 						<div class="mb-4">
 							<label class="form-label">Nombre <span
 								class="text-danger">*</span></label> <input type="text"
-								class="form-control" placeholder="Nombre" th:field="*{nombre}">
+								class="form-control" placeholder="Nombre" th:field="*{nombre}"
+								maxlength="100">
 							<div class="text-danger small" th:if="${errorNombre}">
 								<span th:text="${errorNombre}"></span>
 							</div>

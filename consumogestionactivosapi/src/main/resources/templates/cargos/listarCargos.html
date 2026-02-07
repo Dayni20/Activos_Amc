@@ -5,7 +5,7 @@
 
 <head>
 
-<title>Departamentos</title>
+<title>Cargos</title>
 
 </head>
 
@@ -14,21 +14,20 @@
 		<div class="page-header">
 			<div class="page-header-left d-flex align-items-center">
 				<div class="page-header-title">
-					<h5 class="m-b-10">Departamentos</h5>
+					<h5 class="m-b-10">Cargos</h5>
 				</div>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/departamentos}">Home</a></li>
-					<li class="breadcrumb-item">Departamentos</li>
+					<li class="breadcrumb-item"><a th:href="@{/cargos}">Home</a></li>
+					<li class="breadcrumb-item">Cargos</li>
 				</ul>
 			</div>
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						
-						<a th:href="@{/departamentos/nuevo-departamento}"
+						<a th:href="@{/cargos/nuevo-cargo}"
 							class="btn btn-primary"> <i class="feather-plus me-2"></i> <span>Nuevo
-								Departamento</span>
+								Cargo</span>
 						</a>
 					</div>
 				</div>
@@ -50,35 +49,33 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Nombre</th>
-											<th>Ubicación</th>
-											<th>Estado</th>
-											<th class="text-end">Acciones</th>
+											<th>NOMBRE</th>
+											<th>ESTADO</th>
+											<th class="text-end">ACCIONES</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="departamento : ${listadepartamento}"
+										<tr th:each="cargos : ${listacargo}"
 											class="single-item">
-											<td class="fw-bold" th:text="${departamento.idDepartamento}"></td>
-											<td th:text="${departamento.nombre}"></td>
-											<td th:text="${departamento.fkUbicacion.nombre}"></td>
+											<td class="fw-bold" th:text="${cargos.idCargo}"></td>
+											<td th:text="${cargos.nombre}"></td>
 											<td>
 												<!-- Activo -->
-												<div th:if="${departamento.estado}"
+												<div th:if="${cargos.estado}"
 													class="badge bg-soft-success text-success">Activo</div> <!-- Inactivo -->
-												<div th:unless="${departamento.estado}"
+												<div th:unless="${cargos.estado}"
 													class="badge bg-soft-danger text-danger">Inactivo</div>
 											</td>
 											<td>
 												<div class="hstack gap-2 justify-content-end">
 													<a
-														th:href="@{/departamentos/editar-departamento/{id}(id=${departamento.idDepartamento})}"
+														th:href="@{/cargos/editar-cargo/{id}(id=${cargos.idCargo})}"
 														class="avatar-text avatar-md"> <i
 														class="feather feather-edit"></i>
-													</a> <a th:if="${departamento.estado}" href="javascript:void(0)" class="avatar-text avatar-md"
+													</a> <a th:if="${cargos.estado}" href="javascript:void(0)" class="avatar-text avatar-md"
 														data-bs-toggle="modal"
-														data-bs-target="#modalEliminarDepartamento"
-														th:attr="data-id=${departamento.idDepartamento}"> <i
+														data-bs-target="#modalEliminarCargo"
+														th:attr="data-id=${cargos.idCargo}"> <i
 														class="feather feather-trash-2"></i>
 													</a>
 												</div>
@@ -93,7 +90,7 @@
 			</div>
 		</div>
 		<!-- Modal Eliminar (Lógico) -->
-		<div class="modal fade" id="modalEliminarDepartamento" tabindex="-1"
+		<div class="modal fade" id="modalEliminarCargo" tabindex="-1"
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -105,7 +102,7 @@
 					</div>
 
 					<div class="modal-body">¿Está seguro de realizar este
-						proceso? Esta acción desactivará el departamento.</div>
+						proceso? Esta acción desactivará el cargo.</div>
 
 					<div class="modal-footer">
 						<!-- NO -->
@@ -113,10 +110,8 @@
 							data-bs-dismiss="modal">No</button>
 
 						<!-- SI (envía POST) -->
-						<form th:action="@{/departamentos/eliminar-departamento}"
-							method="post">
-							<input type="hidden" name="idDepartamento"
-								id="idDepartamentoEliminar">
+						<form th:action="@{/cargos/eliminar-cargo}" method="post">
+							<input type="hidden" name="idCargo" id="idCargoEliminar">
 							<button type="submit" class="btn btn-danger">Sí,
 								desactivar</button>
 						</form>
@@ -129,24 +124,27 @@
 		<script>
 			// Cuando se abre el modal, toma el id del botón que lo abrió y lo pone en el hidden
 			const modalEliminar = document
-					.getElementById('modalEliminarDepartamento');
+					.getElementById('modalEliminarCargo');
 			modalEliminar.addEventListener('show.bs.modal', function(event) {
 				const button = event.relatedTarget; // el <a> que disparó el modal
 				const id = button.getAttribute('data-id');
-				document.getElementById('idDepartamentoEliminar').value = id;
+				document.getElementById('idCargoEliminar').value = id;
 			});
 		</script>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				const modal = document
-						.getElementById("modalEliminarDepartamento");
-				if (modal && modal.parentElement !== document.body) {
-					document.body.appendChild(modal); // ✅ lo saca del contenedor del layout
-				}
-			});
+			document.addEventListener("DOMContentLoaded",
+					function() {
+						const modal = document
+								.getElementById("modalEliminarCargo");
+						if (modal && modal.parentElement !== document.body) {
+							document.body.appendChild(modal); // ✅ lo saca del contenedor del layout
+						}
+					});
 		</script>
+
 	</div>
+
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class CategoriaEquiposControlador {
 	@GetMapping
 	public String listarCategoriaEquipos(Model model) {	
 		List<CategoriaEquiposResponseDTO> contenidoBD = servicioCategoriaEquipos.listarCategoriaEquipo();
+		contenidoBD.sort(Comparator.comparing(CategoriaEquiposResponseDTO::getIdCategoria));
 		model.addAttribute("listarcategorias", contenidoBD);
 		return "categorias_equipo/listarCategorias";
 	}
@@ -41,6 +43,7 @@ public class CategoriaEquiposControlador {
 			if (nuevacategoria.getIdCategoria() > 0) {
 				servicioCategoriaEquipos.actualizarCategoriaEquipo(nuevacategoria.getIdCategoria(), nuevacategoria);
 			} else {
+				nuevacategoria.setEstado(true);
 				servicioCategoriaEquipos.nuevoCategoriaEquipo(nuevacategoria);
 			}
 			return "redirect:/categorias-equipo";

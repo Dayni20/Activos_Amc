@@ -8,5 +8,5 @@ public interface IDepartamentosJpaRepositorio extends JpaRepository<Departamento
 
 	boolean existsByNombreIgnoreCase(String nombre);
 
-	boolean existsByNombreIgnoreCaseAndIdDepartamentoNot(String nombre, Integer idCargo);
+	boolean existsByNombreIgnoreCaseAndIdDepartamentoNot(String nombre, Integer idDepartamento);
 }

@@ -122,6 +122,7 @@ public class DepartamentosControlador {
 	    if (departamento.getIdDepartamento() > 0) {
 	        servicioDepartamento.actualizarDepartamento(departamento.getIdDepartamento(), departamento);
 	    } else {
+	    	departamento.setEstado(true);
 	        servicioDepartamento.crearDepartamento(departamento);
 	    }
 

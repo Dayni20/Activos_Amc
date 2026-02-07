@@ -52,8 +52,9 @@ public class CustodiosControlador {
 
     @PutMapping("/estado/{id}")
     public ResponseEntity<CustodiosResponseDTO> actualizarEstado(@PathVariable int id,
-                                                                 @Valid @RequestBody CustodiosRequestDTO request) {
-        Custodios actualizado = custodiosUseCase.actualizarEstado(id, mapper.toDomain(request));
+    		@RequestBody java.util.Map<String, Boolean> body) {
+    	boolean estado = Boolean.TRUE.equals(body.get("estado"));
+        Custodios actualizado = custodiosUseCase.actualizarEstado(id, estado);
         return ResponseEntity.ok(mapper.toResponseDto(actualizado));
     }
 }
