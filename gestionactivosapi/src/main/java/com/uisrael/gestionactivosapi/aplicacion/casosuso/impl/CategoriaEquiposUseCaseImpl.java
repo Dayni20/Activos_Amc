@@ -16,16 +16,14 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public CategoriaEquipos crear(CategoriaEquipos categoriaEquipo) {
-		// Validación case-insensitive: convierte a minúsculas para comparar
 		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
 		
-		// Busca si existe alguna categoría con el mismo nombre (ignorando mayúsculas/minúsculas)
 		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
 		boolean existe = todasLasCategorias.stream()
 			.anyMatch(c -> c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
 		
 		if (existe) {
-			throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+			throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + categoriaEquipo.getNombre());
 		}
 		
 		return repositorio.guardar(categoriaEquipo);
@@ -47,7 +45,6 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			throw new RuntimeException("Categoría no encontrada con ID: " + categoriaEquipo.getIdCategoria());
 		}
 		
-		// Validación case-insensitive para actualización
 		String nombreNormalizado = categoriaEquipo.getNombre().trim().toLowerCase();
 		List<CategoriaEquipos> todasLasCategorias = repositorio.listarTodos();
 		
@@ -56,7 +53,7 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 			             c.getNombre().trim().toLowerCase().equals(nombreNormalizado));
 		
 		if (existeOtra) {
-			throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + categoriaEquipo.getNombre() + "' (sin importar mayúsculas/minúsculas)");
+			throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + categoriaEquipo.getNombre());
 		}
 		
 		return repositorio.guardar(categoriaEquipo);
@@ -64,10 +61,14 @@ public class CategoriaEquiposUseCaseImpl implements ICategoriaEquiposUseCase {
 
 	@Override
 	public void eliminar(int id) {
-		if (repositorio.buscarPorId(id).isEmpty()) {
-			throw new RuntimeException("Categoría no encontrada con ID: " + id);
+		CategoriaEquipos categoria = repositorio.buscarPorId(id)
+			.orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
+		
+		if (!categoria.isEstado()) {
+			throw new IllegalArgumentException("Esta categoría ya se encuentra inactiva");
 		}
-		repositorio.eliminar(id);
+		CategoriaEquipos categoriaInactiva = new CategoriaEquipos(categoria.getIdCategoria(), categoria.getNombre(), false);
+		repositorio.guardar(categoriaInactiva);
 	}
 
 }

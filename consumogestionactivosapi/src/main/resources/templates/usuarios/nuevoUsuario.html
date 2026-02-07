@@ -27,7 +27,6 @@
                 
                     <input type="hidden" th:field="*{idUsuario}" />
                     
-                    <!-- Alerta de error desde el backend -->
                     <div class="alert alert-danger" role="alert" th:if="${errorGeneral}" th:text="${errorGeneral}"></div>
                     
                     <div class="mb-4">
@@ -37,7 +36,9 @@
                                th:field="*{nombre}"
                                required
                                minlength="3"
-                               maxlength="100">
+                               maxlength="25"
+                               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                               title="Solo se permiten letras y espacios, máximo 25 caracteres">
                     </div>
                     
                     <div class="mb-4">
@@ -51,10 +52,12 @@
                     <div class="mb-4">
                         <label class="form-label">CONTRASEÑA <span class="text-danger">*</span></label>
                         <input type="password" class="form-control" 
-                               placeholder="Ingrese la contraseña"
+                               placeholder="Ingrese la contraseña. Ejemplo: 1022_Daya"
                                th:field="*{contrasena}"
                                required
-                               minlength="8">
+                               minlength="8"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"
+                               title="La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números.">
                     </div>
                     
                     <div class="mb-4">
@@ -62,6 +65,7 @@
                         <select class="form-control" name="fkRolId" required>
                             <option value="">Seleccione un rol</option>
                             <option th:each="rol : ${roles}" 
+                                    th:if="${rol.estado}"
                                     th:value="${rol.idRol}" 
                                     th:text="${rol.nombre}"></option>
                         </select>
@@ -72,20 +76,13 @@
                         <select class="form-control" name="fkDepartamentoId" required>
                             <option value="">Seleccione un departamento</option>
                             <option th:each="departamento : ${departamentos}" 
+                                    th:if="${departamento.estado}"
                                     th:value="${departamento.idDepartamento}" 
                                     th:text="${departamento.nombre}"></option>
                         </select>
                     </div>
                     
-                    <div class="mb-4">
-                        <div class="form-check form-switch form-switch-sm ps-5">
-                            <input class="form-check-input c-pointer" type="checkbox"
-                                   id="estadoSwitch"
-                                   th:field="*{estado}">
-                            <label class="form-check-label fw-500 text-dark c-pointer"
-                                   for="estadoSwitch">ACTIVO</label>
-                        </div>
-                    </div>
+                    <input type="hidden" name="estado" value="true" />
                     
                     <div class="d-flex justify-content-end mt-4">
                         <div class="d-flex align-items-center gap-2">

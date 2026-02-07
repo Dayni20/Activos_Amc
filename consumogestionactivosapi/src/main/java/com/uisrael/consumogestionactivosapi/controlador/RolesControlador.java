@@ -59,8 +59,15 @@ public class RolesControlador {
 	}
 	
 	@PostMapping("/eliminar/{id}")
-	public String eliminarRol(@PathVariable Integer id) {
-		servicioRoles.eliminarRol(id);
-		return "redirect:/roles";
+	public String eliminarRol(@PathVariable Integer id, Model model) {
+		try {
+			servicioRoles.eliminarRol(id);
+			return "redirect:/roles";
+		} catch (RuntimeException e) {
+			List<RolesResponseDTO> contenidoBD = servicioRoles.listarRol();
+			model.addAttribute("listarroles", contenidoBD);
+			model.addAttribute("errorEliminar", e.getMessage());
+			return "roles/listarRoles";
+		}
 	}
 }

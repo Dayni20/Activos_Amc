@@ -29,16 +29,28 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 
 	@Override
 	public Usuarios crear(Usuarios usuario) {
+		if (!usuario.isEstado()) {
+			throw new IllegalArgumentException("Solo se pueden crear usuarios en estado activo");
+		}
+		
 		if (usuario.getFkRol() != null) {
 			int idRol = usuario.getFkRol().getIdRol();
-			if (rolesRepositorio.buscarPorId(idRol).isEmpty()) {
+			var rolOpt = rolesRepositorio.buscarPorId(idRol);
+			if (rolOpt.isEmpty()) {
 				throw new RuntimeException("Rol no encontrado");
+			}
+			if (!rolOpt.get().isEstado()) {
+				throw new IllegalArgumentException("No se puede asignar un rol inactivo");
 			}
 		}
 		if (usuario.getFkDepartamento() != null) {
 			int idDep = usuario.getFkDepartamento().getIdDepartamento();
-			if (departamentosRepositorio.buscarPorId(idDep).isEmpty()) {
+			var depOpt = departamentosRepositorio.buscarPorId(idDep);
+			if (depOpt.isEmpty()) {
 				throw new RuntimeException("Departamento no encontrado");
+			}
+			if (!depOpt.get().isEstado()) {
+				throw new IllegalArgumentException("No se puede asignar un departamento inactivo");
 			}
 		}
 		
@@ -75,7 +87,25 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 
 	@Override
 	public void eliminar(int id) {
-		repositorio.eliminar(id);
+		Usuarios usuario = repositorio.buscarPorId(id)
+			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+		
+		// Validar que el usuario esté activo antes de desactivarlo
+		if (!usuario.isEstado()) {
+			throw new IllegalArgumentException("Este usuario ya se encuentra inactivo");
+		}
+		
+		// Eliminado lógico: cambiar estado a false
+		Usuarios usuarioInactivo = new Usuarios(
+			usuario.getIdUsuario(),
+			usuario.getNombre(),
+			usuario.getCorreo(),
+			usuario.getContrasena(),
+			false,
+			usuario.getFkDepartamento(),
+			usuario.getFkRol()
+		);
+		repositorio.guardar(usuarioInactivo);
 	}
 
 	@Override
@@ -85,14 +115,22 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 		
 		if (usuario.getFkRol() != null) {
 			int idRol = usuario.getFkRol().getIdRol();
-			if (rolesRepositorio.buscarPorId(idRol).isEmpty()) {
+			var rolOpt = rolesRepositorio.buscarPorId(idRol);
+			if (rolOpt.isEmpty()) {
 				throw new RuntimeException("Rol no encontrado");
+			}
+			if (!rolOpt.get().isEstado()) {
+				throw new IllegalArgumentException("No se puede asignar un rol inactivo");
 			}
 		}
 		if (usuario.getFkDepartamento() != null) {
 			int idDep = usuario.getFkDepartamento().getIdDepartamento();
-			if (departamentosRepositorio.buscarPorId(idDep).isEmpty()) {
+			var depOpt = departamentosRepositorio.buscarPorId(idDep);
+			if (depOpt.isEmpty()) {
 				throw new RuntimeException("Departamento no encontrado");
+			}
+			if (!depOpt.get().isEstado()) {
+				throw new IllegalArgumentException("No se puede asignar un departamento inactivo");
 			}
 		}
 		
@@ -103,7 +141,9 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 		});
 
 		String contrasenaFinal = usuarioExistente.getContrasena();
-		if (!usuario.getContrasena().equals(usuarioExistente.getContrasena())) {
+		// Solo actualizar contraseña si se proporciona una nueva (no vacía)
+		if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty() 
+			&& !usuario.getContrasena().equals(usuarioExistente.getContrasena())) {
 			contrasenaFinal = passwordEncoder.encode(usuario.getContrasena());
 		}
 		

@@ -42,6 +42,11 @@
 		<div class="main-content">
 			<div class="row">
 				<div class="col-lg-12">
+					<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorEliminar}">
+						<strong>Error:</strong> <span th:text="${errorEliminar}"></span>
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+					
 					<div class="card stretch stretch-full">
 						<div class="card-body p-0">
 							<div class="table-responsive">
@@ -68,7 +73,7 @@
 											<td
 												th:text="${usuario.fkDepartamento != null ? usuario.fkDepartamento.nombre : '-'}"></td>
 											<td>
-												<div class="badge bg-soft-success text-success"
+											<div th:class="${usuario.estado ? 'badge bg-soft-success text-success' : 'badge bg-soft-danger text-danger'}"
 													th:text="${usuario.estado ? 'Activo' : 'Inactivo'}">
 												</div>
 											</td>
@@ -79,7 +84,23 @@
 														class="avatar-text avatar-md"> <i
 														class="feather feather-edit"></i>
 													</a>
-												</div>
+													<form th:action="@{/usuarios/eliminar/{id}(id=${usuario.idUsuario})}" 
+													  method="post" 
+													  style="display: inline;">
+													<button th:if="${usuario.estado}" 
+														type="submit" 
+														class="avatar-text avatar-md border-0 bg-transparent"
+														onclick="return confirm('¿Está seguro de desactivar este usuario?');">
+														<i class="feather feather-trash-2 text-danger"></i>
+													</button>
+													<button th:if="${!usuario.estado}" 
+														type="button" 
+														class="avatar-text avatar-md border-0 bg-transparent"
+														onclick="alert('Este usuario ya se encuentra inactivo');">
+														<i class="feather feather-trash-2 text-danger"></i>
+													</button>
+												</form>												
+											</div>
 											</td>
 										</tr>
 									</tbody>
