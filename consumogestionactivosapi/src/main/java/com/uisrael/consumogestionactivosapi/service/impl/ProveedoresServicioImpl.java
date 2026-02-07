@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.ProveedoresResponseDTO;
 import com.uisrael.consumogestionactivosapi.service.IProveedoresServicio;
@@ -32,23 +33,33 @@ public class ProveedoresServicioImpl implements IProveedoresServicio {
 	}
 
 	@Override
-	public ProveedoresResponseDTO obtenerProveedor(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	 public ProveedoresResponseDTO obtenerProveedor(Integer id) {
+        return clienteweb.get()
+                .uri("/proveedores/{id}", id)
+                .retrieve()
+                .bodyToMono(ProveedoresResponseDTO.class)
+                .block();
+    }
 
 	@Override
 	public void actualizarProveedor(Integer id, ProveedoresRequestDTO dto) {
-		// TODO Auto-generated method stub
-		
-	}
+        clienteweb.put()
+                .uri("/proveedores/{id}", id)
+                .bodyValue(dto)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+    }
 
 	@Override
 	public void eliminarProveedor(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+        // Si tu API usa DELETE:
+        clienteweb.delete()
+                .uri("/proveedores/{id}", id)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+    }
 	
 
 }
