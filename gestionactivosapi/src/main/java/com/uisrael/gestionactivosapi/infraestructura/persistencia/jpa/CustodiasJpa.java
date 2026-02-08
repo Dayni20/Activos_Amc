@@ -21,12 +21,12 @@ public class CustodiasJpa implements Serializable {
     @Column(name = "id_custodia_equipo")
     private int idCustodiaEquipo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_equipo")   // <-- AJUSTA al nombre real en tu tabla
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_equipo")
     private EquiposJpa fkEquipo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_custodio") // <-- AJUSTA al nombre real en tu tabla
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_custodio")
     private CustodiosJpa fkCustodio;
 
     @Column(name = "fecha_inicio")

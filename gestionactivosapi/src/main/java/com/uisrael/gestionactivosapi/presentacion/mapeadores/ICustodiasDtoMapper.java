@@ -28,11 +28,13 @@ public interface ICustodiasDtoMapper {
     // Helpers Request -> Domain (solo IDs)
     // =========================
     default EquiposJpa mapEquipoReq(CustodiasRequestDTO dto) {
-        if (dto == null || dto.getFkEquipo() == null) return null;
+        if (dto == null || dto.getEquipos() == null || dto.getEquipos().isEmpty()) return null;
+
         EquiposJpa e = new EquiposJpa();
-        e.setIdEquipo(dto.getFkEquipo().getIdEquipo());
+        e.setIdEquipo(dto.getEquipos().get(0).getIdEquipo()); // 👈 primer equipo
         return e;
     }
+
 
     default CustodiosJpa mapCustodioReq(CustodiasRequestDTO dto) {
         if (dto == null || dto.getFkCustodio() == null) return null;

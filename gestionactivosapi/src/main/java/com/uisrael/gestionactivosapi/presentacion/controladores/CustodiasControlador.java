@@ -27,9 +27,27 @@ public class CustodiasControlador {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustodiasResponseDTO crear(@Valid @RequestBody CustodiasRequestDTO request) {
-        return mapper.toResponseDto(custodiasUseCase.crear(mapper.toDomain(request)));
+    public List<CustodiasResponseDTO> crear(@Valid @RequestBody CustodiasRequestDTO request) {
+
+        return request.getEquipos().stream().map(eq -> {
+
+            CustodiasRequestDTO uno = new CustodiasRequestDTO();
+            uno.setFechaInicio(request.getFechaInicio());
+            uno.setFechaFin(request.getFechaFin());
+            uno.setObservacion(request.getObservacion());
+            uno.setEstado(request.isEstado());
+            uno.setFkCustodio(request.getFkCustodio());
+
+            // 👇 aquí asignamos UN equipo por registro
+            uno.setEquipos(List.of(eq));
+
+            return mapper.toResponseDto(
+                    custodiasUseCase.crear(mapper.toDomain(uno))
+            );
+
+        }).toList();
     }
+
 
     @GetMapping
     public List<CustodiasResponseDTO> listar() {
