@@ -30,28 +30,25 @@ public class EquiposControlador {
 	public ResponseEntity<?> crear(@Valid @RequestBody EquiposRequestDTO request) {
 
 		// ✅ si ya existe, no intentes guardar
-		if (equiposUseCase.existeCodigo(request.getCodigoSap().trim())) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+		if (request.getCodigoSap() != null && !request.getCodigoSap().isBlank()) {
+			if (equiposUseCase.existeCodigo(request.getCodigoSap().trim())) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+			}
 		}
-
 		if (equiposUseCase.existeSerial(request.getSerial().trim())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese serial");
 		}
 
 		if (request.getIp() != null && !request.getIp().isBlank()) {
-		    if (equiposUseCase.existeIP(request.getIp().trim())) {
-		        return ResponseEntity
-		            .status(HttpStatus.CONFLICT)
-		            .body("Ya existe un equipo con esa dirección IP");
-		    }
+			if (equiposUseCase.existeIP(request.getIp().trim())) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con esa dirección IP");
+			}
 		}
 
 		if (request.getMac() != null && !request.getMac().isBlank()) {
-		    if (equiposUseCase.existeMAC(request.getMac().trim())) {
-		        return ResponseEntity
-		            .status(HttpStatus.CONFLICT)
-		            .body("Ya existe un equipo con esa dirección MAC");
-		    }
+			if (equiposUseCase.existeMAC(request.getMac().trim())) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con esa dirección MAC");
+			}
 		}
 
 		EquiposResponseDTO creado = mapper.toResponseDto(equiposUseCase.crear(mapper.toDomain(request)));
@@ -67,8 +64,10 @@ public class EquiposControlador {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> actualizar(@PathVariable int id, @Valid @RequestBody EquiposRequestDTO request) {
 
-		if (equiposUseCase.existeCodigoParaOtro(request.getCodigoSap().trim(), id)) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+		if (request.getCodigoSap() != null && !request.getCodigoSap().isBlank()) {
+			if (equiposUseCase.existeCodigoParaOtro(request.getCodigoSap().trim(), id)) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+			}
 		}
 
 		if (equiposUseCase.existeSerialParaOtro(request.getSerial().trim(), id)) {
@@ -76,19 +75,15 @@ public class EquiposControlador {
 		}
 
 		if (request.getIp() != null && !request.getIp().isBlank()) {
-		    if (equiposUseCase.existeIPParaOtro(request.getIp().trim(), id)) {
-		        return ResponseEntity
-		            .status(HttpStatus.CONFLICT)
-		            .body("Ya existe un equipo con esa dirección IP");
-		    }
+			if (equiposUseCase.existeIPParaOtro(request.getIp().trim(), id)) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con esa dirección IP");
+			}
 		}
 
 		if (request.getMac() != null && !request.getMac().isBlank()) {
-		    if (equiposUseCase.existeMACParaOtro(request.getMac().trim(), id)) {
-		        return ResponseEntity
-		            .status(HttpStatus.CONFLICT)
-		            .body("Ya existe un equipo con esa dirección MAC");
-		    }
+			if (equiposUseCase.existeMACParaOtro(request.getMac().trim(), id)) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con esa dirección MAC");
+			}
 		}
 
 		Equipos actualizado = equiposUseCase.actualizar(id, mapper.toDomain(request));

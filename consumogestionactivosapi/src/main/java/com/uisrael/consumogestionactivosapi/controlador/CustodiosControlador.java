@@ -122,6 +122,19 @@ public class CustodiosControlador {
 				model.addAttribute("errorCedula", "Ya existe un empleado con esa cédula");
 				hayErrores = true;
 			}
+
+			if (custodio.getCedula() != null && !custodio.getCedula().matches("\\d+")) {
+				model.addAttribute("errorCedula", "La cédula solo debe contener números");
+				hayErrores = true;
+			}
+
+		}
+
+		if (custodio.getTelefono() != null && !custodio.getTelefono().isBlank()) {
+			if (!custodio.getTelefono().matches("\\d+")) {
+				model.addAttribute("errorTelefono", "El teléfono solo debe contener números");
+				hayErrores = true;
+			}
 		}
 
 		if (custodio.getCorreo() == null || custodio.getCorreo().trim().isEmpty()) {

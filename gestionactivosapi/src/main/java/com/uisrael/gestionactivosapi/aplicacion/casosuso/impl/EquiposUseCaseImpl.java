@@ -16,29 +16,30 @@ public class EquiposUseCaseImpl implements IEquiposUseCase {
 
 	@Override
 	public Equipos crear(Equipos equipo) {
-		if (repositorio.existeCodigo(equipo.getCodigoSap().trim())) {
-			throw new RuntimeException("Ya existe un equipo con ese Codigo SAP");
+		if (equipo.getCodigoSap() != null && !equipo.getCodigoSap().isBlank()) {
+			if (repositorio.existeCodigo(equipo.getCodigoSap().trim())) {
+				throw new RuntimeException("Ya existe un equipo con ese Codigo SAP");
+			}
 		}
-
 		if (repositorio.existeSerial(equipo.getSerial().trim())) {
 			throw new RuntimeException("Ya existe un equipo con ese Serial");
 		}
 
 		if (equipo.getIp() != null && !equipo.getIp().isBlank()) {
-		    String ip = equipo.getIp().trim();
+			String ip = equipo.getIp().trim();
 
-		    if (repositorio.existeIP(ip)) {
-		        throw new RuntimeException("Ya existe un equipo con esa dirección IP");
-		    }
+			if (repositorio.existeIP(ip)) {
+				throw new RuntimeException("Ya existe un equipo con esa dirección IP");
+			}
 
 		}
 
 		if (equipo.getMac() != null && !equipo.getMac().isBlank()) {
-		    String mac = equipo.getMac().trim().toUpperCase();
+			String mac = equipo.getMac().trim().toUpperCase();
 
-		    if (repositorio.existeMAC(mac)) {
-		        throw new RuntimeException("Ya existe un equipo con esa dirección MAC");
-		    }
+			if (repositorio.existeMAC(mac)) {
+				throw new RuntimeException("Ya existe un equipo con esa dirección MAC");
+			}
 
 		}
 
@@ -56,88 +57,52 @@ public class EquiposUseCaseImpl implements IEquiposUseCase {
 	}
 
 	@Override
-    public Equipos actualizar(int id, Equipos equipo) {
-    	
-    	if (repositorio.existeCodigoParaOtro(equipo.getCodigoSap().trim(), id)) {
-			throw new RuntimeException("Ya existe un equipo con ese Codigo SAP");
+	public Equipos actualizar(int id, Equipos equipo) {
+		if (equipo.getCodigoSap() != null && !equipo.getCodigoSap().isBlank()) {
+			if (repositorio.existeCodigoParaOtro(equipo.getCodigoSap().trim(), id)) {
+				throw new RuntimeException("Ya existe un equipo con ese Codigo SAP");
+			}
 		}
-    	
-    	if (repositorio.existeSerialParaOtro(equipo.getSerial().trim(), id)) {
+
+		if (repositorio.existeSerialParaOtro(equipo.getSerial().trim(), id)) {
 			throw new RuntimeException("Ya existe un equipo con ese Serial");
 		}
-    	
-    	if (repositorio.existeIPParaOtro(equipo.getSerial().trim(), id)) {
+
+		if (repositorio.existeIPParaOtro(equipo.getSerial().trim(), id)) {
 			throw new RuntimeException("Ya existe un equipo con esa dirección IP");
 		}
-    	
-    	if (repositorio.existeMACParaOtro(equipo.getSerial().trim(), id)) {
+
+		if (repositorio.existeMACParaOtro(equipo.getSerial().trim(), id)) {
 			throw new RuntimeException("Ya existe un equipo con esa dirección MAC");
 		}
-    	
-    	Equipos actualizado = new Equipos(
-    			id,
-    			equipo.getCodigoSap(),
-    	        equipo.getTipoEquipo(),
-    	        equipo.getModelo(),
-    	        equipo.getSerial(),
-    	        equipo.getProcesador(),
-    	        equipo.getMemoriaRamGb(),
-    	        equipo.getCapacidadAlmacenamientoGb(),
-    	        equipo.getSistemaOperativo(),
-    	        equipo.getLicenciaWindowsActivada(),
-    	        equipo.getEtiquetaActivoFijo(),
-    	        equipo.getTipoLicenciaOffice(),
-    	        equipo.getVersionOffice(),
-    	        equipo.getUnionDominio(),
-    	        equipo.getIp(),
-    	        equipo.getMac(),
-    	        equipo.getFechaCompra(),
-    	        equipo.getPrecioCompra(),
-    	        equipo.getEstadoEquipo(),
-    	        equipo.getObservacionEquipo(),
-    	        equipo.isEstado(),
-    	        equipo.getFkMarca(),
-    	        equipo.getFkCategoria(),
-    	        equipo.getFkProveedor()
-    			);
-    	
-        return repositorio.actualizar(id, actualizado);
-    }
+
+		Equipos actualizado = new Equipos(id, equipo.getCodigoSap(), equipo.getTipoEquipo(), equipo.getModelo(),
+				equipo.getSerial(), equipo.getProcesador(), equipo.getMemoriaRamGb(),
+				equipo.getCapacidadAlmacenamientoGb(), equipo.getSistemaOperativo(),
+				equipo.getLicenciaWindowsActivada(), equipo.getEtiquetaActivoFijo(), equipo.getTipoLicenciaOffice(),
+				equipo.getVersionOffice(), equipo.getUnionDominio(), equipo.getIp(), equipo.getMac(),
+				equipo.getFechaCompra(), equipo.getPrecioCompra(), equipo.getEstadoEquipo(),
+				equipo.getObservacionEquipo(), equipo.isEstado(), equipo.getFkMarca(), equipo.getFkCategoria(),
+				equipo.getFkProveedor());
+
+		return repositorio.actualizar(id, actualizado);
+	}
 
 	@Override
 	public Equipos actualizarEstado(int id, boolean estado) {
-		
-		Equipos equipo = repositorio.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Equipo no encontrado"));
-		
-		Equipos actualizado = new Equipos(
-    			id,
-    			equipo.getCodigoSap(),
-    	        equipo.getTipoEquipo(),
-    	        equipo.getModelo(),
-    	        equipo.getSerial(),
-    	        equipo.getProcesador(),
-    	        equipo.getMemoriaRamGb(),
-    	        equipo.getCapacidadAlmacenamientoGb(),
-    	        equipo.getSistemaOperativo(),
-    	        equipo.getLicenciaWindowsActivada(),
-    	        equipo.getEtiquetaActivoFijo(),
-    	        equipo.getTipoLicenciaOffice(),
-    	        equipo.getVersionOffice(),
-    	        equipo.getUnionDominio(),
-    	        equipo.getIp(),
-    	        equipo.getMac(),
-    	        equipo.getFechaCompra(),
-    	        equipo.getPrecioCompra(),
-    	        equipo.getEstadoEquipo(),
-    	        equipo.getObservacionEquipo(),
-    	        estado,
-    	        equipo.getFkMarca(),
-    	        equipo.getFkCategoria(),
-    	        equipo.getFkProveedor()
-    			);
-    	
-        return repositorio.actualizar(id, actualizado);
+
+		Equipos equipo = repositorio.buscarPorId(id).orElseThrow(() -> new RuntimeException("Equipo no encontrado"));
+
+		Equipos actualizado = new Equipos(id, equipo.getCodigoSap(), equipo.getTipoEquipo(), equipo.getModelo(),
+				equipo.getSerial(), equipo.getProcesador(), equipo.getMemoriaRamGb(),
+				equipo.getCapacidadAlmacenamientoGb(), equipo.getSistemaOperativo(),
+				equipo.getLicenciaWindowsActivada(), equipo.getEtiquetaActivoFijo(), equipo.getTipoLicenciaOffice(),
+				equipo.getVersionOffice(), equipo.getUnionDominio(), equipo.getIp(), equipo.getMac(),
+				equipo.getFechaCompra(), equipo.getPrecioCompra(), equipo.getEstadoEquipo(),
+				equipo.getObservacionEquipo(), estado, equipo.getFkMarca(), equipo.getFkCategoria(),
+				equipo.getFkProveedor());
+
+		return repositorio.actualizar(id, actualizado);
 	}
 
 	@Override
