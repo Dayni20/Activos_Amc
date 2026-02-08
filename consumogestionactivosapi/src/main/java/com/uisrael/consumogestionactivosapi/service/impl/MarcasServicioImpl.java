@@ -26,38 +26,92 @@ public class MarcasServicioImpl  implements IMarcasServicio{
 		return clienteweb.get().uri("/marcas").retrieve().bodyToFlux(MarcasResponseDTO.class).collectList().block();
 	}
 
-	@Override
-	public void nuevaMarca(MarcasRequestDTO dto) {
-		clienteweb.post().uri("/marcas").bodyValue(dto).retrieve().toBodilessEntity().block();
-		
-	}
+	 @Override
+	    public void nuevaMarca(MarcasRequestDTO dto) {
 
-	@Override
-	 public MarcasResponseDTO obtenerMarca(Integer id) {
-        try {
-            return clienteweb.get()
-                    .uri("/marcas/{id}", id)
-                    .retrieve()
-                    .bodyToMono(MarcasResponseDTO.class)
-                    .block();
-        } catch (WebClientResponseException e) {
-            // Si no existe, devolvemos null para que el controlador maneje el caso
-            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                return null;
-            }
-            throw e;
-        }
-    }
+	        // ✅ VALIDACIÓN LOCAL (ignora mayúsculas/minúsculas)
+	        String nombreNuevo = normalizarTexto(dto.getNombre());
+	        List<MarcasResponseDTO> existentes = listarMarca();
 
-	@Override
-	public void actualizarMarca(Integer id, MarcasRequestDTO dto) {
-        clienteweb.put()
-                .uri("/marcas/{id}", id)
-                .bodyValue(dto)
-                .retrieve()
-                .toBodilessEntity()
-                .block();
-    }
+	        boolean existe = existentes.stream()
+	                .anyMatch(m -> normalizarTexto(m.getNombre()).equals(nombreNuevo));
+
+	        if (existe) {
+	            throw new IllegalArgumentException("Ya existe una marca con ese nombre");
+	        }
+
+	        // ✅ GUARDAR EN API
+	        try {
+	            clienteweb.post()
+	                    .uri("/marcas")
+	                    .bodyValue(dto)
+	                    .retrieve()
+	                    .toBodilessEntity()
+	                    .block();
+
+	        } catch (WebClientResponseException e) {
+
+	            // Si la API responde duplicado como 400 o 409
+	            if (e.getStatusCode() == HttpStatus.BAD_REQUEST || e.getStatusCode() == HttpStatus.CONFLICT) {
+	                throw new IllegalArgumentException("Ya existe una marca con ese nombre");
+	            }
+
+	            throw e;
+	        }
+	    }
+
+	 @Override
+	    public MarcasResponseDTO obtenerMarca(Integer id) {
+	        try {
+	            return clienteweb.get()
+	                    .uri("/marcas/{id}", id)
+	                    .retrieve()
+	                    .bodyToMono(MarcasResponseDTO.class)
+	                    .block();
+	        } catch (WebClientResponseException e) {
+	            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+	                return null;
+	            }
+	            throw e;
+	        }
+	    }
+
+	
+	 @Override
+	    public void actualizarMarca(Integer id, MarcasRequestDTO dto) {
+
+	        int idEditando = id;
+
+	        // ✅ VALIDACIÓN LOCAL (excluye el mismo id)
+	        String nombreNuevo = normalizarTexto(dto.getNombre());
+	        List<MarcasResponseDTO> existentes = listarMarca();
+
+	        boolean duplicado = existentes.stream()
+	                .filter(m -> obtenerIdMarca(m) != idEditando) // ✅ excluye el mismo registro
+	                .anyMatch(m -> normalizarTexto(m.getNombre()).equals(nombreNuevo));
+
+	        if (duplicado) {
+	            throw new IllegalArgumentException("Ya existe una marca con ese nombre");
+	        }
+
+	        // ✅ ACTUALIZAR EN API
+	        try {
+	            clienteweb.put()
+	                    .uri("/marcas/{id}", id)
+	                    .bodyValue(dto)
+	                    .retrieve()
+	                    .toBodilessEntity()
+	                    .block();
+
+	        } catch (WebClientResponseException e) {
+
+	            if (e.getStatusCode() == HttpStatus.BAD_REQUEST || e.getStatusCode() == HttpStatus.CONFLICT) {
+	                throw new IllegalArgumentException("Ya existe una marca con ese nombre");
+	            }
+
+	            throw e;
+	        }
+	    }
 
 	@Override
 	 public void eliminarMarca(Integer id) {
@@ -67,6 +121,16 @@ public class MarcasServicioImpl  implements IMarcasServicio{
                 .toBodilessEntity()
                 .block();
     }
+	
+	 private String normalizarTexto(String texto) {
+	        return texto == null ? "" : texto.trim().toUpperCase();
+	    }
+
+	  
+	    private int obtenerIdMarca(MarcasResponseDTO m) {
+	        // ✅ AJUSTA si tu getter es distinto:
+	        return m.getIdMarca();
+	    }
 	
 
 }

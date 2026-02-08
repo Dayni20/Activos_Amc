@@ -38,11 +38,17 @@ public class ProveedoresControlador {
     
     
     //POST: guarda en BD
-	@PostMapping
-	public String guardarProveedores(@ModelAttribute ProveedoresRequestDTO nuevoproveedor) {
-		servicioProveedores.nuevoProveedores(nuevoproveedor);
-		return "redirect:/proveedores"; 
-	}
+    @PostMapping
+    public String guardarProveedores(@ModelAttribute("nuevoproveedor") ProveedoresRequestDTO nuevoproveedor,
+                                     Model model) {
+        try {
+            servicioProveedores.nuevoProveedores(nuevoproveedor);
+            return "redirect:/proveedores";
+        } catch (IllegalStateException e) {
+            model.addAttribute("error", e.getMessage());
+            return "proveedores/nuevoProveedores";
+        }
+    }
 	
 	//GET: EDITAR 
 		@GetMapping("/editar/{id}")
@@ -53,6 +59,20 @@ public class ProveedoresControlador {
 		    model.addAttribute("nuevoproveedor", proveedores);
 
 		    return "proveedores/editarProveedores";
+		}
+		//POST ACTUALIZAR 
+		@PostMapping("/actualizar/{id}")
+		public String actualizarProveedor(@PathVariable Integer id,
+		                                  @ModelAttribute("nuevoproveedor") ProveedoresRequestDTO dto,
+		                                  Model model) {
+		    try {
+		        servicioProveedores.actualizarProveedor(id, dto);
+		        return "redirect:/proveedores";
+		    } catch (IllegalStateException e) {
+		        model.addAttribute("error", e.getMessage());
+		        model.addAttribute("nuevoproveedor", dto);
+		        return "proveedores/editarProveedores";
+		    }
 		}
 		
 		// POST:ELIMINAR

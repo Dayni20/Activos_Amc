@@ -38,9 +38,23 @@ public class MarcasControlador {
 	
 	 //POST: guarda en BD
 	@PostMapping
-	public String guardarMarcas(@ModelAttribute MarcasRequestDTO nuevamarca) {
-		servicioMarcas.nuevaMarca(nuevamarca);
-		return "redirect:/marcas"; 
+	public String guardarMarcas(
+	        @ModelAttribute("nuevamarca") MarcasRequestDTO nuevamarca,
+	        Model model) {
+
+	    try {
+	        servicioMarcas.nuevaMarca(nuevamarca);
+	        return "redirect:/marcas";
+
+	    } catch (IllegalArgumentException e) {
+
+	        model.addAttribute("error", e.getMessage());
+
+	        // IMPORTANTE: asegurar que el objeto vuelva al modelo con el mismo nombre
+	        model.addAttribute("nuevamarca", nuevamarca);
+
+	        return "marcas/nuevaMarcas";
+	    }
 	}
 	
 	//GET: EDITAR 
@@ -52,6 +66,26 @@ public class MarcasControlador {
 	    model.addAttribute("nuevamarca", marca);
 
 	    return "marcas/editarMarcas";
+	}
+	
+	//POST ACTUALIZAR
+	@PostMapping("/actualizar/{id}")
+	public String actualizarMarca(
+	        @PathVariable Integer id,
+	        @ModelAttribute("nuevamarca") MarcasRequestDTO dto,
+	        Model model) {
+
+	    try {
+	        servicioMarcas.actualizarMarca(id, dto);
+	        return "redirect:/marcas";
+
+	    } catch (IllegalArgumentException e) {
+
+	        model.addAttribute("error", e.getMessage());
+	        model.addAttribute("nuevamarca", dto);
+
+	        return "marcas/editarMarcas"; // ✅ te quedas en editar
+	    }
 	}
 	
 	// POST:ELIMINAR

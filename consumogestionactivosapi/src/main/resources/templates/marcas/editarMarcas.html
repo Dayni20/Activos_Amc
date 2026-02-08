@@ -11,7 +11,9 @@
 <body>
 <div layout:fragment="contenidopaginas">
 
-    <form th:action="@{/marcas}" th:object="${nuevamarca}" method="post">
+    <form th:action="@{/marcas/actualizar/{id}(id=*{idMarca})}"
+      th:object="${nuevamarca}"
+      method="post">
 
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
@@ -28,25 +30,23 @@
                     <!-- ID oculto -->
                     <input type="hidden" th:field="*{idMarca}" />
 
-                    <!-- Error opcional -->
-                    <div class="alert alert-danger" role="alert"
-                         th:if="${errorNombre}" th:text="${errorNombre}"></div>
+                   
 
                     <!-- Nombre -->
                     <div class="mb-4">
 
                         <label class="form-label">NOMBRE <span class="text-danger">*</span></label>
                         <input type="text" class="form-control"
-                               th:field="*{nombre}" required
-                               placeholder="Ingrese el nombre de la marca">
+       th:field="*{nombre}" required
+       placeholder="Ingrese el nombre de la marca"
+       th:classappend="${error} ? 'is-invalid' : ''">
+
+<div class="invalid-feedback" th:if="${error}">
+  <span th:text="${error}"></span>
+</div>
                     </div>
 
-                    <!-- Estado -->
-                    <div class="mb-4">
-
-                        <label class="form-label">Nombre <span class="text-danger">*</span></label>
-                        <input type="text" maxlength="100" class="form-control" placeholder="Nombre de la categoría" value=" ">
-                    </div>
+                    
                     <div class="row mb-4">
 
                         <div class="form-check form-switch form-switch-sm ps-5">

@@ -13,7 +13,12 @@
 
 <div layout:fragment="contenidopaginas">
 
- <form th:action="@{/proveedores}" th:object="${nuevoproveedor}" method="post">
+ <form th:action="@{/proveedores/actualizar/{id}(id=${nuevoproveedor.idProveedor})}"
+      th:object="${nuevoproveedor}" method="post">
+ 
+  <div th:if="${error}" class="alert alert-danger mb-3">
+        <span th:text="${error}"></span>
+    </div>
 
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
@@ -101,86 +106,7 @@
                 </div>
             </div>
         </div>
-
-    </form>
+</form>
 </div>
-	<div layout:fragment="contenidopaginas">
-		<div class="page-header">
-			<div class="page-header-left d-flex align-items-center">
-				<div class="page-header-title">
-					<h5 class="m-b-10">Proveedores</h5>
-				</div>
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/categorias-equipo}">Home</a></li>
-					<li class="breadcrumb-item">Editar Proveedor</li>
-				</ul>
-			</div>
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div
-						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="javascript:void(0);"
-							class="btn btn-primary successAlertMessage"> <i
-							class="feather-save me-2"></i> <span>Editar</span>
-						</a>
-					</div>
-				</div>
-				<div class="d-md-none d-flex align-items-center">
-					<a href="javascript:void(0)" class="page-header-right-open-toggle">
-						<i class="feather-align-right fs-20"></i>
-					</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="main-content">
-			<div class="card stretch stretch-full">
-				<div class="card-body">
-
-					<div class="mb-4">
-						<label class="form-label">Ruc </label> <input type="text"
-							class="form-control" placeholder="Descripción" value=" ">
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Nombre <span class="text-danger">*</span></label>
-						<input type="text" maxlength="100" class="form-control"
-							placeholder="Nombre de la categoría" value=" ">
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Dirección <span
-							class="text-danger">*</span></label> <input type="text" maxlength="200"
-							class="form-control" placeholder="Nombre de la categoría"
-							value=" ">
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Teléfono <span
-							class="text-danger">*</span></label> <input type="text" maxlength="20"
-							class="form-control" placeholder="Nombre de la categoría"
-							value=" ">
-					</div>
-
-					<div class="mb-4">
-						<label class="form-label">Correo <span class="text-danger">*</span></label>
-						<input type="text" class="form-control"
-							placeholder="Nombre de la categoría" value=" ">
-					</div>
-
-					<div class="row mb-4">
-						<div class="form-check form-switch form-switch-sm ps-5">
-							<input class="form-check-input c-pointer" type="checkbox"
-								id="estadoSwitch" checked> <label
-								class="form-check-label fw-500 text-dark c-pointer"
-								for="estadoSwitch">Activo</label>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 </body>
 </html>
