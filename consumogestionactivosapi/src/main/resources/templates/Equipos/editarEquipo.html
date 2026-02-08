@@ -35,15 +35,18 @@
 				<div class="card-body">
 
 					<form id="frmEquipo"
-						th:action="@{/equipos/actualizar/{id}(id=${equipo.idEquipo})}"
-						th:object="${equipo}" method="post">
+						th:action="@{/equipos}" th:object="${equipo}" method="post">
 
 						<h6 class="mb-3">Información General</h6>
 						<div class="row">
+						<input type="hidden" th:field="*{idEquipo}">
 							<div class="col-md-4 mb-3">
 								<label class="form-label">Código SAP *</label> <input
 									type="text" class="form-control" th:field="*{codigoSap}"
 									maxlength="20">
+								<div class="text-danger small" th:if="${errorCodigo}">
+									<span th:text="${errorCodigo}"></span>
+								</div>
 							</div>
 
 							<div class="col-md-4 mb-3">
@@ -62,6 +65,9 @@
 							<div class="col-md-4 mb-3">
 								<label class="form-label">Serial *</label> <input type="text"
 									class="form-control" th:field="*{serial}" maxlength="100">
+								<div class="text-danger small" th:if="${errorSerial}">
+									<span th:text="${errorSerial}"></span>
+								</div>
 							</div>
 
 							<div class="col-md-4 mb-3">
@@ -104,10 +110,16 @@
 							<div class="col-md-6 mb-3">
 								<label class="form-label">IP</label> <input type="text"
 									class="form-control" th:field="*{ip}">
+								<div class="text-danger small" th:if="${errorIp}">
+									<span th:text="${errorIp}"></span>
+								</div>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label class="form-label">MAC</label> <input type="text"
 									class="form-control" th:field="*{mac}">
+								<div class="text-danger small" th:if="${errorMac}">
+									<span th:text="${errorMac}"></span>
+								</div>
 							</div>
 						</div>
 
@@ -149,7 +161,7 @@
 						<div class="row">
 							<div class="col-md-6 mb-3">
 								<label class="form-label">Fecha de Compra</label> <input
-									type="date" class="form-control" th:field="*{fechaCompra}">
+									type="date" class="form-control" name="fechaCompra" th:value="${#temporals.format(equipo.fechaCompra, 'yyyy-MM-dd')}">
 							</div>
 							<div class="col-md-6 mb-3">
 								<label class="form-label">Precio de Compra</label> <input
@@ -166,20 +178,12 @@
 
 						<h6 class="mt-4 mb-3">Relaciones</h6>
 						<div class="row">
-							<div class="col-md-3 mb-3">
-								<label class="form-label">Departamento</label> <select
-									class="form-control"
-									th:field="*{fkDepartamento.idDepartamento}">
-									<option th:each="d : ${departamentos}"
-										th:value="${d.idDepartamento}" th:text="${d.nombre}">
-									</option>
-								</select>
-							</div>
 
 							<div class="col-md-3 mb-3">
 								<label class="form-label">Marca</label> <select
 									class="form-control" th:field="*{fkMarca.idMarca}">
-									<option th:each="m : ${marcas}" th:value="${m.idMarca}"
+									<option value="0">Seleccione una marca</option>
+									<option th:each="m : ${listamarcas}" th:value="${m.idMarca}"
 										th:text="${m.nombre}"></option>
 								</select>
 							</div>
@@ -187,7 +191,8 @@
 							<div class="col-md-3 mb-3">
 								<label class="form-label">Categoría</label> <select
 									class="form-control" th:field="*{fkCategoria.idCategoria}">
-									<option th:each="c : ${categorias}" th:value="${c.idCategoria}"
+									<option value="0">Seleccione una categoria</option>
+									<option th:each="c : ${listacategorias}" th:value="${c.idCategoria}"
 										th:text="${c.nombre}"></option>
 								</select>
 							</div>
@@ -195,7 +200,8 @@
 							<div class="col-md-3 mb-3">
 								<label class="form-label">Proveedor</label> <select
 									class="form-control" th:field="*{fkProveedor.idProveedor}">
-									<option th:each="p : ${proveedores}"
+									<option value="0">Seleccione un proveedor</option>
+									<option th:each="p : ${listaproveedores}"
 										th:value="${p.idProveedor}" th:text="${p.nombre}"></option>
 								</select>
 							</div>

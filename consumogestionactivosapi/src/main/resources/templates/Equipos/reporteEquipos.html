@@ -90,7 +90,6 @@
 											<th>ESTADO EQUIPO</th>
 											<th>OBSERVACIÓN</th>
 
-											<th>DEPARTAMENTO</th>
 											<th>MARCA</th>
 											<th>PROVEEDOR</th>
 											<th>CATEGORÍA</th>
@@ -131,8 +130,7 @@
 											<td th:text="${equipo.observacionEquipo} ?: '-'"></td>
 
 											<!-- ✅ NOMBRES (no IDs) -->
-											<td
-												th:text="${equipo.fkDepartamento != null ? equipo.fkDepartamento.nombre : '-'}"></td>
+										
 											<td
 												th:text="${equipo.fkMarca != null ? equipo.fkMarca.nombre : '-'}"></td>
 											<td

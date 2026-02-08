@@ -3,6 +3,8 @@ package com.uisrael.consumogestionactivosapi.modelo.dto.request;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -30,7 +32,7 @@ public class EquiposRequestDTO {
 
     private String ip;
     private String mac;
-
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fechaCompra;
     private BigDecimal precioCompra;
 
@@ -39,8 +41,6 @@ public class EquiposRequestDTO {
 
     private boolean estado;
 
-
-    private DepartamentosRequestDTO fkDepartamento;
     private MarcasRequestDTO fkMarca;
     private CategoriaEquiposRequestDTO fkCategoria;
     private ProveedoresRequestDTO fkProveedor;

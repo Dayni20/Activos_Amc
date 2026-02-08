@@ -40,7 +40,6 @@ public class EquiposResponseDTO {
     private boolean estado;
 
 
-   private DepartamentosResponseDTO fkDepartamento;
     private MarcasResponseDTO fkMarca;
     private CategoriaEquiposResponseDTO fkCategoria;
     private ProveedoresResponseDTO fkProveedor;

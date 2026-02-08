@@ -18,42 +18,127 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/equipos")
 public class EquiposControlador {
 
-    private final IEquiposUseCase equiposUseCase;
-    private final IEquiposDtoMapper mapper;
+	private final IEquiposUseCase equiposUseCase;
+	private final IEquiposDtoMapper mapper;
 
-    public EquiposControlador(IEquiposUseCase equiposUseCase, IEquiposDtoMapper mapper) {
-        this.equiposUseCase = equiposUseCase;
-        this.mapper = mapper;
-    }
+	public EquiposControlador(IEquiposUseCase equiposUseCase, IEquiposDtoMapper mapper) {
+		this.equiposUseCase = equiposUseCase;
+		this.mapper = mapper;
+	}
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public EquiposResponseDTO crear(@Valid @RequestBody EquiposRequestDTO request) {
-        return mapper.toResponseDto(equiposUseCase.crear(mapper.toDomain(request)));
-    }
+	@PostMapping
+	public ResponseEntity<?> crear(@Valid @RequestBody EquiposRequestDTO request) {
 
-    @GetMapping
-    public List<EquiposResponseDTO> listar() {
-        return equiposUseCase.listar().stream().map(mapper::toResponseDto).toList();
-    }
+		// ✅ si ya existe, no intentes guardar
+		if (equiposUseCase.existeCodigo(request.getCodigoSap().trim())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+		}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EquiposResponseDTO> obtenerPorId(@PathVariable int id) {
-        Equipos equipo = equiposUseCase.obtenerPorId(id);
-        return ResponseEntity.ok(mapper.toResponseDto(equipo));
-    }
+		if (equiposUseCase.existeSerial(request.getSerial().trim())) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese serial");
+		}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EquiposResponseDTO> actualizar(@PathVariable int id,
-            @Valid @RequestBody EquiposRequestDTO request) {
-        Equipos actualizado = equiposUseCase.actualizar(id, mapper.toDomain(request));
-        return ResponseEntity.ok(mapper.toResponseDto(actualizado));
-    }
+		if (request.getIp() != null && !request.getIp().isBlank()) {
+		    if (equiposUseCase.existeIP(request.getIp().trim())) {
+		        return ResponseEntity
+		            .status(HttpStatus.CONFLICT)
+		            .body("Ya existe un equipo con esa dirección IP");
+		    }
+		}
 
-	    @PutMapping("/estado/{id}")
-	    public ResponseEntity<EquiposResponseDTO> actualizarEstado(@PathVariable int id,
-	            @Valid @RequestBody EquiposRequestDTO request) {
-	        Equipos actualizadoEstado = equiposUseCase.actualizarEstado(id, mapper.toDomain(request));
-	        return ResponseEntity.ok(mapper.toResponseDto(actualizadoEstado));
-	    }
+		if (request.getMac() != null && !request.getMac().isBlank()) {
+		    if (equiposUseCase.existeMAC(request.getMac().trim())) {
+		        return ResponseEntity
+		            .status(HttpStatus.CONFLICT)
+		            .body("Ya existe un equipo con esa dirección MAC");
+		    }
+		}
+
+		EquiposResponseDTO creado = mapper.toResponseDto(equiposUseCase.crear(mapper.toDomain(request)));
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+	}
+
+	@GetMapping
+	public List<EquiposResponseDTO> listar() {
+		return equiposUseCase.listar().stream().map(mapper::toResponseDto).toList();
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> actualizar(@PathVariable int id, @Valid @RequestBody EquiposRequestDTO request) {
+
+		if (equiposUseCase.existeCodigoParaOtro(request.getCodigoSap().trim(), id)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese Código SAP");
+		}
+
+		if (equiposUseCase.existeSerialParaOtro(request.getSerial().trim(), id)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un equipo con ese serial");
+		}
+
+		if (request.getIp() != null && !request.getIp().isBlank()) {
+		    if (equiposUseCase.existeIPParaOtro(request.getIp().trim(), id)) {
+		        return ResponseEntity
+		            .status(HttpStatus.CONFLICT)
+		            .body("Ya existe un equipo con esa dirección IP");
+		    }
+		}
+
+		if (request.getMac() != null && !request.getMac().isBlank()) {
+		    if (equiposUseCase.existeMACParaOtro(request.getMac().trim(), id)) {
+		        return ResponseEntity
+		            .status(HttpStatus.CONFLICT)
+		            .body("Ya existe un equipo con esa dirección MAC");
+		    }
+		}
+
+		Equipos actualizado = equiposUseCase.actualizar(id, mapper.toDomain(request));
+		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+
+	@PutMapping("/estado/{id}")
+	public ResponseEntity<EquiposResponseDTO> actualizarEstado(@PathVariable int id,
+			@RequestBody java.util.Map<String, Boolean> body) {
+		boolean estado = Boolean.TRUE.equals(body.get("estado"));
+		Equipos actualizado = equiposUseCase.actualizarEstado(id, estado);
+		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<EquiposResponseDTO> obtenerPorId(@PathVariable int id) {
+		Equipos equipo = equiposUseCase.obtenerPorId(id);
+		return ResponseEntity.ok(mapper.toResponseDto(equipo));
+	}
+
+	@GetMapping("/existe-codigo")
+	public ResponseEntity<Boolean> existeCodigo(@RequestParam String codigo,
+			@RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? equiposUseCase.existeCodigo(codigo)
+				: equiposUseCase.existeCodigoParaOtro(codigo, id);
+
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/existe-serial")
+	public ResponseEntity<Boolean> existeSerial(@RequestParam String serial,
+			@RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? equiposUseCase.existeSerial(serial)
+				: equiposUseCase.existeSerialParaOtro(serial, id);
+
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/existe-ip")
+	public ResponseEntity<Boolean> existeIP(@RequestParam String ip, @RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? equiposUseCase.existeIP(ip) : equiposUseCase.existeIPParaOtro(ip, id);
+
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/existe-mac")
+	public ResponseEntity<Boolean> existeMAC(@RequestParam String mac, @RequestParam(required = false) Integer id) {
+		boolean existe = (id == null) ? equiposUseCase.existeMAC(mac) : equiposUseCase.existeMACParaOtro(mac, id);
+
+		return ResponseEntity.ok(existe);
+	}
+
 }

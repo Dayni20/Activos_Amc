@@ -49,6 +49,9 @@
 											<th>Cédula</th>
 											<th>Correo</th>
 											<th>Teléfono</th>
+											<th>Fecha Ingreso</th>
+											<th>Departamento</th>
+											<th>Cargo</th>
 											<th>Estado</th>
 											<th class="text-end">Acciones</th>
 										</tr>
@@ -62,7 +65,9 @@
 											<td th:text="${custodio.cedula} ?: '-'"></td>
 											<td th:text="${custodio.correo} ?: '-'"></td>
 											<td th:text="${custodio.telefono} ?: '-'"></td>
-
+											<td th:text="${custodio.fechaIngreso} ?: '-'"></td>
+											<td th:text="${custodio.fkDepartamento.nombre}"></td>
+											<td th:text="${custodio.fkCargo.nombre}"></td>
 											<td>
 												<div th:if="${custodio.estado}"
 													class="badge bg-soft-success text-success">Activo</div>

@@ -72,7 +72,6 @@ public interface ICustodiasDtoMapper {
         dto.setEstado(e.isEstado());
 
         // ✅ FKs (para que en el JSON salga NOMBRE y no solo id)
-        dto.setFkDepartamento(map(e.getFkDepartamento()));
         dto.setFkMarca(map(e.getFkMarcas()));
         dto.setFkProveedor(map(e.getFkProveedor()));
         dto.setFkCategoria(map(e.getFkCategoria()));
@@ -94,14 +93,6 @@ public interface ICustodiasDtoMapper {
     }
 
     // ====== MAPS de FKs de Equipos ======
-    default DepartamentosResponseDTO map(DepartamentosJpa d) {
-        if (d == null) return null;
-        DepartamentosResponseDTO dto = new DepartamentosResponseDTO();
-        dto.setIdDepartamento(d.getIdDepartamento());
-        dto.setNombre(d.getNombre());
-        dto.setEstado(d.isEstado());
-        return dto;
-    }
 
     default MarcasResponseDTO map(MarcasJpa m) {
         if (m == null) return null;

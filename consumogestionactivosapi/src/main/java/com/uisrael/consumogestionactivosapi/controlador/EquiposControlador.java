@@ -22,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CategoriaEquiposRequestDTO;
-import com.uisrael.consumogestionactivosapi.modelo.dto.request.DepartamentosRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.EquiposRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.MarcasRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
@@ -30,7 +29,6 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresReques
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.EquiposResponseDTO;
 
 import com.uisrael.consumogestionactivosapi.service.ICategoriaEquiposServicio;
-import com.uisrael.consumogestionactivosapi.service.IDepartamentosServicio;
 import com.uisrael.consumogestionactivosapi.service.IEquiposServicio;
 import com.uisrael.consumogestionactivosapi.service.IMarcasServicio;
 import com.uisrael.consumogestionactivosapi.service.IProveedoresServicio;
@@ -41,9 +39,6 @@ public class EquiposControlador {
 
 	@Autowired
 	private IEquiposServicio servicioEquipos;
-
-	@Autowired
-	private IDepartamentosServicio servicioDepartamentos;
 
 	@Autowired
 	private IMarcasServicio servicioMarcas;
@@ -68,9 +63,6 @@ public class EquiposControlador {
 		EquiposRequestDTO equipo = new EquiposRequestDTO();
 		equipo.setEstado(true);
 
-		equipo.setFkDepartamento(new DepartamentosRequestDTO());
-		equipo.getFkDepartamento().setIdDepartamento(0);
-
 		equipo.setFkMarca(new MarcasRequestDTO());
 		equipo.getFkMarca().setIdMarca(0);
 
@@ -81,19 +73,40 @@ public class EquiposControlador {
 		equipo.getFkCategoria().setIdCategoria(0);
 
 		// combos
-		cargarCombos(model, 0, 0, 0, 0);
-
+		cargarCombos(model, 0, 0, 0);
 		model.addAttribute("equipo", equipo);
 		return "Equipos/nuevoEquipo";
+	}
+	
+	@GetMapping("/editar-equipo/{id}")
+	public String editar(@PathVariable Integer id, Model model) {
+		EquiposResponseDTO dto = servicioEquipos.obtenerPorId(id);
+
+		Integer idProveedor = dto.getFkProveedor().getIdProveedor();
+		
+		Integer idMarca = dto.getFkMarca().getIdMarca();
+		
+		Integer idCategoria = dto.getFkCategoria().getIdCategoria();
+
+		model.addAttribute("listaproveedores",
+				servicioProveedores.listarProveedores().stream().filter(
+						proveedor -> proveedor.isEstado() || proveedor.getIdProveedor() == idProveedor)
+						.toList());
+
+		model.addAttribute("listamarcas", servicioMarcas.listarMarca().stream()
+				.filter(marca -> marca.isEstado() || marca.getIdMarca() == idMarca).toList());
+		
+		model.addAttribute("listacategorias", servicioCategoriaEquipos.listarCategoriaEquipo().stream()
+				.filter(cate -> cate.isEstado() || cate.getIdCategoria() == idCategoria).toList());
+
+		model.addAttribute("equipo", dto);
+
+		return "Equipos/editarEquipo";
 	}
 
 	@PostMapping
 	public String guardarEquipo(@ModelAttribute EquiposRequestDTO equipo, Model model) {
 
-		if (equipo.getFkDepartamento() == null) {
-			equipo.setFkDepartamento(new DepartamentosRequestDTO());
-			equipo.getFkDepartamento().setIdDepartamento(0);
-		}
 		if (equipo.getFkMarca() == null) {
 			equipo.setFkMarca(new MarcasRequestDTO());
 			equipo.getFkMarca().setIdMarca(0);
@@ -124,10 +137,6 @@ public class EquiposControlador {
 			hayErrores = true;
 		}
 
-		if (equipo.getFkDepartamento().getIdDepartamento() <= 0) {
-			model.addAttribute("errorDepartamento", "Debe seleccionar un departamento");
-			hayErrores = true;
-		}
 		if (equipo.getFkMarca().getIdMarca() <= 0) {
 			model.addAttribute("errorMarca", "Debe seleccionar una marca");
 			hayErrores = true;
@@ -141,24 +150,108 @@ public class EquiposControlador {
 			hayErrores = true;
 		}
 
+		boolean ipRepetida;
+		if (equipo.getIp() != null && !equipo.getIp().isBlank()) {
+
+			if (equipo.getIdEquipo() > 0) {
+				// edición
+				ipRepetida = servicioEquipos.existeIPParaOtro(equipo.getIp().trim(), equipo.getIdEquipo());
+			} else {
+				// creación
+				ipRepetida = servicioEquipos.existeIP(equipo.getIp().trim());
+			}
+
+			if (ipRepetida) {
+				model.addAttribute("errorIp", "Ya existe un equipo con esa dirección IP");
+				hayErrores = true;
+			}
+			
+			if (!esIpValida(equipo.getIp())) {
+		        model.addAttribute("errorIp", "La IP no tiene un formato válido");
+		        hayErrores = true;
+		    }
+		}
+
+		boolean serialRepetido;
+		if (equipo.getSerial() != null && !equipo.getSerial().isBlank()) {
+
+			if (equipo.getIdEquipo() > 0) {
+				// edición
+				serialRepetido = servicioEquipos.existeSerialParaOtro(equipo.getSerial().trim(), equipo.getIdEquipo());
+			} else {
+				// creación
+				serialRepetido = servicioEquipos.existeSerial(equipo.getSerial().trim());
+			}
+
+			if (serialRepetido) {
+				model.addAttribute("errorSerial", "Ya existe un equipo con ese Serial");
+				hayErrores = true;
+			}
+		}
+
+		boolean codigoRepetido;
+		if (equipo.getCodigoSap() != null && !equipo.getCodigoSap().isBlank()) {
+
+			if (equipo.getIdEquipo() > 0) {
+				// edición
+				codigoRepetido = servicioEquipos.existeCodigoParaOtro(equipo.getCodigoSap().trim(),
+						equipo.getIdEquipo());
+			} else {
+				// creación
+				codigoRepetido = servicioEquipos.existeCodigo(equipo.getCodigoSap().trim());
+			}
+
+			if (codigoRepetido) {
+				model.addAttribute("errorCodigo", "Ya existe un equipo con ese Código SAP");
+				hayErrores = true;
+			}
+		}
+
+		boolean macRepetida;
+		if (equipo.getMac() != null && !equipo.getMac().isBlank()) {
+
+			if (equipo.getIdEquipo() > 0) {
+				// edición
+				macRepetida = servicioEquipos.existeMACParaOtro(equipo.getMac().trim(), equipo.getIdEquipo());
+			} else {
+				// creación
+				macRepetida = servicioEquipos.existeMAC(equipo.getMac().trim());
+			}
+
+			if (macRepetida) {
+				model.addAttribute("errorMac", "Ya existe un equipo con esa dirección MAC");
+				hayErrores = true;
+			}
+			
+			if (!esMacValida(equipo.getMac())) {
+		        model.addAttribute("errorMac", "La MAC no tiene un formato válido");
+		        hayErrores = true;
+		    }
+		}
+				
+
 		if (hayErrores) {
-			int idDep = equipo.getFkDepartamento().getIdDepartamento();
 			int idMarca = equipo.getFkMarca().getIdMarca();
 			int idProv = equipo.getFkProveedor().getIdProveedor();
 			int idCat = equipo.getFkCategoria().getIdCategoria();
 
-			cargarCombos(model, idDep, idMarca, idProv, idCat);
+			cargarCombos(model, idMarca, idProv, idCat);
 			model.addAttribute("equipo", equipo);
-			return "Equipos/nuevoEquipo"; // solo nuevo (si luego haces editar, se ajusta)
+			return ubicacionesFormulario(equipo); // solo nuevo (si luego haces editar, se ajusta)
 		}
 
 		if (equipo.getIdEquipo() > 0) {
 			servicioEquipos.actualizarEquipo(equipo.getIdEquipo(), equipo);
 		} else {
+			equipo.setEstado(true);
 			servicioEquipos.crearEquipo(equipo);
 		}
 
 		return "redirect:/equipos";
+	}
+
+	private String ubicacionesFormulario(EquiposRequestDTO equipo) {
+		return (equipo.getIdEquipo() > 0) ? "Equipos/editarEquipo" : "Equipos/nuevoEquipo";
 	}
 
 	@PostMapping("/eliminar-equipo")
@@ -173,10 +266,7 @@ public class EquiposControlador {
 		return "redirect:/equipos";
 	}
 
-	private void cargarCombos(Model model, int idDepSel, int idMarcaSel, int idProvSel, int idCatSel) {
-
-		model.addAttribute("listadepartamentos", servicioDepartamentos.listarDepartamentos().stream()
-				.filter(d -> d.isEstado() || d.getIdDepartamento() == idDepSel).collect(Collectors.toList()));
+	private void cargarCombos(Model model, int idMarcaSel, int idProvSel, int idCatSel) {
 
 		model.addAttribute("listamarcas", servicioMarcas.listarMarca().stream()
 				.filter(m -> m.isEstado() || m.getIdMarca() == idMarcaSel).collect(Collectors.toList()));
@@ -190,279 +280,287 @@ public class EquiposControlador {
 	}
 
 	@GetMapping("/reporte-equipo")
-	public String listarEquiposReporte(
-	        @RequestParam(required = false) String tipo,
-	        Model model) {
+	public String listarEquiposReporte(@RequestParam(required = false) String tipo, Model model) {
 
-	    List<EquiposResponseDTO> contenidoBD = servicioEquipos.listarEquipos();
+		List<EquiposResponseDTO> contenidoBD = servicioEquipos.listarEquipos();
 
-	    // lista de tipos únicos (antes de filtrar)
-	    List<String> listaTipos = contenidoBD.stream()
-	            .map(EquiposResponseDTO::getTipoEquipo)
-	            .filter(t -> t != null && !t.trim().isEmpty())
-	            .map(String::trim)
-	            .distinct()
-	            .sorted(String.CASE_INSENSITIVE_ORDER)
-	            .toList();
+		// lista de tipos únicos (antes de filtrar)
+		List<String> listaTipos = contenidoBD.stream().map(EquiposResponseDTO::getTipoEquipo)
+				.filter(t -> t != null && !t.trim().isEmpty()).map(String::trim).distinct()
+				.sorted(String.CASE_INSENSITIVE_ORDER).toList();
 
-	    // filtrar si viene tipo
-	    if (tipo != null && !tipo.trim().isEmpty()) {
-	        String t = tipo.trim();
-	        contenidoBD = contenidoBD.stream()
-	                .filter(e -> e.getTipoEquipo() != null && e.getTipoEquipo().trim().equalsIgnoreCase(t))
-	                .toList();
-	    }
+		// filtrar si viene tipo
+		if (tipo != null && !tipo.trim().isEmpty()) {
+			String t = tipo.trim();
+			contenidoBD = contenidoBD.stream()
+					.filter(e -> e.getTipoEquipo() != null && e.getTipoEquipo().trim().equalsIgnoreCase(t)).toList();
+		}
 
-	    contenidoBD = contenidoBD.stream()
-	            .sorted(Comparator.comparing(EquiposResponseDTO::getIdEquipo))
-	            .toList();
+		contenidoBD = contenidoBD.stream().sorted(Comparator.comparing(EquiposResponseDTO::getIdEquipo)).toList();
 
-	    model.addAttribute("listarequipos", contenidoBD);
-	    model.addAttribute("listaTipos", listaTipos);
-	    model.addAttribute("tipoSeleccionado", tipo);
+		model.addAttribute("listarequipos", contenidoBD);
+		model.addAttribute("listaTipos", listaTipos);
+		model.addAttribute("tipoSeleccionado", tipo);
 
-	    return "Equipos/reporteEquipos";
+		return "Equipos/reporteEquipos";
 	}
 	
+	public static boolean esIpValida(String ip) {
+	    if (ip == null || ip.isBlank()) return false;
+
+	    String regexIp =
+	        "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}" +
+	        "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
+
+	    return ip.matches(regexIp);
+	}
 	
+	public static boolean esMacValida(String mac) {
+	    if (mac == null || mac.isBlank()) return false;
+
+	    String regexMac = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+
+	    return mac.matches(regexMac);
+	}
+
 	@GetMapping("/reporte-equipo/excel")
 	public ResponseEntity<byte[]> descargarExcelEquipos(@RequestParam(required = false) String tipo) {
 
-	    List<EquiposResponseDTO> data = servicioEquipos.listarEquipos();
+		List<EquiposResponseDTO> data = servicioEquipos.listarEquipos();
 
-	    // Mismo filtro que en la vista
-	    if (tipo != null && !tipo.trim().isEmpty()) {
-	        String t = tipo.trim().toLowerCase();
-	        data = data.stream()
-	                .filter(e -> e.getTipoEquipo() != null && e.getTipoEquipo().trim().toLowerCase().equals(t))
-	                .toList();
-	    }
+		// Mismo filtro que en la vista
+		if (tipo != null && !tipo.trim().isEmpty()) {
+			String t = tipo.trim().toLowerCase();
+			data = data.stream()
+					.filter(e -> e.getTipoEquipo() != null && e.getTipoEquipo().trim().toLowerCase().equals(t))
+					.toList();
+		}
 
-	    String[] cols = {
-	            "ID", "CÓDIGO SAP", "TIPO", "MODELO", "SERIAL", "PROCESADOR",
-	            "RAM (GB)", "ALMACENAMIENTO (GB)", "SISTEMA OPERATIVO",
-	            "LIC. WINDOWS", "ETIQ. ACTIVO FIJO", "TIPO LIC. OFFICE", "VERSIÓN OFFICE", "UNIÓN DOMINIO",
-	            "IP", "MAC", "FECHA COMPRA", "PRECIO COMPRA",
-	            "ESTADO EQUIPO", "OBSERVACIÓN",
-	            "DEPARTAMENTO", "MARCA", "PROVEEDOR", "CATEGORÍA",
-	            "ESTADO"
-	    };
+		String[] cols = { "ID", "CÓDIGO SAP", "TIPO", "MODELO", "SERIAL", "PROCESADOR", "RAM (GB)",
+				"ALMACENAMIENTO (GB)", "SISTEMA OPERATIVO", "LIC. WINDOWS", "ETIQ. ACTIVO FIJO", "TIPO LIC. OFFICE",
+				"VERSIÓN OFFICE", "UNIÓN DOMINIO", "IP", "MAC", "FECHA COMPRA", "PRECIO COMPRA", "ESTADO EQUIPO",
+				"OBSERVACIÓN", "MARCA", "PROVEEDOR", "CATEGORÍA", "ESTADO" };
 
-	    try (Workbook wb = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+		try (Workbook wb = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
-	        String safeSheetName = WorkbookUtil.createSafeSheetName("Reporte Equipos");
-	        Sheet sheet = wb.createSheet(safeSheetName);
+			String safeSheetName = WorkbookUtil.createSafeSheetName("Reporte Equipos");
+			Sheet sheet = wb.createSheet(safeSheetName);
 
-	        // =========================
-	        // 1) LOGO (opcional)
-	        // =========================
-	        // Pon tu logo aquí: src/main/resources/static/assets/images/Logo-AMC-Oficial.png
-	        // Si no existe, se ignora sin romper el Excel.
-	        try (InputStream is = getClass().getClassLoader()
-	                .getResourceAsStream("static/assets/images/Logo-AMC-Oficial.png")) {
+			// =========================
+			// 1) LOGO (opcional)
+			// =========================
+			// Pon tu logo aquí:
+			// src/main/resources/static/assets/images/Logo-AMC-Oficial.png
+			// Si no existe, se ignora sin romper el Excel.
+			try (InputStream is = getClass().getClassLoader()
+					.getResourceAsStream("static/assets/images/Logo-AMC-Oficial.png")) {
 
-	            if (is != null) {
-	                byte[] bytes = is.readAllBytes();
-	                int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+				if (is != null) {
+					byte[] bytes = is.readAllBytes();
+					int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
 
-	                Drawing<?> drawing = sheet.createDrawingPatriarch();
-	                CreationHelper helper = wb.getCreationHelper();
+					Drawing<?> drawing = sheet.createDrawingPatriarch();
+					CreationHelper helper = wb.getCreationHelper();
 
-	                // 🔹 Ajusta espacio para el logo
-	                Row row0 = sheet.getRow(0) != null ? sheet.getRow(0) : sheet.createRow(0);
-	                row0.setHeightInPoints(35); // altura pequeña
+					// 🔹 Ajusta espacio para el logo
+					Row row0 = sheet.getRow(0) != null ? sheet.getRow(0) : sheet.createRow(0);
+					row0.setHeightInPoints(35); // altura pequeña
 
-	                sheet.setColumnWidth(0, 14 * 256); // ancho moderado
-	                sheet.setColumnWidth(1, 14 * 256);
+					sheet.setColumnWidth(0, 14 * 256); // ancho moderado
+					sheet.setColumnWidth(1, 14 * 256);
 
-	                ClientAnchor anchor = helper.createClientAnchor();
-	                anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_DONT_RESIZE);
+					ClientAnchor anchor = helper.createClientAnchor();
+					anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_DONT_RESIZE);
 
-	                // Logo pequeño: A1 → B2
-	                anchor.setCol1(0); // A
-	                anchor.setRow1(0); // fila 1
-	                anchor.setCol2(2); // hasta C
-	                anchor.setRow2(1); // fila 2
+					// Logo pequeño: A1 → B2
+					anchor.setCol1(0); // A
+					anchor.setRow1(0); // fila 1
+					anchor.setCol2(2); // hasta C
+					anchor.setRow2(1); // fila 2
 
-	                drawing.createPicture(anchor, pictureIdx);
-	            }
+					drawing.createPicture(anchor, pictureIdx);
+				}
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-	        // =========================
-	        // 2) TÍTULO CENTRADO (merge en todas las columnas)
-	        // =========================
-	        String titulo = "REPORTE DE EQUIPOS" + ((tipo != null && !tipo.isBlank()) ? " - " + tipo.trim() : "");
-	        int totalCols = cols.length;
+			// =========================
+			// 2) TÍTULO CENTRADO (merge en todas las columnas)
+			// =========================
+			String titulo = "REPORTE DE EQUIPOS" + ((tipo != null && !tipo.isBlank()) ? " - " + tipo.trim() : "");
+			int totalCols = cols.length;
 
-	        Row titleRow = sheet.createRow(0);
-	        titleRow.setHeightInPoints(28);
+			Row titleRow = sheet.createRow(0);
+			titleRow.setHeightInPoints(28);
 
-	        Cell titleCell = titleRow.createCell(0);
-	        titleCell.setCellValue(titulo);
+			Cell titleCell = titleRow.createCell(0);
+			titleCell.setCellValue(titulo);
 
-	        // Combinar de la columna 0 a la última
-	        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, totalCols - 1));
+			// Combinar de la columna 0 a la última
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, totalCols - 1));
 
-	        CellStyle titleStyle = wb.createCellStyle();
-	        Font titleFont = wb.createFont();
-	        titleFont.setBold(true);
-	        titleFont.setFontHeightInPoints((short) 14);
-	        titleStyle.setFont(titleFont);
-	        titleStyle.setAlignment(HorizontalAlignment.CENTER);
-	        titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-	        titleCell.setCellStyle(titleStyle);
+			CellStyle titleStyle = wb.createCellStyle();
+			Font titleFont = wb.createFont();
+			titleFont.setBold(true);
+			titleFont.setFontHeightInPoints((short) 14);
+			titleStyle.setFont(titleFont);
+			titleStyle.setAlignment(HorizontalAlignment.CENTER);
+			titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+			titleCell.setCellStyle(titleStyle);
 
-	        // (Opcional) Subtítulo con fecha
-	        Row subRow = sheet.createRow(1);
-	        Cell subCell = subRow.createCell(0);
-	        subCell.setCellValue("Generado: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-	        sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, totalCols - 1));
+			// (Opcional) Subtítulo con fecha
+			Row subRow = sheet.createRow(1);
+			Cell subCell = subRow.createCell(0);
+			subCell.setCellValue(
+					"Generado: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+			sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, totalCols - 1));
 
-	        CellStyle subStyle = wb.createCellStyle();
-	        Font subFont = wb.createFont();
-	        subFont.setItalic(true);
-	        subStyle.setFont(subFont);
-	        subStyle.setAlignment(HorizontalAlignment.CENTER);
-	        subStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-	        subCell.setCellStyle(subStyle);
+			CellStyle subStyle = wb.createCellStyle();
+			Font subFont = wb.createFont();
+			subFont.setItalic(true);
+			subStyle.setFont(subFont);
+			subStyle.setAlignment(HorizontalAlignment.CENTER);
+			subStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+			subCell.setCellStyle(subStyle);
 
-	        // =========================
-	        // 3) HEADER VERDE (fila de columnas)
-	        // =========================
-	        CellStyle headerStyle = wb.createCellStyle();
-	        Font headerFont = wb.createFont();
-	        headerFont.setBold(true);
-	        headerFont.setColor(IndexedColors.WHITE.getIndex());
-	        headerStyle.setFont(headerFont);
+			// =========================
+			// 3) HEADER VERDE (fila de columnas)
+			// =========================
+			CellStyle headerStyle = wb.createCellStyle();
+			Font headerFont = wb.createFont();
+			headerFont.setBold(true);
+			headerFont.setColor(IndexedColors.WHITE.getIndex());
+			headerStyle.setFont(headerFont);
 
-	        headerStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
-	        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			headerStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+			headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-	        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-	        headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+			headerStyle.setAlignment(HorizontalAlignment.CENTER);
+			headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-	        headerStyle.setBorderBottom(BorderStyle.THIN);
-	        headerStyle.setBorderTop(BorderStyle.THIN);
-	        headerStyle.setBorderLeft(BorderStyle.THIN);
-	        headerStyle.setBorderRight(BorderStyle.THIN);
+			headerStyle.setBorderBottom(BorderStyle.THIN);
+			headerStyle.setBorderTop(BorderStyle.THIN);
+			headerStyle.setBorderLeft(BorderStyle.THIN);
+			headerStyle.setBorderRight(BorderStyle.THIN);
 
-	        // La fila de columnas será la 2 (porque 0=title, 1=subtitle)
-	        int headerRowIndex = 2;
-	        Row header = sheet.createRow(headerRowIndex);
-	        header.setHeightInPoints(18);
+			// La fila de columnas será la 2 (porque 0=title, 1=subtitle)
+			int headerRowIndex = 2;
+			Row header = sheet.createRow(headerRowIndex);
+			header.setHeightInPoints(18);
 
-	        for (int i = 0; i < cols.length; i++) {
-	            Cell c = header.createCell(i);
-	            c.setCellValue(cols[i]);
-	            c.setCellStyle(headerStyle);
-	        }
+			for (int i = 0; i < cols.length; i++) {
+				Cell c = header.createCell(i);
+				c.setCellValue(cols[i]);
+				c.setCellStyle(headerStyle);
+			}
 
-	        // =========================
-	        // 4) DATOS (desde fila 3)
-	        // =========================
-	        CellStyle dataStyle = wb.createCellStyle();
-	        dataStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+			// =========================
+			// 4) DATOS (desde fila 3)
+			// =========================
+			CellStyle dataStyle = wb.createCellStyle();
+			dataStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-	        int r = headerRowIndex + 1; // 3
-	        for (EquiposResponseDTO e : data) {
-	            Row row = sheet.createRow(r++);
+			int r = headerRowIndex + 1; // 3
+			for (EquiposResponseDTO e : data) {
+				Row row = sheet.createRow(r++);
 
-	            int c = 0;
-	            row.createCell(c++).setCellValue(e.getIdEquipo());
+				int c = 0;
+				row.createCell(c++).setCellValue(e.getIdEquipo());
 
-	            row.createCell(c++).setCellValue(val(e.getCodigoSap()));
-	            row.createCell(c++).setCellValue(val(e.getTipoEquipo()));
-	            row.createCell(c++).setCellValue(val(e.getModelo()));
-	            row.createCell(c++).setCellValue(val(e.getSerial()));
-	            row.createCell(c++).setCellValue(val(e.getProcesador()));
+				row.createCell(c++).setCellValue(val(e.getCodigoSap()));
+				row.createCell(c++).setCellValue(val(e.getTipoEquipo()));
+				row.createCell(c++).setCellValue(val(e.getModelo()));
+				row.createCell(c++).setCellValue(val(e.getSerial()));
+				row.createCell(c++).setCellValue(val(e.getProcesador()));
 
-	            row.createCell(c++).setCellValue(numOrText(e.getMemoriaRamGb()));
-	            row.createCell(c++).setCellValue(numOrText(e.getCapacidadAlmacenamientoGb()));
-	            row.createCell(c++).setCellValue(val(e.getSistemaOperativo()));
+				row.createCell(c++).setCellValue(numOrText(e.getMemoriaRamGb()));
+				row.createCell(c++).setCellValue(numOrText(e.getCapacidadAlmacenamientoGb()));
+				row.createCell(c++).setCellValue(val(e.getSistemaOperativo()));
 
-	            row.createCell(c++).setCellValue(boolSiNo(e.getLicenciaWindowsActivada()));
-	            row.createCell(c++).setCellValue(boolSiNo(e.getEtiquetaActivoFijo()));
-	            row.createCell(c++).setCellValue(val(e.getTipoLicenciaOffice()));
-	            row.createCell(c++).setCellValue(val(e.getVersionOffice()));
-	            row.createCell(c++).setCellValue(boolSiNo(e.getUnionDominio()));
+				row.createCell(c++).setCellValue(boolSiNo(e.getLicenciaWindowsActivada()));
+				row.createCell(c++).setCellValue(boolSiNo(e.getEtiquetaActivoFijo()));
+				row.createCell(c++).setCellValue(val(e.getTipoLicenciaOffice()));
+				row.createCell(c++).setCellValue(val(e.getVersionOffice()));
+				row.createCell(c++).setCellValue(boolSiNo(e.getUnionDominio()));
 
-	            row.createCell(c++).setCellValue(val(e.getIp()));
-	            row.createCell(c++).setCellValue(val(e.getMac()));
+				row.createCell(c++).setCellValue(val(e.getIp()));
+				row.createCell(c++).setCellValue(val(e.getMac()));
 
-	            // Fecha compra (si es LocalDate / String)
-	            row.createCell(c++).setCellValue(formatFecha(e.getFechaCompra()));
+				// Fecha compra (si es LocalDate / String)
+				row.createCell(c++).setCellValue(formatFecha(e.getFechaCompra()));
 
-	            // Precio compra (si es BigDecimal / String)
-	            row.createCell(c++).setCellValue(val(e.getPrecioCompra()));
+				// Precio compra (si es BigDecimal / String)
+				row.createCell(c++).setCellValue(val(e.getPrecioCompra()));
 
-	            row.createCell(c++).setCellValue(val(e.getEstadoEquipo()));
-	            row.createCell(c++).setCellValue(val(e.getObservacionEquipo()));
+				row.createCell(c++).setCellValue(val(e.getEstadoEquipo()));
+				row.createCell(c++).setCellValue(val(e.getObservacionEquipo()));
 
-	            row.createCell(c++).setCellValue(e.getFkDepartamento() != null ? val(e.getFkDepartamento().getNombre()) : "-");
-	            row.createCell(c++).setCellValue(e.getFkMarca() != null ? val(e.getFkMarca().getNombre()) : "-");
-	            row.createCell(c++).setCellValue(e.getFkProveedor() != null ? val(e.getFkProveedor().getNombre()) : "-");
-	            row.createCell(c++).setCellValue(e.getFkCategoria() != null ? val(e.getFkCategoria().getNombre()) : "-");
+				row.createCell(c++).setCellValue(e.getFkMarca() != null ? val(e.getFkMarca().getNombre()) : "-");
+				row.createCell(c++)
+						.setCellValue(e.getFkProveedor() != null ? val(e.getFkProveedor().getNombre()) : "-");
+				row.createCell(c++)
+						.setCellValue(e.getFkCategoria() != null ? val(e.getFkCategoria().getNombre()) : "-");
 
-	            row.createCell(c++).setCellValue(e.isEstado() ? "Activo" : "Inactivo");
+				row.createCell(c++).setCellValue(e.isEstado() ? "Activo" : "Inactivo");
 
-	            // aplicar estilo a toda la fila (opcional)
-	            for (int i = 0; i < cols.length; i++) {
-	                Cell cell = row.getCell(i);
-	                if (cell != null) cell.setCellStyle(dataStyle);
-	            }
-	        }
+				// aplicar estilo a toda la fila (opcional)
+				for (int i = 0; i < cols.length; i++) {
+					Cell cell = row.getCell(i);
+					if (cell != null)
+						cell.setCellStyle(dataStyle);
+				}
+			}
 
-	        // =========================
-	        // 5) Mejoras visuales
-	        // =========================
-	        sheet.createFreezePane(0, headerRowIndex + 1); // fija hasta la fila de columnas
-	        sheet.setAutoFilter(new CellRangeAddress(headerRowIndex, headerRowIndex, 0, totalCols - 1));
+			// =========================
+			// 5) Mejoras visuales
+			// =========================
+			sheet.createFreezePane(0, headerRowIndex + 1); // fija hasta la fila de columnas
+			sheet.setAutoFilter(new CellRangeAddress(headerRowIndex, headerRowIndex, 0, totalCols - 1));
 
-	        for (int i = 0; i < cols.length; i++) {
-	            sheet.autoSizeColumn(i);
-	        }
+			for (int i = 0; i < cols.length; i++) {
+				sheet.autoSizeColumn(i);
+			}
 
-	        wb.write(out);
+			wb.write(out);
 
-	        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-	        String suf = (tipo != null && !tipo.isBlank()) ? "_" + tipo.trim().toLowerCase() : "";
-	        String filename = "reporte_equipos" + suf + "_" + timestamp + ".xlsx";
+			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+			String suf = (tipo != null && !tipo.isBlank()) ? "_" + tipo.trim().toLowerCase() : "";
+			String filename = "reporte_equipos" + suf + "_" + timestamp + ".xlsx";
 
-	        return ResponseEntity.ok()
-	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	                .contentType(MediaType.parseMediaType(
-	                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-	                .body(out.toByteArray());
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+					.contentType(MediaType
+							.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+					.body(out.toByteArray());
 
-	    } catch (Exception ex) {
-	        throw new RuntimeException("Error generando Excel de equipos", ex);
-	    }
+		} catch (Exception ex) {
+			throw new RuntimeException("Error generando Excel de equipos", ex);
+		}
 	}
 
 	// =========================
 	// Helpers
 	// =========================
 	private String val(Object x) {
-	    return (x == null) ? "-" : String.valueOf(x);
+		return (x == null) ? "-" : String.valueOf(x);
 	}
 
 	private String boolSiNo(Boolean b) {
-	    return (b != null && b) ? "Sí" : "No";
+		return (b != null && b) ? "Sí" : "No";
 	}
 
 	private String numOrText(Object n) {
-	    return (n == null) ? "-" : String.valueOf(n);
+		return (n == null) ? "-" : String.valueOf(n);
 	}
 
-	// Si fechaCompra viene como LocalDate, lo formatea bonito; si viene String, lo deja
+	// Si fechaCompra viene como LocalDate, lo formatea bonito; si viene String, lo
+	// deja
 	private String formatFecha(Object fecha) {
-	    if (fecha == null) return "-";
-	    if (fecha instanceof LocalDate d) {
-	        return d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    }
-	    return String.valueOf(fecha);
+		if (fecha == null)
+			return "-";
+		if (fecha instanceof LocalDate d) {
+			return d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		}
+		return String.valueOf(fecha);
 	}
 }

@@ -5,114 +5,230 @@ import java.time.LocalDate;
 
 public class EquiposResponseDTO {
 
-    private int idEquipo;
-    private String codigoSap;
-    private String tipoEquipo;
-    private String modelo;
-    private String serial;
-    private String procesador;
+	private int idEquipo;
+	private String codigoSap;
+	private String tipoEquipo;
+	private String modelo;
+	private String serial;
+	private String procesador;
 
-    private Integer memoriaRamGb;
-    private Integer capacidadAlmacenamientoGb;
+	private Integer memoriaRamGb;
+	private Integer capacidadAlmacenamientoGb;
 
-    private String sistemaOperativo;
-    private Boolean licenciaWindowsActivada;
-    private Boolean etiquetaActivoFijo;
+	private String sistemaOperativo;
+	private Boolean licenciaWindowsActivada;
+	private Boolean etiquetaActivoFijo;
 
-    private String tipoLicenciaOffice;
-    private String versionOffice;
+	private String tipoLicenciaOffice;
+	private String versionOffice;
 
-    private Boolean unionDominio;
+	private Boolean unionDominio;
 
-    private String ip;
-    private String mac;
+	private String ip;
+	private String mac;
 
-    private LocalDate fechaCompra;
-    private BigDecimal precioCompra;
+	private LocalDate fechaCompra;
+	private BigDecimal precioCompra;
 
-    private String estadoEquipo;
-    private String observacionEquipo;
+	private String estadoEquipo;
+	private String observacionEquipo;
 
-    private boolean estado;
+	private boolean estado;
 
-    // ✅ FKs completas para que en el consumo se vea el NOMBRE
-    private DepartamentosResponseDTO fkDepartamento;
-    private MarcasResponseDTO fkMarca;
-    private ProveedoresResponseDTO fkProveedor;
-    private CategoriaEquiposResponseDTO fkCategoria;
+	// ✅ FKs completas para que en el consumo se vea el NOMBRE
+	private MarcasResponseDTO fkMarca;
+	private ProveedoresResponseDTO fkProveedor;
+	private CategoriaEquiposResponseDTO fkCategoria;
 
-    public int getIdEquipo() { return idEquipo; }
-    public void setIdEquipo(int idEquipo) { this.idEquipo = idEquipo; }
+	public int getIdEquipo() {
+		return idEquipo;
+	}
 
-    public String getCodigoSap() { return codigoSap; }
-    public void setCodigoSap(String codigoSap) { this.codigoSap = codigoSap; }
+	public void setIdEquipo(int idEquipo) {
+		this.idEquipo = idEquipo;
+	}
 
-    public String getTipoEquipo() { return tipoEquipo; }
-    public void setTipoEquipo(String tipoEquipo) { this.tipoEquipo = tipoEquipo; }
+	public String getCodigoSap() {
+		return codigoSap;
+	}
 
-    public String getModelo() { return modelo; }
-    public void setModelo(String modelo) { this.modelo = modelo; }
+	public void setCodigoSap(String codigoSap) {
+		this.codigoSap = codigoSap;
+	}
 
-    public String getSerial() { return serial; }
-    public void setSerial(String serial) { this.serial = serial; }
+	public String getTipoEquipo() {
+		return tipoEquipo;
+	}
 
-    public String getProcesador() { return procesador; }
-    public void setProcesador(String procesador) { this.procesador = procesador; }
+	public void setTipoEquipo(String tipoEquipo) {
+		this.tipoEquipo = tipoEquipo;
+	}
 
-    public Integer getMemoriaRamGb() { return memoriaRamGb; }
-    public void setMemoriaRamGb(Integer memoriaRamGb) { this.memoriaRamGb = memoriaRamGb; }
+	public String getModelo() {
+		return modelo;
+	}
 
-    public Integer getCapacidadAlmacenamientoGb() { return capacidadAlmacenamientoGb; }
-    public void setCapacidadAlmacenamientoGb(Integer capacidadAlmacenamientoGb) { this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb; }
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 
-    public String getSistemaOperativo() { return sistemaOperativo; }
-    public void setSistemaOperativo(String sistemaOperativo) { this.sistemaOperativo = sistemaOperativo; }
+	public String getSerial() {
+		return serial;
+	}
 
-    public Boolean getLicenciaWindowsActivada() { return licenciaWindowsActivada; }
-    public void setLicenciaWindowsActivada(Boolean licenciaWindowsActivada) { this.licenciaWindowsActivada = licenciaWindowsActivada; }
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
 
-    public Boolean getEtiquetaActivoFijo() { return etiquetaActivoFijo; }
-    public void setEtiquetaActivoFijo(Boolean etiquetaActivoFijo) { this.etiquetaActivoFijo = etiquetaActivoFijo; }
+	public String getProcesador() {
+		return procesador;
+	}
 
-    public String getTipoLicenciaOffice() { return tipoLicenciaOffice; }
-    public void setTipoLicenciaOffice(String tipoLicenciaOffice) { this.tipoLicenciaOffice = tipoLicenciaOffice; }
+	public void setProcesador(String procesador) {
+		this.procesador = procesador;
+	}
 
-    public String getVersionOffice() { return versionOffice; }
-    public void setVersionOffice(String versionOffice) { this.versionOffice = versionOffice; }
+	public Integer getMemoriaRamGb() {
+		return memoriaRamGb;
+	}
 
-    public Boolean getUnionDominio() { return unionDominio; }
-    public void setUnionDominio(Boolean unionDominio) { this.unionDominio = unionDominio; }
+	public void setMemoriaRamGb(Integer memoriaRamGb) {
+		this.memoriaRamGb = memoriaRamGb;
+	}
 
-    public String getIp() { return ip; }
-    public void setIp(String ip) { this.ip = ip; }
+	public Integer getCapacidadAlmacenamientoGb() {
+		return capacidadAlmacenamientoGb;
+	}
 
-    public String getMac() { return mac; }
-    public void setMac(String mac) { this.mac = mac; }
+	public void setCapacidadAlmacenamientoGb(Integer capacidadAlmacenamientoGb) {
+		this.capacidadAlmacenamientoGb = capacidadAlmacenamientoGb;
+	}
 
-    public LocalDate getFechaCompra() { return fechaCompra; }
-    public void setFechaCompra(LocalDate fechaCompra) { this.fechaCompra = fechaCompra; }
+	public String getSistemaOperativo() {
+		return sistemaOperativo;
+	}
 
-    public BigDecimal getPrecioCompra() { return precioCompra; }
-    public void setPrecioCompra(BigDecimal precioCompra) { this.precioCompra = precioCompra; }
+	public void setSistemaOperativo(String sistemaOperativo) {
+		this.sistemaOperativo = sistemaOperativo;
+	}
 
-    public String getEstadoEquipo() { return estadoEquipo; }
-    public void setEstadoEquipo(String estadoEquipo) { this.estadoEquipo = estadoEquipo; }
+	public Boolean getLicenciaWindowsActivada() {
+		return licenciaWindowsActivada;
+	}
 
-    public String getObservacionEquipo() { return observacionEquipo; }
-    public void setObservacionEquipo(String observacionEquipo) { this.observacionEquipo = observacionEquipo; }
+	public void setLicenciaWindowsActivada(Boolean licenciaWindowsActivada) {
+		this.licenciaWindowsActivada = licenciaWindowsActivada;
+	}
 
-    public boolean isEstado() { return estado; }
-    public void setEstado(boolean estado) { this.estado = estado; }
+	public Boolean getEtiquetaActivoFijo() {
+		return etiquetaActivoFijo;
+	}
 
-    public DepartamentosResponseDTO getFkDepartamento() { return fkDepartamento; }
-    public void setFkDepartamento(DepartamentosResponseDTO fkDepartamento) { this.fkDepartamento = fkDepartamento; }
+	public void setEtiquetaActivoFijo(Boolean etiquetaActivoFijo) {
+		this.etiquetaActivoFijo = etiquetaActivoFijo;
+	}
 
-    public MarcasResponseDTO getFkMarca() { return fkMarca; }
-    public void setFkMarca(MarcasResponseDTO fkMarca) { this.fkMarca = fkMarca; }
+	public String getTipoLicenciaOffice() {
+		return tipoLicenciaOffice;
+	}
 
-    public ProveedoresResponseDTO getFkProveedor() { return fkProveedor; }
-    public void setFkProveedor(ProveedoresResponseDTO fkProveedor) { this.fkProveedor = fkProveedor; }
+	public void setTipoLicenciaOffice(String tipoLicenciaOffice) {
+		this.tipoLicenciaOffice = tipoLicenciaOffice;
+	}
 
-    public CategoriaEquiposResponseDTO getFkCategoria() { return fkCategoria; }
-    public void setFkCategoria(CategoriaEquiposResponseDTO fkCategoria) { this.fkCategoria = fkCategoria; }
+	public String getVersionOffice() {
+		return versionOffice;
+	}
+
+	public void setVersionOffice(String versionOffice) {
+		this.versionOffice = versionOffice;
+	}
+
+	public Boolean getUnionDominio() {
+		return unionDominio;
+	}
+
+	public void setUnionDominio(Boolean unionDominio) {
+		this.unionDominio = unionDominio;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getMac() {
+		return mac;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public LocalDate getFechaCompra() {
+		return fechaCompra;
+	}
+
+	public void setFechaCompra(LocalDate fechaCompra) {
+		this.fechaCompra = fechaCompra;
+	}
+
+	public BigDecimal getPrecioCompra() {
+		return precioCompra;
+	}
+
+	public void setPrecioCompra(BigDecimal precioCompra) {
+		this.precioCompra = precioCompra;
+	}
+
+	public String getEstadoEquipo() {
+		return estadoEquipo;
+	}
+
+	public void setEstadoEquipo(String estadoEquipo) {
+		this.estadoEquipo = estadoEquipo;
+	}
+
+	public String getObservacionEquipo() {
+		return observacionEquipo;
+	}
+
+	public void setObservacionEquipo(String observacionEquipo) {
+		this.observacionEquipo = observacionEquipo;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
+	public MarcasResponseDTO getFkMarca() {
+		return fkMarca;
+	}
+
+	public void setFkMarca(MarcasResponseDTO fkMarca) {
+		this.fkMarca = fkMarca;
+	}
+
+	public ProveedoresResponseDTO getFkProveedor() {
+		return fkProveedor;
+	}
+
+	public void setFkProveedor(ProveedoresResponseDTO fkProveedor) {
+		this.fkProveedor = fkProveedor;
+	}
+
+	public CategoriaEquiposResponseDTO getFkCategoria() {
+		return fkCategoria;
+	}
+
+	public void setFkCategoria(CategoriaEquiposResponseDTO fkCategoria) {
+		this.fkCategoria = fkCategoria;
+	}
 }

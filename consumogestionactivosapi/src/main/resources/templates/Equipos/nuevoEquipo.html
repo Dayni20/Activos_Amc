@@ -45,6 +45,9 @@
 								<label class="form-label">Código SAP</label> <input
 									maxlength="20" type="text" class="form-control"
 									th:field="*{codigoSap}" placeholder="Código SAP" />
+								<div class="text-danger small" th:if="${errorCodigo}">
+									<span th:text="${errorCodigo}"></span>
+								</div>
 							</div>
 
 							<div class="col-md-4 mb-4">
@@ -159,12 +162,18 @@
 								<label class="form-label">IP</label> <input type="text"
 									class="form-control" th:field="*{ip}"
 									placeholder="192.168.1.10" />
+								<div class="text-danger small" th:if="${errorIp}">
+									<span th:text="${errorIp}"></span>
+								</div>
 							</div>
 
 							<div class="col-md-4 mb-4">
 								<label class="form-label">MAC</label> <input type="text"
 									class="form-control" th:field="*{mac}"
 									placeholder="AA:BB:CC:DD:EE:FF" />
+								<div class="text-danger small" th:if="${errorMac}">
+									<span th:text="${errorMac}"></span>
+								</div>
 							</div>
 						</div>
 
@@ -200,18 +209,6 @@
                COMBOS OBLIGATORIOS (FK)
           ========================== -->
 						<div class="row">
-							<div class="col-md-3 mb-4">
-								<label class="form-label">Departamento <span
-									class="text-danger">*</span></label> <select class="form-control"
-									th:field="*{fkDepartamento.idDepartamento}">
-									<option value="0">Seleccione un departamento</option>
-									<option th:each="d : ${listadepartamentos}"
-										th:value="${d.idDepartamento}" th:text="${d.nombre}"></option>
-								</select>
-								<div class="text-danger small" th:if="${errorDepartamento}">
-									<span th:text="${errorDepartamento}"></span>
-								</div>
-							</div>
 
 							<div class="col-md-3 mb-4">
 								<label class="form-label">Marca <span
@@ -253,17 +250,7 @@
 							</div>
 						</div>
 
-						<!-- =========================
-               ESTADO
-          ========================== -->
-						<div class="row mb-4">
-							<div class="form-check form-switch form-switch-sm ps-5">
-								<input class="form-check-input c-pointer" type="checkbox"
-									th:field="*{estado}" id="estadoSwitch" /> <label
-									class="form-check-label fw-500 text-dark c-pointer"
-									for="estadoSwitch">Activo</label>
-							</div>
-						</div>
+					
 
 					</div>
 				</div>

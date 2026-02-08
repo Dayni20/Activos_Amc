@@ -16,4 +16,12 @@ public interface ICustodiosServicio {
     void actualizarCustodio(Integer idCustodio, CustodiosRequestDTO dto);
 
     void actualizarEstado(Integer idCustodio, boolean estado);
+    
+	boolean existeCorreo(String correo);
+
+	boolean existeCorreoParaOtro(String correo, int idCustodio);
+
+	boolean existeCedula(String cedula);
+
+	boolean existeCedulaParaOtro(String cedula, int idCustodio);
 }

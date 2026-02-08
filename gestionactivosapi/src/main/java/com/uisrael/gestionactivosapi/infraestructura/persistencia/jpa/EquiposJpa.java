@@ -93,10 +93,6 @@ public class EquiposJpa implements Serializable {
     private boolean estado;
     
     @ManyToOne
-    @JoinColumn(name = "fKDepartamento")
-    private DepartamentosJpa fkDepartamento;
-    
-    @ManyToOne
     @JoinColumn(name = "id_marca", nullable = false)
     private MarcasJpa fkMarcas;
         

@@ -1,5 +1,7 @@
 package com.uisrael.consumogestionactivosapi.modelo.dto.response;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -15,5 +17,11 @@ public class CustodiosResponseDTO {
     
     private String telefono;
     
-    private boolean estado;
+    private LocalDate fechaIngreso;
+    
+	private boolean estado;
+	
+	private DepartamentosResponseDTO fkDepartamento;
+	
+	private CargosResponseDTO fkCargo;
 }

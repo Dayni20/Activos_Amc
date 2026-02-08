@@ -22,7 +22,6 @@ public interface IEquiposDtoMapper {
     // =========================
     // REQUEST DTO -> DOMINIO
     // =========================
-    @Mapping(target = "fkDepartamento", expression = "java(mapDepartamento(dto))")
     @Mapping(target = "fkCategoria", expression = "java(mapCategoria(dto))")
     @Mapping(target = "fkMarca", expression = "java(mapMarca(dto))")
     @Mapping(target = "fkProveedor", expression = "java(mapProveedor(dto))")
@@ -32,7 +31,6 @@ public interface IEquiposDtoMapper {
     // DOMINIO -> RESPONSE DTO
     // (✅ aquí está tu arreglo)
     // =========================
-    @Mapping(target = "fkDepartamento", expression = "java(toDepartamentoResponse(equipo.getFkDepartamento()))")
     @Mapping(target = "fkMarca", expression = "java(toMarcaResponse(equipo.getFkMarca()))")
     @Mapping(target = "fkProveedor", expression = "java(toProveedorResponse(equipo.getFkProveedor()))")
     @Mapping(target = "fkCategoria", expression = "java(toCategoriaResponse(equipo.getFkCategoria()))")
@@ -41,15 +39,6 @@ public interface IEquiposDtoMapper {
     // ==========================================================
     // MAPS MANUALES (REQUEST -> DOMINIO)  (solo ID en relaciones)
     // ==========================================================
-    default Departamentos mapDepartamento(EquiposRequestDTO dto) {
-        if (dto == null || dto.getFkDepartamento() == null) return null;
-        return new Departamentos(
-                dto.getFkDepartamento().getIdDepartamento(),
-                null,
-                true,
-                null
-        );
-    }
 
     default CategoriaEquipos mapCategoria(EquiposRequestDTO dto) {
         if (dto == null || dto.getFkCategoria() == null) return null;

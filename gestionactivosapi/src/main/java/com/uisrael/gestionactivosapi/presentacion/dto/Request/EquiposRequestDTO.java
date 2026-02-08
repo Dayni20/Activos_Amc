@@ -30,7 +30,6 @@ public class EquiposRequestDTO {
     private String observacionEquipo;
     private boolean estado;
 
-    private DepartamentosRequestDTO fkDepartamento;
     private MarcasRequestDTO fkMarca;
     private ProveedoresRequestDTO fkProveedor;
     private CategoriaEquiposRequestDTO fkCategoria;
