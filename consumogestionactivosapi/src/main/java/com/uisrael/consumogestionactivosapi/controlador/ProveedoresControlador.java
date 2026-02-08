@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
@@ -44,11 +44,28 @@ public class ProveedoresControlador {
 		return "redirect:/proveedores"; 
 	}
 	
-	
-	
-	@PutMapping("/editarProveedores")
-	public String modificarProveedores() {
-		return "proveedores/editarProveedores"; // ubicacion fisica page
-	}
+	//GET: EDITAR 
+		@GetMapping("/editar/{id}")
+		public String editarProveedores(@PathVariable Integer id, Model model) {
 
+		    ProveedoresResponseDTO proveedores = servicioProveedores.obtenerProveedor(id);
+
+		    model.addAttribute("nuevoproveedor", proveedores);
+
+		    return "proveedores/editarProveedores";
+		}
+		
+		// POST:ELIMINAR
+		@PostMapping("/eliminar/{id}")
+		public String eliminarProveedor(@PathVariable Integer id, Model model) {
+			try {
+				servicioProveedores.eliminarProveedor(id);
+				return "redirect:/proveedores";
+			} catch (RuntimeException e) {
+				List<ProveedoresResponseDTO> contenidoBD = servicioProveedores.listarProveedores();
+				model.addAttribute("listarproveedores", contenidoBD);
+				model.addAttribute("errorEliminar", e.getMessage());
+				return "proveedores/listarProveedores";
+			}
+}
 }

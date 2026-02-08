@@ -43,28 +43,29 @@ public class MarcasControlador {
 		return "redirect:/marcas"; 
 	}
 	
-	//GET EDITAR 
+	//GET: EDITAR 
 	@GetMapping("/editarMarcas/{id}")
-	public String modificarMarcas(@PathVariable Integer id, Model model) {
+	public String editarMarca(@PathVariable Integer id, Model model) {
 
 	    MarcasResponseDTO marca = servicioMarcas.obtenerMarca(id);
 
-	    MarcasRequestDTO dto = new MarcasRequestDTO();
-	    dto.setIdMarca(marca.getIdMarca());
-	    dto.setNombre(marca.getNombre());
-	    dto.setEstado(marca.isEstado());
+	    model.addAttribute("nuevamarca", marca);
 
-	    model.addAttribute("editarmarca", dto);
 	    return "marcas/editarMarcas";
 	}
 	
-	  // POST EDITAR
-    @PostMapping("/editarMarcas")
-    public String actualizarMarca(
-            @ModelAttribute("editarmarca") MarcasRequestDTO dto) {
-
-        servicioMarcas.actualizarMarca(dto.getIdMarca(), dto);
-        return "redirect:/marcas";
+	// POST:ELIMINAR
+	@PostMapping("/eliminar/{id}")
+	public String eliminarMarca(@PathVariable Integer id, Model model) {
+		try {
+			servicioMarcas.eliminarMarca(id);
+			return "redirect:/marcas";
+		} catch (RuntimeException e) {
+			List<MarcasResponseDTO> contenidoBD = servicioMarcas.listarMarca();
+			model.addAttribute("listarmarca", contenidoBD);
+			model.addAttribute("errorEliminar", e.getMessage());
+			return "marcas/listarMarcas";
+		}
     }
 
 }
