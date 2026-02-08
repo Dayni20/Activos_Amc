@@ -1,6 +1,7 @@
 package com.uisrael.gestionactivosapi.presentacion.dto.Request;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class CustodiasRequestDTO {
 
     // ✅ AGREGA ESTO (para relación)
     @NotNull
-    private EquiposRequestDTO fkEquipo;
+    private List<EquiposRequestDTO> equipos;
 
     @NotNull
     private CustodiosRequestDTO fkCustodio;

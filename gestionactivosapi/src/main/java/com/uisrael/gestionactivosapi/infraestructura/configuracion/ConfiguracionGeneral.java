@@ -87,120 +87,120 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICategoriaEqui
 
 @Configuration
 public class ConfiguracionGeneral {
-	
+
 	@Bean
 	IDepartamentosUseCase departamentoUseCase(IDepartamentosRepositorio repositorio) {
 		return new DepartamentosUseCaseImpl(repositorio);
 	}
-	
+
 	@Bean
 	IUbicacionesUseCase ubicacionUseCase(IUbicacionesRepositorio repositorio) {
 		return new UbicacionesUseCaseImpl(repositorio);
 	}
-	
+
 	@Bean
 	ICargosUseCase cargoUseCase(ICargosRepositorio repositorio) {
 		return new CargosUseCaseImpl(repositorio);
 	}
-	
+
 	@Bean
-	IDepartamentosRepositorio departamentoRepositorio(IDepartamentosJpaRepositorio jpaRepositorio, IDepartamentosJpaMapper mapper) {
+	IDepartamentosRepositorio departamentoRepositorio(IDepartamentosJpaRepositorio jpaRepositorio,
+			IDepartamentosJpaMapper mapper) {
 		return new DepartamentosRepositorioImpl(jpaRepositorio, mapper);
 	}
-	
+
 	@Bean
-	IUbicacionesRepositorio ubicacionRepositorio(IUbicacionesJpaRepositorio jpaRepositorio, IUbicacionesJpaMapper mapper) {
+	IUbicacionesRepositorio ubicacionRepositorio(IUbicacionesJpaRepositorio jpaRepositorio,
+			IUbicacionesJpaMapper mapper) {
 		return new UbicacionesRepositorioImpl(jpaRepositorio, mapper);
 	}
-	
+
 	@Bean
 	ICargosRepositorio cargoRepositorio(ICargosJpaRepositorio jpaRepositorio, ICargosJpaMapper mapper) {
 		return new CargosRepositorioImpl(jpaRepositorio, mapper);
 	}
-	
+
 	@Bean
 	IProveedoresUseCase proveedoresUseCase(IProveedoresRepositorio repositorio) {
-	    return new ProveedoresUseCaseImpl(repositorio);
+		return new ProveedoresUseCaseImpl(repositorio);
 	}
 
 	@Bean
 	IMarcasUseCase marcasUseCase(IMarcasRepositorio repositorio) {
-	    return new MarcasUseCaseImpl(repositorio);
+		return new MarcasUseCaseImpl(repositorio);
 	}
 
 	@Bean
-	IProveedoresRepositorio proveedoresRepositorio(IProveedoresJpaRepositorio jpaRepositorio, IProveedoresJpaMapper mapper) {
-	    return new ProveedoresRepositorioImpl(jpaRepositorio, mapper);
+	IProveedoresRepositorio proveedoresRepositorio(IProveedoresJpaRepositorio jpaRepositorio,
+			IProveedoresJpaMapper mapper) {
+		return new ProveedoresRepositorioImpl(jpaRepositorio, mapper);
 	}
 
 	@Bean
 	IMarcasRepositorio marcasRepositorio(IMarcasJpaRepositorio jpaRepositorio, IMarcasJpaMapper mapper) {
-	    return new MarcasRepositorioImpl(jpaRepositorio, mapper);
+		return new MarcasRepositorioImpl(jpaRepositorio, mapper);
 	}
-    @Bean
-    IEquiposUseCase equiposUseCase(IEquiposRepositorio repositorio) {
-        return new EquiposUseCaseImpl(repositorio);
-    }
 
-    @Bean
-    IEquiposRepositorio equiposRepositorio(
-            IEquiposJpaRepositorio jpaRepositorio,
-            IEquiposJpaMapper mapper) {
-        return new EquiposRepositorioImpl(jpaRepositorio, mapper);
-    }
-    
-    @Bean
-    ICustodiosUseCase custodiosUseCase(ICustodiosRepositorio repositorio) {
-        return new CustodiosUseCaseImpl(repositorio);
-    }
+	@Bean
+	IEquiposUseCase equiposUseCase(IEquiposRepositorio repositorio) {
+		return new EquiposUseCaseImpl(repositorio);
+	}
 
-    @Bean
-    ICustodiosRepositorio custodiosRepositorio(
-            ICustodiosJpaRepositorio jpaRepositorio,
-            ICustodiosJpaMapper mapper) {
-        return new CustodiosRepositorioImpl(jpaRepositorio, mapper);
-    }
+	@Bean
+	IEquiposRepositorio equiposRepositorio(IEquiposJpaRepositorio jpaRepositorio, IEquiposJpaMapper mapper) {
+		return new EquiposRepositorioImpl(jpaRepositorio, mapper);
+	}
 
-    @Bean
-    ICustodiasUseCase custodiasUseCase(ICustodiasRepositorio repositorio) {
-        return new CustodiasUseCaseImpl(repositorio);
-    }
+	@Bean
+	ICustodiosUseCase custodiosUseCase(ICustodiosRepositorio repositorio) {
+		return new CustodiosUseCaseImpl(repositorio);
+	}
 
-    @Bean
-    ICustodiasRepositorio custodiasRepositorio(
-            ICustodiasJpaRepositorio jpaRepositorio,
-            ICustodiasJpaMapper mapper) {
-        return new CustodiasRepositorioImpl(jpaRepositorio, mapper);
-    }
+	@Bean
+	ICustodiosRepositorio custodiosRepositorio(ICustodiosJpaRepositorio jpaRepositorio, ICustodiosJpaMapper mapper) {
+		return new CustodiosRepositorioImpl(jpaRepositorio, mapper);
+	}
 
-    @Bean
-    IRolesUseCase rolesUseCase(IRolesRepositorio repositorio) {
-        return new RolesUseCaseImpl(repositorio);
-    }
+	@Bean
+	ICustodiasUseCase custodiasUseCase(ICustodiasRepositorio repositorio) {
+		return new CustodiasUseCaseImpl(repositorio);
+	}
 
-    @Bean
-    IRolesRepositorio rolesRepositorio(IRolesJpaRepositorio jpaRepositorio, IRolesJpaMapper mapper) {
-        return new RolesRepositorioImpl(jpaRepositorio, mapper);
-    }
+	@Bean
+	public ICustodiasRepositorio custodiasRepositorio(ICustodiasJpaRepositorio jpaRepositorio,
+			ICustodiasJpaMapper mapper, IEquiposJpaRepositorio equiposRepo, ICustodiosJpaRepositorio custodiosRepo) {
+		return new CustodiasRepositorioImpl(jpaRepositorio, mapper, equiposRepo, custodiosRepo);
+	}
 
-    @Bean
-    IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio, IRolesRepositorio rolesRepositorio,
-            IDepartamentosRepositorio departamentosRepositorio, PasswordEncoder passwordEncoder) {
-        return new UsuariosUseCaseImpl(repositorio, rolesRepositorio, departamentosRepositorio, passwordEncoder);
-    }
+	@Bean
+	IRolesUseCase rolesUseCase(IRolesRepositorio repositorio) {
+		return new RolesUseCaseImpl(repositorio);
+	}
 
-    @Bean
-    IUsuariosRepositorio usuariosRepositorio(IUsuariosJpaRepositorio jpaRepositorio, IUsuariosJpaMapper mapper) {
-        return new UsuariosRepositorioImpl(jpaRepositorio, mapper);
-    }
+	@Bean
+	IRolesRepositorio rolesRepositorio(IRolesJpaRepositorio jpaRepositorio, IRolesJpaMapper mapper) {
+		return new RolesRepositorioImpl(jpaRepositorio, mapper);
+	}
 
-    @Bean
-    ICategoriaEquiposUseCase categoriaEquiposUseCase(ICategoriaEquiposRepositorio repositorio) {
-        return new CategoriaEquiposUseCaseImpl(repositorio);
-    }
+	@Bean
+	IUsuariosUseCase usuariosUseCase(IUsuariosRepositorio repositorio, IRolesRepositorio rolesRepositorio,
+			IDepartamentosRepositorio departamentosRepositorio, PasswordEncoder passwordEncoder) {
+		return new UsuariosUseCaseImpl(repositorio, rolesRepositorio, departamentosRepositorio, passwordEncoder);
+	}
 
-    @Bean
-    ICategoriaEquiposRepositorio categoriaEquiposRepositorio(ICategoriaEquiposJpaRepositorio jpaRepositorio, ICategoriaEquiposJpaMapper mapper) {
-        return new CategoriaEquiposRepositorioImpl(jpaRepositorio, mapper);
-    }
+	@Bean
+	IUsuariosRepositorio usuariosRepositorio(IUsuariosJpaRepositorio jpaRepositorio, IUsuariosJpaMapper mapper) {
+		return new UsuariosRepositorioImpl(jpaRepositorio, mapper);
+	}
+
+	@Bean
+	ICategoriaEquiposUseCase categoriaEquiposUseCase(ICategoriaEquiposRepositorio repositorio) {
+		return new CategoriaEquiposUseCaseImpl(repositorio);
+	}
+
+	@Bean
+	ICategoriaEquiposRepositorio categoriaEquiposRepositorio(ICategoriaEquiposJpaRepositorio jpaRepositorio,
+			ICategoriaEquiposJpaMapper mapper) {
+		return new CategoriaEquiposRepositorioImpl(jpaRepositorio, mapper);
+	}
 }

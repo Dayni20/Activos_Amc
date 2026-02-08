@@ -6,88 +6,115 @@ import java.util.Optional;
 import com.uisrael.gestionactivosapi.dominio.entidades.Custodias;
 import com.uisrael.gestionactivosapi.dominio.repositorios.ICustodiasRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CustodiasJpa;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CustodiosJpa;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.EquiposJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiasJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiasJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IEquiposJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiosJpaRepositorio;
 
 public class CustodiasRepositorioImpl implements ICustodiasRepositorio {
 
-    private final ICustodiasJpaRepositorio jpaRepository;
-    private final ICustodiasJpaMapper entityMapper;
+	private final ICustodiasJpaRepositorio jpaRepository;
+	private final ICustodiasJpaMapper entityMapper;
 
-    public CustodiasRepositorioImpl(ICustodiasJpaRepositorio jpaRepository,
-                                    ICustodiasJpaMapper entityMapper) {
-        this.jpaRepository = jpaRepository;
-        this.entityMapper = entityMapper;
-    }
+	private final IEquiposJpaRepositorio equiposRepo;
+	private final ICustodiosJpaRepositorio custodiosRepo;
 
-    @Override
-    public Custodias guardar(Custodias custodia) {
-        CustodiasJpa entity = entityMapper.toEntity(custodia);
+	// 👉 Constructor usado por @Bean en ConfiguracionGeneral
+	public CustodiasRepositorioImpl(ICustodiasJpaRepositorio jpaRepository, ICustodiasJpaMapper entityMapper,
+			IEquiposJpaRepositorio equiposRepo, ICustodiosJpaRepositorio custodiosRepo) {
+		this.jpaRepository = jpaRepository;
+		this.entityMapper = entityMapper;
+		this.equiposRepo = equiposRepo;
+		this.custodiosRepo = custodiosRepo;
+	}
 
-        // ✅ setear relaciones por ID
-        if (custodia.getFkEquipo() != null) {
-            EquiposJpa eq = new EquiposJpa();
-            eq.setIdEquipo(custodia.getFkEquipo().getIdEquipo());
-            entity.setFkEquipo(eq);
-        }
+	// =========================
+	// CREAR
+	// =========================
+	@Override
+	public Custodias guardar(Custodias custodia) {
 
-        if (custodia.getFkCustodio() != null) {
-            CustodiosJpa cu = new CustodiosJpa();
-            cu.setIdCustodio(custodia.getFkCustodio().getIdCustodio());
-            entity.setFkCustodio(cu);
-        }
+		CustodiasJpa entity = entityMapper.toEntity(custodia);
 
-        CustodiasJpa guardado = jpaRepository.save(entity);
-        return entityMapper.toDomain(guardado);
-    }
+		if (custodia.getFkEquipo() != null) {
+			entity.setFkEquipo(equiposRepo.getReferenceById(custodia.getFkEquipo().getIdEquipo()));
+		}
 
-    @Override
-    public Optional<Custodias> buscarPorId(int id) {
-        return jpaRepository.findById(id).map(entityMapper::toDomain);
-    }
+		if (custodia.getFkCustodio() != null) {
+			entity.setFkCustodio(custodiosRepo.getReferenceById(custodia.getFkCustodio().getIdCustodio()));
+		}
 
-    @Override
-    public List<Custodias> listarTodos() {
-        return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
-    }
+		CustodiasJpa guardado = jpaRepository.save(entity);
 
-    @Override
-    public Custodias actualizar(int id, Custodias custodia) {
-        CustodiasJpa existente = jpaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Custodia no encontrada"));
+		// 🔑 volver a leer para traer relaciones completas
+		CustodiasJpa completo = jpaRepository.findById(guardado.getIdCustodiaEquipo())
+				.orElseThrow(() -> new RuntimeException("No se pudo leer la custodia guardada"));
 
-        existente.setFechaInicio(custodia.getFechaInicio());
-        existente.setFechaFin(custodia.getFechaFin());
-        existente.setObservacion(custodia.getObservacion());
-        existente.setEstado(custodia.isEstado());
+		return entityMapper.toDomain(completo);
+	}
 
-        // ✅ actualizar relaciones por ID si vienen
-        if (custodia.getFkEquipo() != null) {
-            EquiposJpa eq = new EquiposJpa();
-            eq.setIdEquipo(custodia.getFkEquipo().getIdEquipo());
-            existente.setFkEquipo(eq);
-        }
+	// =========================
+	// BUSCAR POR ID
+	// =========================
+	@Override
+	public Optional<Custodias> buscarPorId(int id) {
+		return jpaRepository.findById(id).map(entityMapper::toDomain);
+	}
 
-        if (custodia.getFkCustodio() != null) {
-            CustodiosJpa cu = new CustodiosJpa();
-            cu.setIdCustodio(custodia.getFkCustodio().getIdCustodio());
-            existente.setFkCustodio(cu);
-        }
+	// =========================
+	// LISTAR
+	// =========================
+	@Override
+	public List<Custodias> listarTodos() {
+		return jpaRepository.findAll().stream().map(entityMapper::toDomain).toList();
+	}
 
-        CustodiasJpa guardado = jpaRepository.save(existente);
-        return entityMapper.toDomain(guardado);
-    }
+	// =========================
+	// ACTUALIZAR
+	// =========================
+	@Override
+	public Custodias actualizar(int id, Custodias custodia) {
 
-    @Override
-    public Custodias actualizarEstado(int id, Custodias custodia) {
-        CustodiasJpa existente = jpaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Custodia no encontrada"));
+		CustodiasJpa existente = jpaRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Custodia no encontrada"));
 
-        existente.setEstado(custodia.isEstado());
+		existente.setFechaInicio(custodia.getFechaInicio());
+		existente.setFechaFin(custodia.getFechaFin());
+		existente.setObservacion(custodia.getObservacion());
+		existente.setEstado(custodia.isEstado());
 
-        CustodiasJpa guardado = jpaRepository.save(existente);
-        return entityMapper.toDomain(guardado);
-    }
+		if (custodia.getFkEquipo() != null) {
+			existente.setFkEquipo(equiposRepo.getReferenceById(custodia.getFkEquipo().getIdEquipo()));
+		}
+
+		if (custodia.getFkCustodio() != null) {
+			existente.setFkCustodio(custodiosRepo.getReferenceById(custodia.getFkCustodio().getIdCustodio()));
+		}
+
+		CustodiasJpa guardado = jpaRepository.save(existente);
+
+		CustodiasJpa completo = jpaRepository.findById(guardado.getIdCustodiaEquipo())
+				.orElseThrow(() -> new RuntimeException("No se pudo leer la custodia actualizada"));
+
+		return entityMapper.toDomain(completo);
+	}
+
+	// =========================
+	// ACTUALIZAR ESTADO
+	// =========================
+	@Override
+	public Custodias actualizarEstado(int id, Custodias custodia) {
+
+		CustodiasJpa existente = jpaRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Custodia no encontrada"));
+
+		existente.setEstado(custodia.isEstado());
+
+		CustodiasJpa guardado = jpaRepository.save(existente);
+
+		CustodiasJpa completo = jpaRepository.findById(guardado.getIdCustodiaEquipo())
+				.orElseThrow(() -> new RuntimeException("No se pudo leer la custodia"));
+
+		return entityMapper.toDomain(completo);
+	}	
 }
