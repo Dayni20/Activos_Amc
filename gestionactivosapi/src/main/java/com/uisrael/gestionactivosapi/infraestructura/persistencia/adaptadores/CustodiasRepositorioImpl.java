@@ -116,5 +116,5 @@ public class CustodiasRepositorioImpl implements ICustodiasRepositorio {
 				.orElseThrow(() -> new RuntimeException("No se pudo leer la custodia"));
 
 		return entityMapper.toDomain(completo);
-	}
+	}	
 }
