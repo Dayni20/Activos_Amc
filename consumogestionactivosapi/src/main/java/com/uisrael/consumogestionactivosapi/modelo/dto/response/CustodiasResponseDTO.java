@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class CustodiasResponseDTO {
 
-    // ✅ CABECERA (ACTA)
-    private int idCustodia;   // <-- NUEVO (id custodia / acta)
+    // CABECERA
+    private int idCustodia; // si lo tienes, déjalo
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String observacion;
@@ -15,11 +15,13 @@ public class CustodiasResponseDTO {
 
     private CustodiosResponseDTO fkCustodio;
 
-    // ✅ DETALLE
+    // DETALLE
     private int idCustodiaEquipo;
     private EquiposResponseDTO fkEquipo;
 
-    // (Opcional: si tu API luego devuelve entregado)
+    // ✅ NUEVO: id del empleado (viene como campo directo en JSON)
+    private int idCustodio;
+
     private Boolean entregado;
     private String observacionDevolucion;
 }
