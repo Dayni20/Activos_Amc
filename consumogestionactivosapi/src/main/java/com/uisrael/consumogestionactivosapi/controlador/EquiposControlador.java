@@ -13,7 +13,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.util.WorkbookUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,26 +27,29 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresReques
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.EquiposResponseDTO;
 
+import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.ICategoriaEquiposServicio;
 import com.uisrael.consumogestionactivosapi.service.IEquiposServicio;
 import com.uisrael.consumogestionactivosapi.service.IMarcasServicio;
 import com.uisrael.consumogestionactivosapi.service.IProveedoresServicio;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/equipos")
 public class EquiposControlador {
 
-	@Autowired
-	private IEquiposServicio servicioEquipos;
+	private final IEquiposServicio servicioEquipos;
+	private final IMarcasServicio servicioMarcas;
+	private final IProveedoresServicio servicioProveedores;
+	private final ICategoriaEquiposServicio servicioCategoriaEquipos;
+	private final SesionUsuario sesionUsuario;
 
-	@Autowired
-	private IMarcasServicio servicioMarcas;
-
-	@Autowired
-	private IProveedoresServicio servicioProveedores;
-
-	@Autowired
-	private ICategoriaEquiposServicio servicioCategoriaEquipos;
+	@ModelAttribute("sesionUsuario")
+	public SesionUsuario obtenerSesionUsuario() {
+		return sesionUsuario;
+	}
 
 	@GetMapping
 	public String listarEquipos(Model model) {

@@ -109,7 +109,8 @@ body {
 				<ul class="nxl-navbar">
 					<li class="nxl-item nxl-caption"><label>MENÚ</label></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-shield"></i></span> <span class="nxl-mtext">Roles</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -120,7 +121,9 @@ body {
 							<li class="nxl-item"><a class="nxl-link"
 								th:href="@{/roles/nuevo-rol}">Crear Rol</a></li>
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-user"></i></span> <span class="nxl-mtext">Usuarios</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -132,7 +135,8 @@ body {
 								th:href="@{/usuarios/nuevo-usuario}">Crear Usuario</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather feather-briefcase me-2"></i></span> <span
 							class="nxl-mtext">Cargos</span><span class="nxl-arrow"><i
@@ -146,7 +150,8 @@ body {
 								th:href="@{/cargos/nuevo-cargo}">Crear Cargo</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR o TECNICO -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-box"></i></span> <span class="nxl-mtext">Categorías
 								Equipo</span><span class="nxl-arrow"><i
@@ -160,7 +165,8 @@ body {
 									Categoría</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather feather-map-pin me-2"></i></span> <span
 							class="nxl-mtext">Ubicaciones</span><span class="nxl-arrow"><i
@@ -173,7 +179,9 @@ body {
 							<li class="nxl-item"><a class="nxl-link"
 								th:href="@{/ubicaciones/nueva-ubicacion}">Crear Ubicación</a></li>
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather feather-grid"></i></span> <span class="nxl-mtext">Departamentos</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -188,8 +196,8 @@ body {
 
 					<!-- CODIGO GEOVANNA VELASCO MARCAS Y PROVEEDORES -->
 
-
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR o TECNICO -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather feather-tag"></i></span> <span class="nxl-mtext">Marcas</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -202,7 +210,9 @@ body {
 								th:href="@{/marcas/nuevaMarcas}">Crear Marcas</a></li>
 
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					
+					<!-- Solo ADMINISTRADOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather feather-truck"></i></span> <span class="nxl-mtext">Proveedores</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -215,7 +225,8 @@ body {
 
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR o TECNICO -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-user"></i></span> <span class="nxl-mtext">Custodios</span>
 							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -227,7 +238,8 @@ body {
 								th:href="@{/custodios/nuevo-custodio}">Crear Custodios</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR o TECNICO -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-monitor"></i></span> <span class="nxl-mtext">Equipos</span>
 							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -239,7 +251,8 @@ body {
 								th:href="@{/equipos/nuevo-equipo}">Crear Equipos</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR o TECNICO -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-clipboard"></i></span> <span class="nxl-mtext">Custodias</span>
 							<span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -251,7 +264,8 @@ body {
 								th:href="@{/custodias/nueva-custodia}">Crear Custodias</a></li>
 						</ul></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<!-- ADMINISTRADOR, TECNICO o AUDITOR -->
+					<li class="nxl-item nxl-hasmenu" th:if="${sesionUsuario.rol == 'ADMINISTRADOR' || sesionUsuario.rol == 'TECNICO' || sesionUsuario.rol == 'AUDITOR'}"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-cast"></i></span> <span class="nxl-mtext">Reportes</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -259,8 +273,8 @@ body {
 						<ul class="nxl-submenu">
 							<li class="nxl-item"><a class="nxl-link"
 								th:href="@{/equipos/reporte-equipo}">Reporte Equipos</a></li>
-							<li class="nxl-item"><a class="nxl-link"
-								href="reports-leads.html">Reporte Custodias</a></li>
+							<!-- <li class="nxl-item"><a class="nxl-link"
+								th:href="@{/custodias/reporte-custodia}">Reporte Custodias</a></li> -->
 
 						</ul>
 						
@@ -331,12 +345,12 @@ body {
 									<img th:src="@{/assets/images/avatar/usuario.png}"
 										alt="user-image" class="img-fluid user-avtar" />
 									<div>
-										<h6 class="text-dark mb-0">Usuario PISIP</h6>
-										<span class="fs-12 fw-medium text-muted">alex@example.com</span>
-									</div>
+									<h6 class="text-dark mb-0" th:text="${sesionUsuario.nombreUsuario}">Usuario</h6>
+									<span class="fs-12 fw-medium text-muted" th:text="${sesionUsuario.correo}">correo@example.com</span>
 								</div>
 							</div>
-							<a href="./auth-login-minimal.html" class="dropdown-item"> <i
+						</div>
+						<a th:href="@{/logout}" class="dropdown-item"> <i
 								class="feather-log-out"></i> <span>Logout</span>
 							</a>
 						</div>

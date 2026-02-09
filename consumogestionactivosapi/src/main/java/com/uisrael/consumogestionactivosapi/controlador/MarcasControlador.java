@@ -2,7 +2,6 @@ package com.uisrael.consumogestionactivosapi.controlador;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.MarcasRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.MarcasResponseDTO;
+import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.IMarcasServicio;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/marcas") // url
 public class MarcasControlador {
 
-	@Autowired
-	private IMarcasServicio servicioMarcas;
+	private final IMarcasServicio servicioMarcas;
+	private final SesionUsuario sesionUsuario;
+
+	@ModelAttribute("sesionUsuario")
+	public SesionUsuario obtenerSesionUsuario() {
+		return sesionUsuario;
+	}
 	
 	@GetMapping
 	public String listarMarcas(Model model) {	

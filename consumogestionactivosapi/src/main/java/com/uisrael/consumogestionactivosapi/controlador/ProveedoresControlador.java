@@ -2,7 +2,6 @@ package com.uisrael.consumogestionactivosapi.controlador;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.ProveedoresResponseDTO;
+import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.IProveedoresServicio;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/proveedores") // url
 public class ProveedoresControlador {
 
-	@Autowired
-	private IProveedoresServicio servicioProveedores;
+	private final IProveedoresServicio servicioProveedores;
+	private final SesionUsuario sesionUsuario;
+
+	@ModelAttribute("sesionUsuario")
+	public SesionUsuario obtenerSesionUsuario() {
+		return sesionUsuario;
+	}
 	
 	@GetMapping
 	public String listarProveedores(Model model) {

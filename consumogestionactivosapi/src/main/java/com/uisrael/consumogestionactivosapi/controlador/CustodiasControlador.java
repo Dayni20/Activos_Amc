@@ -3,7 +3,6 @@ package com.uisrael.consumogestionactivosapi.controlador;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,22 +11,27 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.request.CustodiasRequestD
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CustodiosRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.EquiposRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.CustodiasResponseDTO;
+import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.ICustodiasServicio;
 import com.uisrael.consumogestionactivosapi.service.ICustodiosServicio;
 import com.uisrael.consumogestionactivosapi.service.IEquiposServicio;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/custodias")
 public class CustodiasControlador {
 
-    @Autowired
-    private ICustodiasServicio servicioCustodias;
+    private final ICustodiasServicio servicioCustodias;
+    private final IEquiposServicio servicioEquipos;
+    private final ICustodiosServicio servicioCustodios;
+    private final SesionUsuario sesionUsuario;
 
-    @Autowired
-    private IEquiposServicio servicioEquipos;
-
-    @Autowired
-    private ICustodiosServicio servicioCustodios;
+    @ModelAttribute("sesionUsuario")
+    public SesionUsuario obtenerSesionUsuario() {
+        return sesionUsuario;
+    }
 
   
     @GetMapping

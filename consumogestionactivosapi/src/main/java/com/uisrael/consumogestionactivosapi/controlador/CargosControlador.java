@@ -3,7 +3,6 @@ package com.uisrael.consumogestionactivosapi.controlador;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CargosRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.CargosResponseDTO;
+import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.ICargosServicio;
+import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/cargos") // url
+@RequiredArgsConstructor
+@RequestMapping("/cargos")
 public class CargosControlador {
 	
-	@Autowired
-	private ICargosServicio servicioCargo;
+	private final ICargosServicio servicioCargo;
+	private final SesionUsuario sesionUsuario;
+
+
+	@ModelAttribute("sesionUsuario")
+	public SesionUsuario obtenerSesionUsuario() {
+		return sesionUsuario;
+	}
 
 	@GetMapping
 	public String listarCargos(Model model) {
