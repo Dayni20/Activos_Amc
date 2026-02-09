@@ -27,13 +27,7 @@ public class AuthControlador {
 	@GetMapping("/")
 	public String redirigirInicio() {
 		if (sesionUsuario.isAutenticado()) {
-			if ("ADMINISTRADOR".equals(sesionUsuario.getRol())) {
-				return "redirect:/roles";
-			} else if ("TECNICO".equals(sesionUsuario.getRol())) {
-				return "redirect:/equipos";
-			} else {
-				return "redirect:/inicio";
-			}
+			return "redirect:/inicio";
 		}
 		return "redirect:/login";
 	}
@@ -41,13 +35,7 @@ public class AuthControlador {
 	@GetMapping("/login")
 	public String mostrarLogin(Model model, @RequestParam(required = false) String error) {
 		if (sesionUsuario.isAutenticado()) {
-			if ("ADMINISTRADOR".equals(sesionUsuario.getRol())) {
-				return "redirect:/roles";
-			} else if ("TECNICO".equals(sesionUsuario.getRol())) {
-				return "redirect:/equipos";
-			} else {
-				return "redirect:/inicio";
-			}
+			return "redirect:/inicio";
 		}
 		if (error != null) {
 			model.addAttribute("error", "Credenciales incorrectas. Por favor, intente nuevamente.");
@@ -83,14 +71,7 @@ public class AuthControlador {
 					String nombreUsuario = (String) respuestaUsuario.getOrDefault("nombreUsuario", correo.split("@")[0]);
 					String rol = (String) respuestaUsuario.getOrDefault("rol", "AUDITOR");
 					sesionUsuario.iniciarSesion(correo, contrasena, nombreUsuario, rol);
-					
-					if ("ADMINISTRADOR".equals(rol)) {
-						return "redirect:/roles";
-					} else if ("TECNICO".equals(rol)) {
-						return "redirect:/equipos";
-					} else {
-						return "redirect:/inicio";
-					}
+					return "redirect:/inicio";
 				} else {
 					String nombreUsuario = correo.split("@")[0];
 					sesionUsuario.iniciarSesion(correo, contrasena, nombreUsuario, "AUDITOR");
