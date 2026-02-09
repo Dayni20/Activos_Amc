@@ -4,8 +4,8 @@
 	layout:decorate="~{plantilla/plantillaui}">
 
 <head>
-<meta charset="utf-8">
-<title>Nueva Custodia</title>
+	<meta charset="utf-8">
+	<title>Nueva Custodia</title>
 </head>
 
 <body>
@@ -26,14 +26,13 @@
 
 				<div class="page-header-right ms-auto">
 					<div class="page-header-right-items">
-						<div
-							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+						<div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 							<button type="submit" class="btn btn-primary">
 								<i class="feather-save me-2"></i> <span>Guardar</span>
 							</button>
 
-							<a th:href="@{/custodias}" class="btn btn-light"> <i
-								class="feather-arrow-left me-2"></i> <span>Volver</span>
+							<a th:href="@{/custodias}" class="btn btn-light">
+								<i class="feather-arrow-left me-2"></i> <span>Volver</span>
 							</a>
 						</div>
 					</div>
@@ -50,38 +49,21 @@
 				<div class="card stretch stretch-full">
 					<div class="card-body">
 
+						<!-- Para edición (si luego la usas). En creación queda 0 -->
 						<input type="hidden" th:field="*{idCustodiaEquipo}">
-						<!-- Estado por defecto true (ya lo seteas en el controlador) -->
-						<!-- Si lo quieres editable, usa switch como departamentos -->
 						<input type="hidden" th:field="*{estado}">
 
 						<div class="row">
 
-							<!-- Equipo -->
-							<div class="col-md-6 mb-4">
-								<label class="form-label">Equipo <span
-									class="text-danger">*</span></label> <select class="form-control"
-									th:field="*{fkEquipo.idEquipo}">
-									<option value="0">Seleccione un equipo</option>
-									<option th:each="e : ${listaequipos}" th:value="${e.idEquipo}"
-										th:text="${e.codigoSap + ' - ' + e.tipoEquipo + ' - ' + e.modelo}">
-									</option>
-								</select>
-
-								<div class="text-danger small" th:if="${errorSeleccionEquipo}">
-									<span th:text="${errorSeleccionEquipo}"></span>
-								</div>
-							</div>
-
 							<!-- Custodio -->
 							<div class="col-md-6 mb-4">
-								<label class="form-label">Custodio <span
-									class="text-danger">*</span></label> <select class="form-control"
-									th:field="*{fkCustodio.idCustodio}">
+								<label class="form-label">Custodio <span class="text-danger">*</span></label>
+								<select class="form-control" th:field="*{fkCustodio.idCustodio}">
 									<option value="0">Seleccione un custodio</option>
 									<option th:each="c : ${listacustodios}"
 										th:value="${c.idCustodio}"
-										th:text="${c.nombre + ' - ' + c.cedula}"></option>
+										th:text="${c.nombre + ' - ' + c.cedula}">
+									</option>
 								</select>
 
 								<div class="text-danger small" th:if="${errorSeleccionCustodio}">
@@ -90,27 +72,25 @@
 							</div>
 
 							<!-- Fecha Inicio -->
-							<div class="col-md-4 mb-4">
-								<label class="form-label">Fecha Inicio <span
-									class="text-danger">*</span></label> <input type="date"
-									class="form-control" th:field="*{fechaInicio}">
+							<div class="col-md-3 mb-4">
+								<label class="form-label">Fecha Inicio <span class="text-danger">*</span></label>
+								<input type="date" class="form-control" th:field="*{fechaInicio}">
 								<div class="text-danger small" th:if="${errorFechaInicio}">
 									<span th:text="${errorFechaInicio}"></span>
 								</div>
 							</div>
 
 							<!-- Fecha Fin -->
-							<div class="col-md-4 mb-4">
-								<label class="form-label">Fecha Fin</label> <input type="date"
-									class="form-control" th:field="*{fechaFin}">
+							<div class="col-md-3 mb-4">
+								<label class="form-label">Fecha Fin</label>
+								<input type="date" class="form-control" th:field="*{fechaFin}">
 							</div>
 
 							<!-- Observación -->
-							<div class="col-md-4 mb-4">
-								<label class="form-label">Observación <span
-									class="text-danger">*</span></label> <input type="text" maxlength="255"
-									class="form-control" th:field="*{observacion}"
-									placeholder="Ej: Asignación inicial">
+							<div class="col-md-12 mb-4">
+								<label class="form-label">Observación <span class="text-danger">*</span></label>
+								<input type="text" maxlength="255" class="form-control"
+									th:field="*{observacion}" placeholder="Ej: Asignación inicial">
 								<div class="text-danger small" th:if="${errorObservacion}">
 									<span th:text="${errorObservacion}"></span>
 								</div>
@@ -118,13 +98,67 @@
 
 						</div>
 
-						<!-- Si quieres mostrar estado editable en crear -->
-						<div class="row mb-2">
+						<!-- Estado -->
+						<div class="row mb-4">
 							<div class="form-check form-switch form-switch-sm ps-5">
 								<input class="form-check-input c-pointer" type="checkbox"
-									id="estadoSwitch" th:field="*{estado}"> <label
-									class="form-check-label fw-500 text-dark c-pointer"
+									id="estadoSwitch" th:field="*{estado}">
+								<label class="form-check-label fw-500 text-dark c-pointer"
 									for="estadoSwitch">Activo</label>
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- ✅ MULTI-EQUIPOS: CHECKLIST -->
+						<div class="row">
+							<div class="col-md-12 mb-2">
+								<label class="form-label">Equipos a entregar <span class="text-danger">*</span></label>
+
+								<div class="text-danger small mb-2" th:if="${errorSeleccionEquipos}">
+									<span th:text="${errorSeleccionEquipos}"></span>
+								</div>
+
+								<div class="table-responsive">
+									<table class="table table-hover align-middle">
+										<thead>
+											<tr>
+												<th style="width: 60px;">Sel.</th>
+												<th>Código</th>
+												<th>Tipo</th>
+												<th>Modelo</th>
+												<th>Serial</th>
+												<th>IP</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="e : ${listaequipos}">
+												<td>
+													<input class="form-check-input"
+														type="checkbox"
+														th:name="equiposSeleccionados"
+														th:value="${e.idEquipo}"
+														th:checked="${custodia.equiposSeleccionados != null and custodia.equiposSeleccionados.contains(e.idEquipo)}">
+												</td>
+												<td th:text="${e.codigoSap}"></td>
+												<td th:text="${e.tipoEquipo}"></td>
+												<td th:text="${e.modelo}"></td>
+												<td th:text="${e.serial}"></td>
+												<td th:text="${e.ip}"></td>
+											</tr>
+
+											<tr th:if="${#lists.isEmpty(listaequipos)}">
+												<td colspan="6" class="text-center text-muted">
+													No hay equipos activos disponibles.
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<small class="text-muted">
+									Selecciona uno o varios equipos para generar el acta de entrega.
+								</small>
 							</div>
 						</div>
 

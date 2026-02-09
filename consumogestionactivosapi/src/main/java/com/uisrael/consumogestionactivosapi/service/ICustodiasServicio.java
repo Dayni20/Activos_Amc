@@ -8,7 +8,10 @@ public interface ICustodiasServicio {
 
     List<CustodiasResponseDTO> listarCustodias();
 
-    void crearCustodia(CustodiasRequestDTO dto);
+    void crearCustodia(CustodiasRequestDTO dto); // (si quieres mantener 1 equipo)
+
+    // ✅ NUEVO: crea acta con varios equipos
+    List<CustodiasResponseDTO> crearCustodiaActa(CustodiasRequestDTO dto);
 
     CustodiasResponseDTO obtenerPorId(Integer id);
 

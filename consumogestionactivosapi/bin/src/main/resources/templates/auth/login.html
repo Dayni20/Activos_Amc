@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - AMC ECUADOR</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/images/logo-AMC-Oficial.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/theme.min.css}">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #023e27 30%,#e31207  100%);
+        }
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-logo img {
+            max-width: 150px;
+        }
+        .login-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #023e27 30%,#e31207 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            margin-top: 20px;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #023e27 30%,#e31207 100%);
+            color: white;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .alert {
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img th:src="@{/assets/images/logo-AMC-Oficial.png}" alt="AMC Logo" />
+            </div>
+            <h2 class="login-title">Gestión de Activos</h2>
+            
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <i class="feather-alert-circle me-2"></i>
+                <span th:text="${error}"></span>
+            </div>
+            
+            <form th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="correo" name="correo" 
+                           placeholder="rol@uisrael.edu.ec" required autofocus>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" name="contrasena" 
+                           placeholder="Ingrese su contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn btn-login">
+                    <i class="feather-log-in me-2"></i>
+                    Iniciar Sesión
+                </button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    Sistema de Gestión de Activos - AMC Ecuador
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <script th:src="@{/assets/vendors/js/vendors.min.js}"></script>
+    <script th:src="@{/assets/js/common-init.min.js}"></script>
+</body>
+</html>

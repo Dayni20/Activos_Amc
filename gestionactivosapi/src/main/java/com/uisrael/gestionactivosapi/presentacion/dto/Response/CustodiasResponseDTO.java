@@ -4,15 +4,22 @@ import java.time.LocalDate;
 
 public class CustodiasResponseDTO {
 
+    // ✅ NUEVO: N° Acta (cabecera)
+    private int idCustodio;
+
+    // Detalle
     private int idCustodiaEquipo;
+
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String observacion;
     private boolean estado;
 
-    // ✅ objetos anidados
     private EquiposResponseDTO fkEquipo;
     private CustodiosResponseDTO fkCustodio;
+
+    public int getIdCustodio() { return idCustodio; }
+    public void setIdCustodio(int idCustodio) { this.idCustodio = idCustodio; }
 
     public int getIdCustodiaEquipo() { return idCustodiaEquipo; }
     public void setIdCustodiaEquipo(int idCustodiaEquipo) { this.idCustodiaEquipo = idCustodiaEquipo; }

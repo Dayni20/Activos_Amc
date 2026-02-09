@@ -29,6 +29,13 @@ public class CustodiasServicioImpl implements ICustodiasServicio {
 		clienteWeb.post().uri("/custodias").bodyValue(dto).retrieve().toBodilessEntity().block();
 	}
 
+	// ✅ NUEVO: si tu API responde lista (como en tu Postman: [ { ... } ])
+	@Override
+	public List<CustodiasResponseDTO> crearCustodiaActa(CustodiasRequestDTO dto) {
+		return clienteWeb.post().uri("/custodias").bodyValue(dto).retrieve().bodyToFlux(CustodiasResponseDTO.class)
+				.collectList().block();
+	}
+
 	@Override
 	public CustodiasResponseDTO obtenerPorId(Integer id) {
 		return clienteWeb.get().uri(uriBuilder -> uriBuilder.path("/custodias/{id}").build(id)).retrieve()
@@ -46,7 +53,6 @@ public class CustodiasServicioImpl implements ICustodiasServicio {
 		CustodiasRequestDTO dto = new CustodiasRequestDTO();
 		dto.setEstado(estado);
 
-	
 		clienteWeb.put().uri("/custodias/estado/{id}", id).bodyValue(dto).retrieve().toBodilessEntity().block();
 	}
 }
