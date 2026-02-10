@@ -619,5 +619,30 @@ public void descargarActaEntregaPdf(HttpSession session, HttpServletResponse res
     doc.add(table);
     doc.close();
 }
+//=========================================================
+//ACTA ENTREGA (HTML) POR CUSTODIO
+//=========================================================
+@GetMapping("/acta-entrega/custodio/{idCustodio}")
+public String verActaEntregaPorCustodio(@PathVariable Integer idCustodio, Model model) {
+
+ List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias().stream()
+         .filter(x -> x != null
+                   && x.getFkCustodio() != null
+                   && x.getFkCustodio().getIdCustodio() == idCustodio)
+         .sorted(Comparator.comparing(CustodiasResponseDTO::getIdCustodiaEquipo))
+         .toList();
+
+ if (lista.isEmpty()) {
+     return "redirect:/custodias";
+ }
+
+ // cabecera = PK menor
+ CustodiasResponseDTO cabecera = lista.get(0);
+
+ model.addAttribute("cabecera", cabecera);
+ model.addAttribute("detalles", lista);
+
+ return "custodias/actaEntrega";
+}
 
 }

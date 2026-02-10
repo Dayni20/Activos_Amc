@@ -1,75 +1,90 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{plantilla/plantillaui}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{plantilla/plantillaui}">
 <head>
-  <meta charset="utf-8">
-  <title>Acta de Entrega</title>
+<meta charset="utf-8">
+<title>Acta de Entrega</title>
 </head>
 <body>
-<div layout:fragment="contenidopaginas">
+	<div layout:fragment="contenidopaginas">
 
-  <div class="page-header">
-    <div class="page-header-left d-flex align-items-center">
-      <div class="page-header-title">
-        <h5 class="m-b-10">Acta de Entrega</h5>
-      </div>
-    </div>
-<div class="page-header-right ms-auto">
-  <!-- Botón para descargar PDF y volver -->
-  <button id="btnDescargarVolver" type="button" class="btn btn-primary ms-2">
-    <i class="feather-download me-2"></i><span>Descargar PDF y Volver</span>
-  </button>
-</div>
-  </div>
+		<div class="page-header">
+			<div class="page-header-left d-flex align-items-center">
+				<div class="page-header-title">
+					<h5 class="m-b-10">Acta de Entrega</h5>
+				</div>
+			</div>
+			<div class="page-header-right ms-auto">
+				<!-- Botón para descargar PDF y volver -->
+				<button id="btnDescargarVolver" type="button"
+					class="btn btn-primary ms-2">
+					<i class="feather-download me-2"></i><span>Descargar PDF y
+						Volver</span>
+				</button>
+			</div>
+		</div>
 
-  <div class="card">
-    <div class="card-body">
+		<div class="card">
+			<div class="card-body">
 
-      <div th:if="${cabecera == null}" class="alert alert-warning">
-        No se encontró información para el acta.
-      </div>
+				<div th:if="${cabecera == null}" class="alert alert-warning">
+					No se encontró información para el acta.</div>
 
-      <div th:if="${cabecera != null}">
-        <p><b>N° Acta:</b> <span th:text="${cabecera.idCustodia}"></span></p>
-        <p><b>Custodio:</b> <span th:text="${cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span></p>
-        <p><b>Fecha inicio:</b> <span th:text="${cabecera.fechaInicio}"></span></p>
-        <p><b>Observación:</b> <span th:text="${cabecera.observacion}"></span></p>
+				<div th:if="${cabecera != null}">
+					<p>
+						<strong>N° Acta:</strong> <span
+							th:text="${cabecera != null && cabecera.fkCustodio != null ? cabecera.fkCustodio.idCustodio : cabecera.idCustodio}">
+							0 </span>
+					</p>
 
-        <hr>
+					<p>
+						<b>Custodio:</b> <span
+							th:text="${cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span>
+					</p>
+					<p>
+						<b>Fecha inicio:</b> <span th:text="${cabecera.fechaInicio}"></span>
+					</p>
+					<p>
+						<b>Observación:</b> <span th:text="${cabecera.observacion}"></span>
+					</p>
 
-        <h6>Equipos entregados</h6>
-        <div class="table-responsive">
-          <table class="table table-hover align-middle">
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>Código</th>
-              <th>Tipo</th>
-              <th>Modelo</th>
-              <th>Serial</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="d : ${detalles}">
-              <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
-              <td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
-              <td th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
-              <td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
-              <td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
-            </tr>
-            <tr th:if="${detalles == null or #lists.isEmpty(detalles)}">
-              <td colspan="5" class="text-center text-muted">Sin detalles</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+					<hr>
 
-    </div>
-  </div>
+					<h6>Equipos entregados</h6>
+					<div class="table-responsive">
+						<table class="table table-hover align-middle">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Código</th>
+									<th>Tipo</th>
+									<th>Modelo</th>
+									<th>Serial</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="d : ${detalles}">
+									<td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
+									<td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
+									<td
+										th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
+									<td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
+									<td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
+								</tr>
+								<tr th:if="${detalles == null or #lists.isEmpty(detalles)}">
+									<td colspan="5" class="text-center text-muted">Sin
+										detalles</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
-</div>
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>
 <script>
