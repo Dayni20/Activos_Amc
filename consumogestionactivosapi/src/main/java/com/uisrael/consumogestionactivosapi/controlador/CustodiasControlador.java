@@ -1,6 +1,7 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -56,10 +57,11 @@ public class CustodiasControlador {
 
         List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias();
 
-        // ✅ orden para que el agrupado por idCustodia funcione
+        // ✅ Ordenar por CUSTODIO para que el agrupado en Thymeleaf NO repita
         lista.sort(
-            Comparator.comparing(CustodiasResponseDTO::getIdCustodia)
-                      .thenComparing(CustodiasResponseDTO::getIdCustodiaEquipo)
+            Comparator.comparing((CustodiasResponseDTO x) -> x.getFkCustodio().getIdCustodio())
+                      .thenComparing(CustodiasResponseDTO::getIdCustodia, Comparator.nullsLast(Comparator.naturalOrder()))
+                      .thenComparing(CustodiasResponseDTO::getIdCustodiaEquipo, Comparator.nullsLast(Comparator.naturalOrder()))
         );
 
         // ✅ true = ACTIVO (queda al menos 1 detalle activo)
@@ -79,84 +81,161 @@ public class CustodiasControlador {
         return "Custodias/listarCustodias";
     }
 
+    // =========================
+    // CERRAR CUSTODIA (PANTALLA CON CHECKS)
+    // =========================
+    @GetMapping("/cerrar-custodia/{idCustodia}")
+    public String cerrarCustodiaForm(@PathVariable Integer idCustodia, Model model) {
 
+        List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias().stream()
+                .filter(x -> x.getIdCustodia() == idCustodia.intValue())
+                .toList();
 
- // =========================
- // CERRAR CUSTODIA (PANTALLA CON CHECKS)
- // =========================
- @GetMapping("/cerrar-custodia/{idCustodia}")
- public String cerrarCustodiaForm(@PathVariable Integer idCustodia, Model model) {
+        if (lista.isEmpty()) return "redirect:/custodias";
 
-     // Traer todas las líneas de la custodia
-     List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias().stream()
-             .filter(x -> x.getIdCustodia() == idCustodia)
-             .toList();
+        // ✅ Cabecera solo para mostrar custodio (nombre, cédula, etc.)
+        CustodiasResponseDTO cabecera = lista.get(0);
 
-     if (lista.isEmpty()) return "redirect:/custodias";
+        // ✅ 1) Registro "fuente" = el más reciente (mayor idCustodiaEquipo)
+        CustodiasResponseDTO fuente = lista.stream()
+                .max(Comparator.comparing(CustodiasResponseDTO::getIdCustodiaEquipo,
+                        Comparator.nullsLast(Integer::compareTo)))
+                .orElse(cabecera);
 
-     CustodiasResponseDTO cabecera = lista.get(0);
+        // ✅ 2) Si el más reciente no tiene observación, usar la primera no vacía
+        String obs = (fuente.getObservacion() != null && !fuente.getObservacion().trim().isEmpty())
+                ? fuente.getObservacion().trim()
+                : lista.stream()
+                    .map(CustodiasResponseDTO::getObservacion)
+                    .filter(s -> s != null && !s.trim().isEmpty())
+                    .findFirst()
+                    .orElse("");
 
-     // Form que recibirá detallesEntregados (ids de idCustodiaEquipo marcados)
-     CustodiasRequestDTO form = new CustodiasRequestDTO();
-     form.setIdCustodia(idCustodia);
-     form.setObservacion(cabecera.getObservacion());
+        // ✅ 3) Fecha inicio y fin desde la misma API (como en tu JSON)
+        LocalDate fechaInicio = fuente.getFechaInicio();
+        LocalDate fechaFin = fuente.getFechaFin();
 
-     model.addAttribute("cabecera", cabecera);
-     model.addAttribute("detalles", lista);
-     model.addAttribute("form", form);
+        // si por algo vinieran null, las recuperamos desde cualquier fila
+        if (fechaInicio == null) {
+            fechaInicio = lista.stream()
+                    .map(CustodiasResponseDTO::getFechaInicio)
+                    .filter(f -> f != null)
+                    .findFirst()
+                    .orElse(null);
+        }
 
-     return "custodias/cerrarCustodia"; // <-- tu vista con checks
- }
+        if (fechaFin == null) {
+            fechaFin = lista.stream()
+                    .map(CustodiasResponseDTO::getFechaFin)
+                    .filter(f -> f != null)
+                    .findFirst()
+                    .orElse(LocalDate.now());
+        }
 
- // =========================
- // CERRAR CUSTODIA (GUARDAR)
- // - Cierra SOLO los detalles marcados
- // - Si ya NO queda ningún detalle activo => queda cerrada total
- // - Genera Acta de Salida SOLO con lo devuelto
- // =========================
- @PostMapping("/cerrar-custodia")
- public String cerrarCustodiaGuardar(@ModelAttribute("form") CustodiasRequestDTO form,
-                                     HttpSession session,
-                                     Model model) {
+        // ✅ Form precargado EXACTO como la API
+        CustodiasRequestDTO form = new CustodiasRequestDTO();
+        form.setIdCustodia(idCustodia);
+        form.setObservacion(obs);
+        form.setFechaInicio(fechaInicio);
+        form.setFechaFin(fechaFin);
 
-     if (form.getDetallesEntregados() == null || form.getDetallesEntregados().isEmpty()) {
-         model.addAttribute("error", "Debe seleccionar al menos un equipo devuelto");
-         return "custodias/cerrarCustodia";
-     }
+        model.addAttribute("cabecera", cabecera);
+        model.addAttribute("detalles", lista);
+        model.addAttribute("form", form);
 
-     // 1) Traer todas las líneas de la custodia
-     List<CustodiasResponseDTO> todas = servicioCustodias.listarCustodias().stream()
-             .filter(x -> x.getIdCustodia() == form.getIdCustodia())
-             .toList();
+        return "custodias/cerrarCustodia";
+    }
 
-     if (todas.isEmpty()) return "redirect:/custodias";
+    // =========================
+    // CERRAR CUSTODIA (GUARDAR)
+    // ✅ Envía JSON EXACTO como tu Postman:
+    // {
+    	//   fechaInicio, fechaFin, observacion, estado,
+    //   fkCustodio:{idCustodio}, equipos:[{idEquipo}]
+    // }
+    // =========================
+    @PostMapping("/cerrar-custodia")
+    public String cerrarCustodiaGuardar(@ModelAttribute("form") CustodiasRequestDTO form,
+                                        HttpSession session,
+                                        Model model) {
 
-     // 2) Filtrar SOLO las líneas devueltas (por idCustodiaEquipo)
-     List<CustodiasResponseDTO> devueltos = todas.stream()
-             .filter(x -> form.getDetallesEntregados().contains(x.getIdCustodiaEquipo()))
-             .toList();
+        // ✅ 0) Normaliza observación (evita null / espacios)
+        String obsFinal = (form.getObservacion() == null) ? "" : form.getObservacion().trim();
+        form.setObservacion(obsFinal);
 
-     // 3) Cerrar SOLO esos detalles (desvincular)
-     for (CustodiasResponseDTO d : devueltos) {
-         servicioCustodias.actualizarEstado(d.getIdCustodiaEquipo(), false);
-     }
+        // ✅ Validación: deben marcar al menos 1 equipo
+        if (form.getDetallesEntregados() == null || form.getDetallesEntregados().isEmpty()) {
 
-     // 4) Verificar si todavía quedan detalles ACTIVOS en esa custodia
-     boolean quedanActivos = servicioCustodias.listarCustodias().stream()
-             .anyMatch(x -> x.getIdCustodia() == form.getIdCustodia() && x.isEstado());
+            List<CustodiasResponseDTO> lista = servicioCustodias.listarCustodias().stream()
+                    .filter(x -> x.getIdCustodia() == form.getIdCustodia())
+                    .toList();
 
-     // 5) Si ya NO quedan activos => custodia “cerrada total”
-     //    (aquí no tienes una cabecera separada, así que la “cierre total” se refleja
-     //     porque ya no existen detalles activos)
-     //    Opcional: si tu API soporta fechaFin en actualización, aquí podrías setearla.
+            model.addAttribute("cabecera", lista.isEmpty() ? null : lista.get(0));
+            model.addAttribute("detalles", lista);
+            model.addAttribute("form", form);
+            model.addAttribute("error", "Debe seleccionar al menos un equipo devuelto");
 
-     // 6) Guardar para Acta de Salida SOLO lo devuelto
-     session.setAttribute("ACTA_SALIDA_RECIENTE", devueltos);
+            return "custodias/cerrarCustodia";
+        }
 
-     // 7) Ir a vista del acta salida
-     return "redirect:/custodias/actaSalida";
- }
+        // 1) Todas las líneas de esa custodia
+        List<CustodiasResponseDTO> todas = servicioCustodias.listarCustodias().stream()
+                .filter(x -> x.getIdCustodia() == form.getIdCustodia())
+                .toList();
 
+        if (todas.isEmpty()) return "redirect:/custodias";
+
+        // ✅ Si por alguna razón NO vino fechaInicio desde el hidden, la recuperamos de la cabecera
+        CustodiasResponseDTO cabecera = todas.get(0);
+        if (form.getFechaInicio() == null) {
+            form.setFechaInicio(cabecera.getFechaInicio());
+        }
+
+        // ✅ Si no vino fechaFin, usa hoy
+        if (form.getFechaFin() == null) {
+            form.setFechaFin(LocalDate.now());
+        }
+
+        // 2) Solo las líneas marcadas (devueltas)
+        List<CustodiasResponseDTO> devueltos = todas.stream()
+                .filter(x -> form.getDetallesEntregados().contains(x.getIdCustodiaEquipo()))
+                .toList();
+
+        // 3) ✅ Por cada detalle marcado: actualizar SOLO con lo del FORM (misma observación / fechas)
+        for (CustodiasResponseDTO d : devueltos) {
+
+            CustodiasRequestDTO upd = new CustodiasRequestDTO();
+
+            // ✅ IMPORTANTE: usar SIEMPRE lo que viene del formulario
+            upd.setFechaInicio(form.getFechaInicio());   // ✅ MISMA FECHA INICIO
+            upd.setFechaFin(form.getFechaFin());         // ✅ FECHA FIN EDITABLE
+            upd.setObservacion(obsFinal);                // ✅ MISMA OBSERVACIÓN EDITADA
+            upd.setEstado(false);                        // cerrar
+
+            // ✅ fkCustodio:{idCustodio}
+            if (d.getFkCustodio() != null) {
+                CustodiosRequestDTO c = new CustodiosRequestDTO();
+                c.setIdCustodio(d.getFkCustodio().getIdCustodio());
+                upd.setFkCustodio(c);
+            }
+
+            // ✅ equipos:[{idEquipo}]
+            if (d.getFkEquipo() != null) {
+                EquiposRequestDTO e = new EquiposRequestDTO();
+                e.setIdEquipo(d.getFkEquipo().getIdEquipo());
+                upd.setEquipos(java.util.List.of(e));
+            }
+
+            // ✅ id en URL = idCustodiaEquipo
+            servicioCustodias.actualizarCustodia(d.getIdCustodiaEquipo(), upd);
+        }
+
+        // 4) Guardar para Acta de Salida SOLO devueltos
+        session.setAttribute("ACTA_SALIDA_RECIENTE", devueltos);
+
+        // 5) Ir a acta salida
+        return "redirect:/custodias/actaSalida";
+    }
 
     // =========================
     // ✅ VISTA HTML ACTA ENTREGA POR CUSTODIO
@@ -189,7 +268,6 @@ public class CustodiasControlador {
                           && x.getFkCustodio().getIdCustodio() == idCustodio)
                 .toList();
 
-        // ⚠️ NUNCA redirijas aquí
         if (lista == null || lista.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return;
@@ -197,7 +275,6 @@ public class CustodiasControlador {
 
         CustodiasResponseDTO cab = lista.get(0);
 
-        // ✅ LIMPIA LA RESPUESTA
         response.reset();
         response.setContentType("application/pdf");
         response.setHeader(
@@ -397,92 +474,91 @@ public class CustodiasControlador {
             return "custodias/nuevocustodia";
         }
 
-        // ✅ guardamos lo recién creado en sesión
         session.setAttribute("ACTA_ENTREGA_RECIENTE", creados);
 
-        // ✅ vamos a una vista que renderiza el acta (HTML)
         return "redirect:/custodias/actaEntrega";
     }
 
     private String formularioCustodia(CustodiasRequestDTO dto) {
         return (dto.getIdCustodiaEquipo() > 0) ? "custodias/editarCustodia" : "custodias/nuevocustodia";
     }
- // =========================
- // ✅ PDF ACTA SALIDA (usa sesión - SOLO DEVUELTOS)
- // =========================
- @GetMapping("/acta-salida/pdf")
- public void descargarActaSalidaPdf(HttpSession session, HttpServletResponse response) throws IOException {
 
-     @SuppressWarnings("unchecked")
-     List<CustodiasResponseDTO> lista =
-             (List<CustodiasResponseDTO>) session.getAttribute("ACTA_SALIDA_RECIENTE");
+    // =========================
+    // ✅ PDF ACTA SALIDA (usa sesión - SOLO DEVUELTOS)
+    // =========================
+    @GetMapping("/acta-salida/pdf")
+    public void descargarActaSalidaPdf(HttpSession session, HttpServletResponse response) throws IOException {
 
-     if (lista == null || lista.isEmpty()) {
-         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-         return;
-     }
+        @SuppressWarnings("unchecked")
+        List<CustodiasResponseDTO> lista =
+                (List<CustodiasResponseDTO>) session.getAttribute("ACTA_SALIDA_RECIENTE");
 
-     CustodiasResponseDTO cab = lista.get(0);
+        if (lista == null || lista.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            return;
+        }
 
-     response.reset();
-     response.setContentType("application/pdf");
-     response.setHeader("Content-Disposition", "attachment; filename=Acta_Salida.pdf");
+        CustodiasResponseDTO cab = lista.get(0);
 
-     Document doc = new Document(PageSize.A4);
-     PdfWriter.getInstance(doc, response.getOutputStream());
-     doc.open();
+        response.reset();
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Acta_Salida.pdf");
 
-     Font title = new Font(Font.HELVETICA, 14, Font.BOLD);
-     Font normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        Document doc = new Document(PageSize.A4);
+        PdfWriter.getInstance(doc, response.getOutputStream());
+        doc.open();
 
-     doc.add(new Paragraph("ACTA DE SALIDA DE EQUIPOS", title));
-     doc.add(new Paragraph(" ", normal));
+        Font title = new Font(Font.HELVETICA, 14, Font.BOLD);
+        Font normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
 
-     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        doc.add(new Paragraph("ACTA DE SALIDA DE EQUIPOS", title));
+        doc.add(new Paragraph(" ", normal));
 
-     String nombre = (cab.getFkCustodio() != null) ? nvl(cab.getFkCustodio().getNombre()) : "";
-     String cedula = (cab.getFkCustodio() != null) ? nvl(cab.getFkCustodio().getCedula()) : "";
-     int idCustodio = (cab.getFkCustodio() != null) ? cab.getFkCustodio().getIdCustodio() : cab.getIdCustodio();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-     doc.add(new Paragraph("ID Custodio: " + idCustodio, normal));
-     doc.add(new Paragraph("Custodio: " + nombre, normal));
-     doc.add(new Paragraph("Cédula: " + cedula, normal));
-     doc.add(new Paragraph("Fecha salida: " + java.time.LocalDate.now().format(fmt), normal));
-     doc.add(new Paragraph("Observación: " + nvl(cab.getObservacion()), normal));
-     doc.add(new Paragraph(" ", normal));
+        String nombre = (cab.getFkCustodio() != null) ? nvl(cab.getFkCustodio().getNombre()) : "";
+        String cedula = (cab.getFkCustodio() != null) ? nvl(cab.getFkCustodio().getCedula()) : "";
+        int idCustodio = (cab.getFkCustodio() != null) ? cab.getFkCustodio().getIdCustodio() : cab.getIdCustodio();
 
-     PdfPTable table = new PdfPTable(5);
-     table.setWidthPercentage(100);
+        doc.add(new Paragraph("ID Custodio: " + idCustodio, normal));
+        doc.add(new Paragraph("Custodio: " + nombre, normal));
+        doc.add(new Paragraph("Cédula: " + cedula, normal));
+        doc.add(new Paragraph("Fecha salida: " + LocalDate.now().format(fmt), normal));
+        doc.add(new Paragraph("Observación: " + nvl(cab.getObservacion()), normal));
+        doc.add(new Paragraph(" ", normal));
 
-     table.addCell(headerCell("ID Equipo"));
-     table.addCell(headerCell("Código"));
-     table.addCell(headerCell("Tipo"));
-     table.addCell(headerCell("Modelo"));
-     table.addCell(headerCell("Serial"));
+        PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100);
 
-     Set<Integer> seen = new HashSet<>();
+        table.addCell(headerCell("ID Equipo"));
+        table.addCell(headerCell("Código"));
+        table.addCell(headerCell("Tipo"));
+        table.addCell(headerCell("Modelo"));
+        table.addCell(headerCell("Serial"));
 
-     for (CustodiasResponseDTO it : lista) {
-         if (it.getFkEquipo() == null) continue;
-         Integer idEq = it.getFkEquipo().getIdEquipo();
-         if (idEq == null) continue;
-         if (!seen.add(idEq)) continue;
+        Set<Integer> seen = new HashSet<>();
 
-         table.addCell(cell(String.valueOf(idEq)));
-         table.addCell(cell(nvl(it.getFkEquipo().getCodigoSap())));
-         table.addCell(cell(nvl(it.getFkEquipo().getTipoEquipo())));
-         table.addCell(cell(nvl(it.getFkEquipo().getModelo())));
-         table.addCell(cell(nvl(it.getFkEquipo().getSerial())));
-     }
+        for (CustodiasResponseDTO it : lista) {
+            if (it.getFkEquipo() == null) continue;
+            Integer idEq = it.getFkEquipo().getIdEquipo();
+            if (idEq == null) continue;
+            if (!seen.add(idEq)) continue;
 
-     doc.add(table);
+            table.addCell(cell(String.valueOf(idEq)));
+            table.addCell(cell(nvl(it.getFkEquipo().getCodigoSap())));
+            table.addCell(cell(nvl(it.getFkEquipo().getTipoEquipo())));
+            table.addCell(cell(nvl(it.getFkEquipo().getModelo())));
+            table.addCell(cell(nvl(it.getFkEquipo().getSerial())));
+        }
 
-     doc.add(new Paragraph(" ", normal));
-     doc.add(new Paragraph("Firma Custodio: ____________________________", normal));
-     doc.add(new Paragraph("Firma Responsable TI: ______________________", normal));
+        doc.add(table);
 
-     doc.close();
- }
+        doc.add(new Paragraph(" ", normal));
+        doc.add(new Paragraph("Firma Custodio: ____________________________", normal));
+        doc.add(new Paragraph("Firma Responsable TI: ______________________", normal));
+
+        doc.close();
+    }
 
     // =========================
     // ✅ Vista HTML del Acta (lee la sesión)
@@ -500,6 +576,7 @@ public class CustodiasControlador {
 
         return "custodias/actaEntrega";
     }
+
     @GetMapping("/actaSalida")
     public String verActaSalida(Model model, HttpSession session) {
 
@@ -512,21 +589,14 @@ public class CustodiasControlador {
         model.addAttribute("cabecera", cabecera);
         model.addAttribute("detalles", lista);
 
-        // OJO: tu carpeta de templates es "Custodias" con C mayúscula
         return "Custodias/actaSalida";
     }
 
-    // =========================
-    // ✅ "Descargar y volver" -> redirige
-    // =========================
     @GetMapping("/acta-entrega/descargar-y-volver")
     public String descargarYVolver() {
         return "redirect:/custodias";
     }
 
-    // =========================
-    // ✅ PDF Acta Entrega (usa sesión)
-    // =========================
     @GetMapping("/acta-entrega/pdf")
     public void descargarActaEntregaPdf(HttpSession session, HttpServletResponse response) throws IOException {
 

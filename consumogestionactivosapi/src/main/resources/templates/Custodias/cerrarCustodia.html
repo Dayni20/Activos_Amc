@@ -37,12 +37,7 @@
 
             <p>
                 <b>Custodio:</b>
-                <span th:text="${cabecera.fkCustodio.nombre}"></span>
-            </p>
-
-            <p>
-                <b>Observación:</b>
-                <span th:text="${cabecera.observacion}"></span>
+                <span th:text="${cabecera != null && cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span>
             </p>
 
             <form id="formCerrarCustodia"
@@ -50,25 +45,44 @@
                   th:object="${form}"
                   method="post">
 
+                <!-- IDs -->
                 <input type="hidden" th:field="*{idCustodia}"/>
+
+                <!-- ✅ IMPORTANTE: enviar fechaInicio oculta para NO perderla -->
+                <input type="hidden" th:field="*{fechaInicio}"/>
+
+                <!-- ✅ OBSERVACIÓN EDITABLE + FECHA FIN EDITABLE -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label"><b>Observación</b></label>
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{observacion}"
+                               placeholder="Ingrese observación"/>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label"><b>Fecha Fin</b></label>
+                        <input type="date"
+                               class="form-control"
+                               th:field="*{fechaFin}"/>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                         <tr>
                             <th style="width:80px">Devolver</th>
-
-                            <!-- ✅ NUEVO -->
                             <th style="width:90px">ID Equipo</th>
-
                             <th>Código</th>
                             <th>Tipo</th>
                             <th>Modelo</th>
                             <th>Serial</th>
                         </tr>
                         </thead>
-                        <tbody>
 
+                        <tbody>
                         <tr th:each="d : ${detalles}">
                             <td class="text-center">
                                 <input type="checkbox"
@@ -76,15 +90,13 @@
                                        th:value="${d.idCustodiaEquipo}">
                             </td>
 
-                            <!-- ✅ NUEVO -->
                             <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
 
-                            <td th:text="${d.fkEquipo.codigoSap}"></td>
-                            <td th:text="${d.fkEquipo.tipoEquipo}"></td>
-                            <td th:text="${d.fkEquipo.modelo}"></td>
-                            <td th:text="${d.fkEquipo.serial}"></td>
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
