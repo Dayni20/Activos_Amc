@@ -1,86 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{plantilla/plantillaui}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{plantilla/plantillaui}">
+
 <head>
-<meta charset="utf-8">
-<title>Acta de Salida</title>
+    <title>Acta de Salida</title>
 </head>
+
 <body>
-	<div layout:fragment="contenidopaginas">
+<div layout:fragment="contenidopaginas">
 
-		<div class="page-header">
-			<div class="page-header-left d-flex align-items-center">
-				<div class="page-header-title">
-					<h5 class="m-b-10">Acta de Salida</h5>
-				</div>
-			</div>
+    <div class="page-header">
+        <div class="page-header-left d-flex align-items-center">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Acta de Salida</h5>
+            </div>
+        </div>
 
-			<div class="page-header-right ms-auto d-flex gap-2">
-				<a th:href="@{/custodias/acta-salida/pdf}" class="btn btn-primary">
-					<i class="feather-download me-2"></i> Descargar PDF
-				</a> <a th:href="@{/custodias}" class="btn btn-secondary"> Volver </a>
-			</div>
-		</div>
+        <div class="page-header-right ms-auto d-flex gap-2">
+            <a th:href="@{/custodias/acta-salida/pdf}" class="btn btn-primary">
+                DESCARGAR PDF
+            </a>
+            <a th:href="@{/custodias}" class="btn btn-secondary">
+                VOLVER
+            </a>
+        </div>
+    </div>
 
-		<div class="card">
-			<div class="card-body">
+    <div class="card">
+        <div class="card-body">
 
-				<div th:if="${cabecera == null}" class="alert alert-warning">
-					No se encontró información para el acta.</div>
+            <p><b>ID Custodio:</b> <span th:text="${idCustodioReal != null ? idCustodioReal : 0}"></span></p>
+            <p><b>Custodio:</b> <span th:text="${nombreCustodioReal}"></span></p>
+            <p><b>Fecha salida:</b> <span th:text="${fechaSalidaReal}"></span></p>
+            <p><b>Observación:</b> <span th:text="${observacionReal}"></span></p>
 
-				<div th:if="${cabecera != null}">
-					<p>
-						<b>N° Custodia:</b> <span th:text="${cabecera.idCustodia}"></span>
-					</p>
-					<p>
-						<b>Custodio:</b> <span
-							th:text="${cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span>
-					</p>
-					<p>
-						<b>Fecha salida:</b> <span
-							th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"></span>
-					</p>
-					<p>
-						<b>Observación:</b> <span th:text="${cabecera.observacion}"></span>
-					</p>
+            <hr/>
 
-					<hr>
+            <h6 class="mb-3"><b>Equipos devueltos</b></h6>
 
-					<h6>Equipos devueltos</h6>
-					<div class="table-responsive">
-						<table class="table table-hover align-middle">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Código</th>
-									<th>Tipo</th>
-									<th>Modelo</th>
-									<th>Serial</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="d : ${detalles}">
-									<td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
-									<td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
-									<td
-										th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
-									<td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
-									<td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
-								</tr>
-								<tr th:if="${detalles == null or #lists.isEmpty(detalles)}">
-									<td colspan="5" class="text-center text-muted">Sin
-										detalles</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Código</th>
+                        <th>Tipo</th>
+                        <th>Modelo</th>
+                        <th>Serial</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="d : ${detalles}">
+                        <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
+                        <td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
+                        <td th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
+                        <td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
+                        <td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-				</div>
+        </div>
+    </div>
 
-			</div>
-		</div>
-
-	</div>
+</div>
 </body>
 </html>
