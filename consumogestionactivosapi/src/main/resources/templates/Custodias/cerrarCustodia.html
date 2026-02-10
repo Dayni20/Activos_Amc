@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{plantilla/plantillaui}">
+
+<head>
+    <title>Cerrar Custodia</title>
+</head>
+
+<body>
+<div layout:fragment="contenidopaginas">
+
+    <div class="page-header">
+        <div class="page-header-left d-flex align-items-center">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Cerrar Custodia</h5>
+            </div>
+        </div>
+
+        <div class="page-header-right ms-auto d-flex gap-2">
+            <button type="submit"
+                    form="formCerrarCustodia"
+                    class="btn btn-danger">
+                CERRAR CUSTODIA / GENERAR ACTA DE SALIDA
+            </button>
+
+            <a th:href="@{/custodias}" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <p>
+                <b>Custodio:</b>
+                <span th:text="${cabecera.fkCustodio.nombre}"></span>
+            </p>
+
+            <p>
+                <b>Observación:</b>
+                <span th:text="${cabecera.observacion}"></span>
+            </p>
+
+            <form id="formCerrarCustodia"
+                  th:action="@{/custodias/cerrar-custodia}"
+                  th:object="${form}"
+                  method="post">
+
+                <input type="hidden" th:field="*{idCustodia}"/>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                        <tr>
+                            <th style="width:80px">Devolver</th>
+
+                            <!-- ✅ NUEVO -->
+                            <th style="width:90px">ID Equipo</th>
+
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Modelo</th>
+                            <th>Serial</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="d : ${detalles}">
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       th:field="*{detallesEntregados}"
+                                       th:value="${d.idCustodiaEquipo}">
+                            </td>
+
+                            <!-- ✅ NUEVO -->
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
+
+                            <td th:text="${d.fkEquipo.codigoSap}"></td>
+                            <td th:text="${d.fkEquipo.tipoEquipo}"></td>
+                            <td th:text="${d.fkEquipo.modelo}"></td>
+                            <td th:text="${d.fkEquipo.serial}"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
