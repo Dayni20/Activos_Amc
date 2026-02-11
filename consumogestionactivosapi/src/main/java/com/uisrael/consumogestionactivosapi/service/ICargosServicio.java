@@ -8,16 +8,16 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.response.CargosResponseDT
 public interface ICargosServicio {
 
 	public List<CargosResponseDTO> listarCargos();
-	
+
 	public void crearCargo(CargosRequestDTO dto);
-	
+
 	CargosResponseDTO obtenerPorId(Integer idCargo);
 
 	void actualizarCargo(Integer idCargo, CargosRequestDTO dto);
-	
+
 	void actualizarEstado(Integer idCargo, boolean estado);
-	
+
 	boolean nombreExiste(String nombre);
-	
+
 	boolean nombreExisteParaOtro(String nombre, int idCargo);
 }

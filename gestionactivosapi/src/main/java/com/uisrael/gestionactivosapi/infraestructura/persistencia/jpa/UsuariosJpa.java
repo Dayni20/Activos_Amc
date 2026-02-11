@@ -39,7 +39,7 @@ public class UsuariosJpa implements Serializable {
     private String contrasena;
 
     private boolean estado;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_departamento")
     private DepartamentosJpa fkDepartamento;

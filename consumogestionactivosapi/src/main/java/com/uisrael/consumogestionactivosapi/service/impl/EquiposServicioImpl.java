@@ -28,10 +28,10 @@ public class EquiposServicioImpl implements IEquiposServicio {
 	@Override
 	public void crearEquipo(EquiposRequestDTO dto) {
 		//clienteWeb.post().uri("/equipos").bodyValue(dto).retrieve().toBodilessEntity().block();
-		
+
 		try {
 		    clienteWeb.post().uri("/equipos").bodyValue(dto).retrieve().toBodilessEntity().block();
-			
+
 
 		} catch (WebClientResponseException ex) {
 		    System.out.println("STATUS: " + ex.getStatusCode());

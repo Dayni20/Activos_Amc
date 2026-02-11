@@ -8,9 +8,9 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.UbicacionesRespon
 
 @Mapper(componentModel = "spring")
 public interface IUbicacionesDtoMapper {
-	
+
 	Ubicaciones toDomain(UbicacionesRequestDTO dto);
-	
+
 	UbicacionesResponseDTO toResponseDto(Ubicaciones ubicacion);
 
 }

@@ -18,12 +18,12 @@ public class CustodiosRequestDTO {
 
     private String correo;
     private String telefono;
-    
+
     private LocalDate fechaIngreso;
 
     private boolean estado;
-    
+
     private DepartamentosRequestDTO fkDepartamento;
-    
+
     private CargosRequestDTO fkCargo;
 }

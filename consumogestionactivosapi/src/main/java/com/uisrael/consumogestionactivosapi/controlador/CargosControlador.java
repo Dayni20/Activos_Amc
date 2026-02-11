@@ -15,13 +15,14 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.request.CargosRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.CargosResponseDTO;
 import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.ICargosServicio;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cargos")
 public class CargosControlador {
-	
+
 	private final ICargosServicio servicioCargo;
 	private final SesionUsuario sesionUsuario;
 

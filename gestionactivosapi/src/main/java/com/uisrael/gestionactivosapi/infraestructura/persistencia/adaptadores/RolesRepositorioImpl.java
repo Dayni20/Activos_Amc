@@ -12,7 +12,7 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.IRolesJpaRepos
 public class RolesRepositorioImpl implements IRolesRepositorio {
 
 	private final IRolesJpaRepositorio jpaRepository;
-	
+
 	private final IRolesJpaMapper entityMapper;
 
 	public RolesRepositorioImpl(IRolesJpaRepositorio jpaRepository, IRolesJpaMapper entityMapper) {

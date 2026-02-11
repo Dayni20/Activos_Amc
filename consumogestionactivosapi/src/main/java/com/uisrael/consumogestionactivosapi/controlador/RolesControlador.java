@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,21 +30,21 @@ public class RolesControlador {
 	public SesionUsuario obtenerSesionUsuario() {
 		return sesionUsuario;
 	}
-	
+
 	@GetMapping
-	public String listarRoles(Model model) {	
+	public String listarRoles(Model model) {
 		List<RolesResponseDTO> contenidoBD = servicioRoles.listarRol();
 		contenidoBD.sort(Comparator.comparing(RolesResponseDTO::getIdRol));
 		model.addAttribute("listarroles", contenidoBD);
 		return "roles/listarRoles";
 	}
-	
+
 	@GetMapping("/nuevo-rol")
 	public String nuevoRol(Model model) {
 		model.addAttribute("nuevorol", new RolesRequestDTO());
 		return "roles/nuevoRol";
 	}
-	
+
 	@PostMapping
 	public String guardarRol(@ModelAttribute RolesRequestDTO nuevorol, Model model) {
 		try {
@@ -61,14 +61,14 @@ public class RolesControlador {
 			return nuevorol.getIdRol() > 0 ? "roles/editarRol" : "roles/nuevoRol";
 		}
 	}
-	
+
 	@GetMapping("/editar-rol/{id}")
 	public String editarRol(@PathVariable Integer id, Model model) {
 		RolesResponseDTO rol = servicioRoles.obtenerRol(id);
 		model.addAttribute("nuevorol", rol);
 		return "roles/editarRol";
 	}
-	
+
 	@PostMapping("/eliminar/{id}")
 	public String eliminarRol(@PathVariable Integer id, Model model) {
 		try {

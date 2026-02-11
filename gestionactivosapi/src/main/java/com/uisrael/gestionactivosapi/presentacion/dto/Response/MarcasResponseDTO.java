@@ -28,5 +28,5 @@ public class MarcasResponseDTO {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	
+
 }

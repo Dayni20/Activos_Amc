@@ -16,26 +16,26 @@ public class AuthControlador {
 	@GetMapping("/yo")
 	public Map<String, String> obtenerUsuarioActual(Authentication authentication) {
 		Map<String, String> respuesta = new HashMap<>();
-		
+
 		if (authentication != null && authentication.isAuthenticated()) {
 			// Obtener el correo/username
 			respuesta.put("correo", authentication.getName());
-			
+
 			// Obtener el primer rol (asumiendo que cada usuario tiene un solo rol)
 			String rol = authentication.getAuthorities().stream()
 				.findFirst()
 				.map(GrantedAuthority::getAuthority)
 				.orElse("ROLE_AUDITOR");
-			
+
 			// Remover el prefijo ROLE_ si existe
 			if (rol.startsWith("ROLE_")) {
 				rol = rol.substring(5);
 			}
-			
+
 			respuesta.put("rol", rol);
 			respuesta.put("nombreUsuario", authentication.getName().split("@")[0]);
 		}
-		
+
 		return respuesta;
 	}
 }

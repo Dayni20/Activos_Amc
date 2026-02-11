@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IProveedoresUseCase;
-
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
-
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.ProveedoresRequestDTO;
-
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.ProveedoresResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.mapeadores.IProveedoresDtoMapper;
 
@@ -47,7 +44,7 @@ public class ProveedoresControlador {
     public List<ProveedoresResponseDTO> listar() {
         return proveedoresUseCase.listar().stream().map(mapper::toResponseDto).toList();
     }
-    
+
     @PutMapping("/{id}")
 	public ResponseEntity<ProveedoresResponseDTO> actualizar(@PathVariable int id,
 			@Valid @RequestBody ProveedoresRequestDTO request) {
@@ -55,13 +52,13 @@ public class ProveedoresControlador {
 		Proveedores actualizado = proveedoresUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}
-    
+
     @DeleteMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void eliminar(@PathVariable int id) {
 		proveedoresUseCase.eliminar(id);
     }
-    
+
     @GetMapping("/{id}")
   	public ProveedoresResponseDTO obtenerPorId(@PathVariable int id) {
   		return mapper.toResponseDto(proveedoresUseCase.obtenerPorId(id));

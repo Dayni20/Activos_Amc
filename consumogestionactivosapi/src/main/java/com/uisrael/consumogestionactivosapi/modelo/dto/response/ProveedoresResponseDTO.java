@@ -13,5 +13,5 @@ public class ProveedoresResponseDTO {
 	private String direccion;
 	private boolean estado;
 
-	
+
 }

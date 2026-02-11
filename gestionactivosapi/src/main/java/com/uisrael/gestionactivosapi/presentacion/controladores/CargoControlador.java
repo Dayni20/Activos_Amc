@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/cargos")
 public class CargoControlador {
-	
+
 	private final ICargosUseCase cargoUseCase;
 
 	private final ICargoDtoMapper mapper;

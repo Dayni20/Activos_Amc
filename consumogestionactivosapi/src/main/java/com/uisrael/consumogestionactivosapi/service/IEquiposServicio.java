@@ -16,7 +16,7 @@ public interface IEquiposServicio {
     void actualizarEquipo(Integer idEquipo, EquiposRequestDTO dto);
 
     void actualizarEstado(Integer idEquipo, boolean estado);
-    
+
 	boolean existeCodigo(String codigo);
 
 	boolean existeCodigoParaOtro(String codigo, int idEquipo);
@@ -24,11 +24,11 @@ public interface IEquiposServicio {
 	boolean existeSerial(String serial);
 
 	boolean existeSerialParaOtro(String serial, int idEquipo);
-	
+
 	boolean existeIP(String ip);
 
 	boolean existeIPParaOtro(String ip, int idEquipo);
-	
+
 	boolean existeMAC(String mac);
 
 	boolean existeMACParaOtro(String mac, int idEquipo);

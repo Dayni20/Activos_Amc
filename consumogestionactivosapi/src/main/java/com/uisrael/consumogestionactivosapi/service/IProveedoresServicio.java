@@ -7,20 +7,20 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.response.ProveedoresRespo
 
 
 public interface IProveedoresServicio {
-	
-	//Listar 
+
+	//Listar
 	public List<ProveedoresResponseDTO> listarProveedores();
-	
+
 	//Nuevo
 	public void nuevoProveedores(ProveedoresRequestDTO dto);
-	
+
 	//Obtener
 	 ProveedoresResponseDTO obtenerProveedor(Integer id);
-	
+
 	//Editar
 	 void actualizarProveedor(Integer id, ProveedoresRequestDTO dto);
-	
+
 	//Eliminar
 	 void eliminarProveedor(Integer id);
-	
+
 }

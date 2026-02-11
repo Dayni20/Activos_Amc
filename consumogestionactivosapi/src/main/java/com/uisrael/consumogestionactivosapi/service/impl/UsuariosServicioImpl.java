@@ -12,9 +12,9 @@ import com.uisrael.consumogestionactivosapi.service.IUsuariosServicio;
 
 @Service
 public class UsuariosServicioImpl implements IUsuariosServicio {
-	
+
 	private final WebClient clienteweb;
-	
+
 	public UsuariosServicioImpl(WebClient clienteweb) {
 		super();
 		this.clienteweb = clienteweb;
@@ -63,7 +63,7 @@ public class UsuariosServicioImpl implements IUsuariosServicio {
 			throw new RuntimeException(mensaje);
 		}
 	}
-	
+
 	private String extraerMensajeError(String errorBody) {
 		try {
 			int inicioMensaje = errorBody.indexOf(":") + 2;

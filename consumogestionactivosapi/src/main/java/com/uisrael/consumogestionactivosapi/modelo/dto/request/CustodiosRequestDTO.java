@@ -25,8 +25,8 @@ public class CustodiosRequestDTO {
     private LocalDate fechaIngreso;
 
     private boolean estado;
-    
+
     private DepartamentosRequestDTO fkDepartamento;
-    
+
     private CargosRequestDTO fkCargo;
 }

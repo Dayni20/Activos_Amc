@@ -91,11 +91,11 @@ public class EquiposJpa implements Serializable {
     private String observacionEquipo;
 
     private boolean estado;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_marca", nullable = false)
     private MarcasJpa fkMarcas;
-        
+
     @ManyToOne
     @JoinColumn(name = "id_proveedor", nullable = false)
     private ProveedoresJpa fkProveedor;

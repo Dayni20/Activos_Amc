@@ -12,7 +12,7 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICategoriaEqui
 public class CategoriaEquiposRepositorioImpl implements ICategoriaEquiposRepositorio {
 
 	private final ICategoriaEquiposJpaRepositorio jpaRepository;
-	
+
 	private final ICategoriaEquiposJpaMapper entityMapper;
 
 	public CategoriaEquiposRepositorioImpl(ICategoriaEquiposJpaRepositorio jpaRepository, ICategoriaEquiposJpaMapper entityMapper) {

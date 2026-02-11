@@ -8,7 +8,7 @@ import com.uisrael.gestionactivosapi.dominio.entidades.Roles;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
 
 public class RolesUseCaseImpl implements IRolesUseCase {
-	
+
 	private final IRolesRepositorio repositorio;
 
 	public RolesUseCaseImpl(IRolesRepositorio repositorio) {
@@ -38,12 +38,12 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 		if (repositorio.buscarPorId(rol.getIdRol()).isEmpty()) {
 			throw new RuntimeException("Rol no encontrado con ID: " + rol.getIdRol());
 		}
-		
+
 		Optional<Roles> rolExistente = repositorio.buscarPorNombre(rol.getNombre());
 		if (rolExistente.isPresent() && rolExistente.get().getIdRol() != rol.getIdRol()) {
 			throw new IllegalArgumentException("Ya existe otro rol con el nombre '" + rol.getNombre() + "'");
 		}
-		
+
 		return repositorio.guardar(rol);
 	}
 
@@ -51,11 +51,11 @@ public class RolesUseCaseImpl implements IRolesUseCase {
 	public void eliminar(int id) {
 		Roles rol = repositorio.buscarPorId(id)
 			.orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + id));
-		
+
 		if (!rol.isEstado()) {
 			throw new IllegalArgumentException("Este rol ya se encuentra inactivo");
 		}
-		
+
 		Roles rolInactivo = new Roles(rol.getIdRol(), rol.getNombre(), false);
 		repositorio.guardar(rolInactivo);
 	}

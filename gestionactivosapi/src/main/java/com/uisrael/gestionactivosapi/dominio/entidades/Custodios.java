@@ -17,10 +17,10 @@ public class Custodios implements Serializable {
 	private final String telefono;
 	private final LocalDate fechaIngreso;
 	private final boolean estado;
-	
+
 	private DepartamentosJpa fkDepartamento;
 	private CargosJpa fkCargo;
-	
+
 	public Custodios(int idCustodio, String nombre, String cedula, String correo, String telefono,
 			LocalDate fechaIngreso, boolean estado, DepartamentosJpa fkDepartamento, CargosJpa fkCargo) {
 		this.idCustodio = idCustodio;

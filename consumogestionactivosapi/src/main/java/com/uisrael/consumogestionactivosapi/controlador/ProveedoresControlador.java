@@ -29,7 +29,7 @@ public class ProveedoresControlador {
 	public SesionUsuario obtenerSesionUsuario() {
 		return sesionUsuario;
 	}
-	
+
 	@GetMapping
 	public String listarProveedores(Model model) {
 		List<ProveedoresResponseDTO> contenidoBD=	servicioProveedores.listarProveedores();
@@ -43,8 +43,8 @@ public class ProveedoresControlador {
         model.addAttribute("nuevoproveedor", new ProveedoresRequestDTO());
         return "proveedores/nuevoProveedores";  // ubicacion fisica page
     }
-    
-    
+
+
     //POST: guarda en BD
     @PostMapping
     public String guardarProveedores(@ModelAttribute("nuevoproveedor") ProveedoresRequestDTO nuevoproveedor,
@@ -57,8 +57,8 @@ public class ProveedoresControlador {
             return "proveedores/nuevoProveedores";
         }
     }
-	
-	//GET: EDITAR 
+
+	//GET: EDITAR
 		@GetMapping("/editar/{id}")
 		public String editarProveedores(@PathVariable Integer id, Model model) {
 
@@ -68,7 +68,7 @@ public class ProveedoresControlador {
 
 		    return "proveedores/editarProveedores";
 		}
-		//POST ACTUALIZAR 
+		//POST ACTUALIZAR
 		@PostMapping("/actualizar/{id}")
 		public String actualizarProveedor(@PathVariable Integer id,
 		                                  @ModelAttribute("nuevoproveedor") ProveedoresRequestDTO dto,
@@ -82,7 +82,7 @@ public class ProveedoresControlador {
 		        return "proveedores/editarProveedores";
 		    }
 		}
-		
+
 		// POST:ELIMINAR
 		@PostMapping("/eliminar/{id}")
 		public String eliminarProveedor(@PathVariable Integer id, Model model) {

@@ -32,6 +32,6 @@ public class Cargos implements Serializable {
 	public String toString() {
 		return "Cargos [idCargo=" + idCargo + ", nombre=" + nombre + ", estado=" + estado + "]";
 	}
-	
+
 
 }

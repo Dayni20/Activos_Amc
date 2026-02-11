@@ -10,7 +10,12 @@ import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -20,7 +25,6 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CustodiasRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CustodiosRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.EquiposRequestDTO;
@@ -91,7 +95,9 @@ public class CustodiasControlador {
                 .filter(x -> x.getIdCustodia() == idCustodia.intValue())
                 .toList();
 
-        if (lista.isEmpty()) return "redirect:/custodias";
+        if (lista.isEmpty()) {
+			return "redirect:/custodias";
+		}
 
         // ✅ Cabecera solo para mostrar custodio (nombre, cédula, etc.)
         CustodiasResponseDTO cabecera = lista.get(0);
@@ -183,7 +189,9 @@ public class CustodiasControlador {
                 .filter(x -> x.getIdCustodia() == form.getIdCustodia())
                 .toList();
 
-        if (todas.isEmpty()) return "redirect:/custodias";
+        if (todas.isEmpty()) {
+			return "redirect:/custodias";
+		}
 
         // ✅ Si por alguna razón NO vino fechaInicio desde el hidden, la recuperamos de la cabecera
         CustodiasResponseDTO cabecera = todas.get(0);
@@ -313,9 +321,13 @@ public class CustodiasControlador {
         Set<Integer> seen = new HashSet<>();
 
         for (CustodiasResponseDTO it : lista) {
-            if (it.getFkEquipo() == null) continue;
+            if (it.getFkEquipo() == null) {
+				continue;
+			}
             Integer idEq = it.getFkEquipo().getIdEquipo();
-            if (!seen.add(idEq)) continue;
+            if (!seen.add(idEq)) {
+				continue;
+			}
 
             table.addCell(String.valueOf(idEq));
             table.addCell(nvl(it.getFkEquipo().getCodigoSap()));
@@ -427,7 +439,9 @@ public class CustodiasControlador {
                 hayErrores = true;
             }
         } else {
-            if (custodia.getFkEquipo() == null) custodia.setFkEquipo(new EquiposRequestDTO());
+            if (custodia.getFkEquipo() == null) {
+				custodia.setFkEquipo(new EquiposRequestDTO());
+			}
             if (custodia.getFkEquipo().getIdEquipo() <= 0) {
                 model.addAttribute("errorSeleccionEquipo", "Debe seleccionar un equipo");
                 hayErrores = true;
@@ -539,10 +553,13 @@ public class CustodiasControlador {
         Set<Integer> seen = new HashSet<>();
 
         for (CustodiasResponseDTO it : lista) {
-            if (it.getFkEquipo() == null) continue;
+            if (it.getFkEquipo() == null) {
+				continue;
+			}
             Integer idEq = it.getFkEquipo().getIdEquipo();
-            if (idEq == null) continue;
-            if (!seen.add(idEq)) continue;
+            if ((idEq == null) || !seen.add(idEq)) {
+				continue;
+			}
 
             table.addCell(cell(String.valueOf(idEq)));
             table.addCell(cell(nvl(it.getFkEquipo().getCodigoSap())));
@@ -653,10 +670,13 @@ public class CustodiasControlador {
         Set<Integer> seen = new HashSet<>();
 
         for (CustodiasResponseDTO it : lista) {
-            if (it.getFkEquipo() == null) continue;
+            if (it.getFkEquipo() == null) {
+				continue;
+			}
             Integer idEq = it.getFkEquipo().getIdEquipo();
-            if (idEq == null) continue;
-            if (!seen.add(idEq)) continue;
+            if ((idEq == null) || !seen.add(idEq)) {
+				continue;
+			}
 
             table.addCell(cell(String.valueOf(idEq)));
             table.addCell(cell(nvl(it.getFkEquipo().getCodigoSap())));

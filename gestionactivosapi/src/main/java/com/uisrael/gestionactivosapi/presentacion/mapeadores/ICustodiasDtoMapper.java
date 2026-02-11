@@ -4,10 +4,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.uisrael.gestionactivosapi.dominio.entidades.Custodias;
-import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.*;
-
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CategoriaEquiposJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CustodiosJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.EquiposJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
+import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.ProveedoresJpa;
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.CustodiasRequestDTO;
-import com.uisrael.gestionactivosapi.presentacion.dto.Response.*;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.CategoriaEquiposResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.CustodiasResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.CustodiosResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.EquiposResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.MarcasResponseDTO;
+import com.uisrael.gestionactivosapi.presentacion.dto.Response.ProveedoresResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface ICustodiasDtoMapper {
@@ -30,8 +38,9 @@ public interface ICustodiasDtoMapper {
 	// Helpers Request -> Domain (solo IDs)
 	// =========================
 	default EquiposJpa mapEquipoReq(CustodiasRequestDTO dto) {
-		if (dto == null || dto.getEquipos() == null || dto.getEquipos().isEmpty())
+		if (dto == null || dto.getEquipos() == null || dto.getEquipos().isEmpty()) {
 			return null;
+		}
 
 		EquiposJpa e = new EquiposJpa();
 		e.setIdEquipo(dto.getEquipos().get(0).getIdEquipo()); // 👈 primer equipo
@@ -39,8 +48,9 @@ public interface ICustodiasDtoMapper {
 	}
 
 	default CustodiosJpa mapCustodioReq(CustodiasRequestDTO dto) {
-		if (dto == null || dto.getFkCustodio() == null)
+		if (dto == null || dto.getFkCustodio() == null) {
 			return null;
+		}
 		CustodiosJpa c = new CustodiosJpa();
 		c.setIdCustodio(dto.getFkCustodio().getIdCustodio());
 		return c;
@@ -50,8 +60,9 @@ public interface ICustodiasDtoMapper {
 	// ✅ JPA -> RESPONSE (COMPLETO)
 	// =========================
 	default EquiposResponseDTO map(EquiposJpa e) {
-		if (e == null)
+		if (e == null) {
 			return null;
+		}
 
 		EquiposResponseDTO dto = new EquiposResponseDTO();
 		dto.setIdEquipo(e.getIdEquipo());
@@ -83,8 +94,9 @@ public interface ICustodiasDtoMapper {
 	}
 
 	default CustodiosResponseDTO map(CustodiosJpa c) {
-		if (c == null)
+		if (c == null) {
 			return null;
+		}
 
 		CustodiosResponseDTO dto = new CustodiosResponseDTO();
 		dto.setIdCustodio(c.getIdCustodio());
@@ -97,8 +109,9 @@ public interface ICustodiasDtoMapper {
 	}
 
 	default MarcasResponseDTO map(MarcasJpa m) {
-		if (m == null)
+		if (m == null) {
 			return null;
+		}
 		MarcasResponseDTO dto = new MarcasResponseDTO();
 		dto.setIdMarca(m.getIdMarca());
 		dto.setNombre(m.getNombre());
@@ -107,8 +120,9 @@ public interface ICustodiasDtoMapper {
 	}
 
 	default ProveedoresResponseDTO map(ProveedoresJpa p) {
-		if (p == null)
+		if (p == null) {
 			return null;
+		}
 		ProveedoresResponseDTO dto = new ProveedoresResponseDTO();
 		dto.setIdProveedor(p.getIdProveedor());
 		dto.setNombre(p.getNombre());
@@ -121,8 +135,9 @@ public interface ICustodiasDtoMapper {
 	}
 
 	default CategoriaEquiposResponseDTO map(CategoriaEquiposJpa c) {
-		if (c == null)
+		if (c == null) {
 			return null;
+		}
 		CategoriaEquiposResponseDTO dto = new CategoriaEquiposResponseDTO();
 		dto.setIdCategoria(c.getIdCategoria());
 		dto.setNombre(c.getNombre());

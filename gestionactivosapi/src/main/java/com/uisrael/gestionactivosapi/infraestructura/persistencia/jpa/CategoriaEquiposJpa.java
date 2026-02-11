@@ -31,7 +31,7 @@ public class CategoriaEquiposJpa implements Serializable {
 
     @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;
-    
+
     private boolean estado;
 }
 

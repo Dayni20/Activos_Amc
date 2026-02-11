@@ -29,5 +29,5 @@ public class CategoriaEquiposResponseDTO {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	
+
 }

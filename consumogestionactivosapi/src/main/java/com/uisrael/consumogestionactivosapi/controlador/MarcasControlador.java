@@ -29,21 +29,21 @@ public class MarcasControlador {
 	public SesionUsuario obtenerSesionUsuario() {
 		return sesionUsuario;
 	}
-	
+
 	@GetMapping
-	public String listarMarcas(Model model) {	
+	public String listarMarcas(Model model) {
 	List<MarcasResponseDTO> contenidoBD=	servicioMarcas.listarMarca();
 	model.addAttribute("listarmarcas", contenidoBD);
 		return "marcas/listarMarcas"; // ubicacion fisica page
 	}
-	
+
 	//GET: muestra el formulario
 	@GetMapping("/nuevaMarcas")
 	public String nuevaMarcas(Model model) {
 		model.addAttribute("nuevamarca", new MarcasRequestDTO());
 		return "marcas/nuevaMarcas"; // ubicacion fisica page
 	}
-	
+
 	 //POST: guarda en BD
 	@PostMapping
 	public String guardarMarcas(
@@ -64,8 +64,8 @@ public class MarcasControlador {
 	        return "marcas/nuevaMarcas";
 	    }
 	}
-	
-	//GET: EDITAR 
+
+	//GET: EDITAR
 	@GetMapping("/editarMarcas/{id}")
 	public String editarMarca(@PathVariable Integer id, Model model) {
 
@@ -75,7 +75,7 @@ public class MarcasControlador {
 
 	    return "marcas/editarMarcas";
 	}
-	
+
 	//POST ACTUALIZAR
 	@PostMapping("/actualizar/{id}")
 	public String actualizarMarca(
@@ -95,7 +95,7 @@ public class MarcasControlador {
 	        return "marcas/editarMarcas"; // ✅ te quedas en editar
 	    }
 	}
-	
+
 	// POST:ELIMINAR
 	@PostMapping("/eliminar/{id}")
 	public String eliminarMarca(@PathVariable Integer id, Model model) {

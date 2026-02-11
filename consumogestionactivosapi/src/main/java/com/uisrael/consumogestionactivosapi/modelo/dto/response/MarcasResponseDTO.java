@@ -8,5 +8,5 @@ public class MarcasResponseDTO {
 	private String nombre;
 	private boolean estado;
 
-	
+
 }

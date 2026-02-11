@@ -12,7 +12,7 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.IUsuariosJpaRe
 public class UsuariosRepositorioImpl implements IUsuariosRepositorio {
 
 	private final IUsuariosJpaRepositorio jpaRepository;
-	
+
 	private final IUsuariosJpaMapper entityMapper;
 
 	public UsuariosRepositorioImpl(IUsuariosJpaRepositorio jpaRepository, IUsuariosJpaMapper entityMapper) {
@@ -41,7 +41,7 @@ public class UsuariosRepositorioImpl implements IUsuariosRepositorio {
 	public void eliminar(int id) {
 		UsuariosJpa entity = jpaRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-		entity.setEstado(false);;
+		entity.setEstado(false);
 		jpaRepository.save(entity);
 	}
 

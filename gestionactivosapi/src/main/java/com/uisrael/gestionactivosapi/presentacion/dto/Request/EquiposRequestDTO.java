@@ -35,5 +35,5 @@ public class EquiposRequestDTO {
     private CategoriaEquiposRequestDTO fkCategoria;
 
 
-    
+
 }

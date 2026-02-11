@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		if (!sesionUsuario.isAutenticado()) {
 			response.sendRedirect("/login");
 			return false;

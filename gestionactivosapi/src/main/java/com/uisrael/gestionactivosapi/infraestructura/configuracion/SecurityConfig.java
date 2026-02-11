@@ -24,56 +24,56 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
-			
+
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/auth/**").authenticated()
-				
-				
+
+
 				.requestMatchers(HttpMethod.GET, "/api/equipos/**").hasAnyRole("ADMINISTRADOR", "TECNICO", "AUDITOR")
 				.requestMatchers(HttpMethod.POST, "/api/equipos/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers(HttpMethod.PUT, "/api/equipos/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers(HttpMethod.DELETE, "/api/equipos/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
-				
+
 				.requestMatchers("/api/marcas/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers("/api/categorias-equipo/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers("/api/custodias/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers("/api/custodios/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
-				
+
 				.requestMatchers(HttpMethod.GET, "/api/departamentos/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers(HttpMethod.GET, "/api/ubicaciones/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers(HttpMethod.GET, "/api/proveedores/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
 				.requestMatchers(HttpMethod.GET, "/api/cargos/**").hasAnyRole("ADMINISTRADOR", "TECNICO")
-				
-				
+
+
 				.requestMatchers(HttpMethod.POST, "/api/departamentos/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.PUT, "/api/departamentos/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.DELETE, "/api/departamentos/**").hasRole("ADMINISTRADOR")
-				
+
 				.requestMatchers(HttpMethod.POST, "/api/ubicaciones/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.PUT, "/api/ubicaciones/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.DELETE, "/api/ubicaciones/**").hasRole("ADMINISTRADOR")
-				
+
 				.requestMatchers(HttpMethod.POST, "/api/proveedores/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.PUT, "/api/proveedores/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.DELETE, "/api/proveedores/**").hasRole("ADMINISTRADOR")
-				
+
 				.requestMatchers(HttpMethod.POST, "/api/cargos/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.PUT, "/api/cargos/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.DELETE, "/api/cargos/**").hasRole("ADMINISTRADOR")
-				
+
 				.requestMatchers("/api/usuarios/**").hasRole("ADMINISTRADOR")
 				.requestMatchers("/api/roles/**").hasRole("ADMINISTRADOR")
-				
-				
+
+
 				.requestMatchers(HttpMethod.GET, "/api/reportes/**").hasAnyRole("ADMINISTRADOR", "TECNICO", "AUDITOR")
-				
+
 				.requestMatchers(HttpMethod.POST, "/api/reportes/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.PUT, "/api/reportes/**").hasRole("ADMINISTRADOR")
 				.requestMatchers(HttpMethod.DELETE, "/api/reportes/**").hasRole("ADMINISTRADOR")
-				
+
 				.anyRequest().authenticated()
 			)
-			
+
 			.httpBasic(basic -> basic.realmName("API Gestión de Activos"));
 
 		return http.build();

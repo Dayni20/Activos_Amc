@@ -8,10 +8,10 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CategoriaE
 
 @Mapper(componentModel = "spring")
 public interface ICategoriaEquiposJpaMapper {
-	
+
 	@Mapping(source = "idCategoria", target = "idCategoria")
 	CategoriaEquipos toDomain(CategoriaEquiposJpa entity);
-	
+
 	@Mapping(source = "idCategoria", target = "idCategoria")
 	CategoriaEquiposJpa toEntity(CategoriaEquipos categoriaEquipo);
 

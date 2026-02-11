@@ -8,7 +8,6 @@ import com.uisrael.gestionactivosapi.dominio.entidades.Departamentos;
 import com.uisrael.gestionactivosapi.dominio.entidades.Equipos;
 import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
-
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.EquiposRequestDTO;
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.CategoriaEquiposResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.DepartamentosResponseDTO;
@@ -41,7 +40,9 @@ public interface IEquiposDtoMapper {
     // ==========================================================
 
     default CategoriaEquipos mapCategoria(EquiposRequestDTO dto) {
-        if (dto == null || dto.getFkCategoria() == null) return null;
+        if (dto == null || dto.getFkCategoria() == null) {
+			return null;
+		}
         return new CategoriaEquipos(
                 dto.getFkCategoria().getIdCategoria(),
                 null,
@@ -50,7 +51,9 @@ public interface IEquiposDtoMapper {
     }
 
     default Marcas mapMarca(EquiposRequestDTO dto) {
-        if (dto == null || dto.getFkMarca() == null) return null;
+        if (dto == null || dto.getFkMarca() == null) {
+			return null;
+		}
         return new Marcas(
                 dto.getFkMarca().getIdMarca(),
                 null,
@@ -59,7 +62,9 @@ public interface IEquiposDtoMapper {
     }
 
     default Proveedores mapProveedor(EquiposRequestDTO dto) {
-        if (dto == null || dto.getFkProveedor() == null) return null;
+        if (dto == null || dto.getFkProveedor() == null) {
+			return null;
+		}
         return new Proveedores(
                 dto.getFkProveedor().getIdProveedor(),
                 null, null, null, null, null,
@@ -71,7 +76,9 @@ public interface IEquiposDtoMapper {
     // MAPS MANUALES (DOMINIO -> RESPONSE) (✅ para que salga NOMBRE)
     // ==========================================================
     default DepartamentosResponseDTO toDepartamentoResponse(Departamentos d) {
-        if (d == null) return null;
+        if (d == null) {
+			return null;
+		}
         DepartamentosResponseDTO r = new DepartamentosResponseDTO();
         r.setIdDepartamento(d.getIdDepartamento());
         r.setNombre(d.getNombre());
@@ -81,7 +88,9 @@ public interface IEquiposDtoMapper {
     }
 
     default MarcasResponseDTO toMarcaResponse(Marcas m) {
-        if (m == null) return null;
+        if (m == null) {
+			return null;
+		}
         MarcasResponseDTO r = new MarcasResponseDTO();
         r.setIdMarca(m.getIdMarca());
         r.setNombre(m.getNombre());
@@ -90,7 +99,9 @@ public interface IEquiposDtoMapper {
     }
 
     default ProveedoresResponseDTO toProveedorResponse(Proveedores p) {
-        if (p == null) return null;
+        if (p == null) {
+			return null;
+		}
         ProveedoresResponseDTO r = new ProveedoresResponseDTO();
         r.setIdProveedor(p.getIdProveedor());
         r.setNombre(p.getNombre());
@@ -100,7 +111,9 @@ public interface IEquiposDtoMapper {
     }
 
     default CategoriaEquiposResponseDTO toCategoriaResponse(CategoriaEquipos c) {
-        if (c == null) return null;
+        if (c == null) {
+			return null;
+		}
         CategoriaEquiposResponseDTO r = new CategoriaEquiposResponseDTO();
         r.setIdCategoria(c.getIdCategoria());
         r.setNombre(c.getNombre());

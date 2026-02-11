@@ -8,9 +8,9 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.DepartamentosResp
 
 @Mapper(componentModel = "spring")
 public interface IDepartamentosDtoMapper {
-	
+
 	Departamentos toDomain(DepartamentosRequestDTO dto);
-	
+
 	DepartamentosResponseDTO toResponseDto(Departamentos departamento);
 
 }

@@ -7,8 +7,8 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.Departamen
 
 @Mapper(componentModel = "spring")
 public interface IDepartamentosJpaMapper {
-	
+
 	Departamentos toDomain(DepartamentosJpa entity);
-	
+
 	DepartamentosJpa toEntity(Departamentos departamento);
 }

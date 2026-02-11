@@ -8,7 +8,7 @@ import com.uisrael.gestionactivosapi.dominio.repositorios.IMarcasRepositorio;
 
 
 public class MarcasUseCaseImpl implements IMarcasUseCase {
-	
+
 	private final IMarcasRepositorio repositorio;
 
 	public MarcasUseCaseImpl(IMarcasRepositorio repositorio) {
@@ -29,7 +29,7 @@ public class MarcasUseCaseImpl implements IMarcasUseCase {
 	public List<Marcas> listar() {
 		return repositorio.listarTodos();
 	}
-	
+
 	@Override
 	public Marcas actualizar(int id, Marcas marcas) {
 		return repositorio.actualizar(id, marcas);
@@ -39,6 +39,6 @@ public class MarcasUseCaseImpl implements IMarcasUseCase {
 	public void eliminar(int id) {
 		repositorio.eliminar(id);
 	}
-	
+
 
 }

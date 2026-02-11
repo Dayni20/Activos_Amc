@@ -7,9 +7,9 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.Ubicacione
 
 @Mapper(componentModel = "spring")
 public interface IUbicacionesJpaMapper {
-	
+
 	Ubicaciones toDomain(UbicacionesJpa entity);
-	
+
 	UbicacionesJpa toEntity(Ubicaciones ubicacion);
-	
+
 }

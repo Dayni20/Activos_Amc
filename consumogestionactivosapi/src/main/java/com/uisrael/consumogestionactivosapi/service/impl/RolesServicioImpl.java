@@ -12,9 +12,9 @@ import com.uisrael.consumogestionactivosapi.service.IRolesServicio;
 
 @Service
 public class RolesServicioImpl implements IRolesServicio {
-	
+
 	private final WebClient clienteweb;
-	
+
 	public RolesServicioImpl(WebClient clienteweb) {
 		super();
 		this.clienteweb = clienteweb;
@@ -63,7 +63,7 @@ public class RolesServicioImpl implements IRolesServicio {
 			throw new RuntimeException(mensaje);
 		}
 	}
-	
+
 	private String extraerMensajeError(String errorBody) {
 		try {
 			int inicioMensaje = errorBody.indexOf(":") + 2;

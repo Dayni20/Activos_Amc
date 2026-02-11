@@ -97,7 +97,7 @@ public class EquiposRepositorioImpl implements IEquiposRepositorio {
             prov.setIdProveedor(equipo.getFkProveedor().getIdProveedor());
             existente.setFkProveedor(prov);
         }
-        
+
         // ✅ FK Categoria (categoria)
         if (equipo.getFkCategoria() != null) {
             CategoriaEquiposJpa cat = new CategoriaEquiposJpa();

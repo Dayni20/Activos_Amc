@@ -13,7 +13,7 @@ import com.uisrael.gestionactivosapi.infraestructura.repositorios.IDepartamentos
 public class DepartamentosRepositorioImpl implements IDepartamentosRepositorio{
 
 	private final IDepartamentosJpaRepositorio jpaRepository;
-	
+
 	private final IDepartamentosJpaMapper entityMapper;
 
 	public DepartamentosRepositorioImpl(IDepartamentosJpaRepositorio jpaRepository,
@@ -66,7 +66,7 @@ public class DepartamentosRepositorioImpl implements IDepartamentosRepositorio{
 		DepartamentosJpa guardado = jpaRepository.save(existente);
 		return entityMapper.toDomain(guardado);
 	}
-	
+
     @Override
     public boolean existeNombre(String nombre) {
         return jpaRepository.existsByNombreIgnoreCase(nombre);
@@ -76,5 +76,5 @@ public class DepartamentosRepositorioImpl implements IDepartamentosRepositorio{
     public boolean existeNombreParaOtro(String nombre, int idDepartamento) {
         return jpaRepository.existsByNombreIgnoreCaseAndIdDepartamentoNot(nombre, idDepartamento);
     }
-	
+
 }

@@ -10,9 +10,9 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICa
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICargosJpaRepositorio;
 
 public class CargosRepositorioImpl implements ICargosRepositorio{
-	
+
 	private final ICargosJpaRepositorio jpaRepository;
-	
+
 	private final ICargosJpaMapper entityMapper;
 
 

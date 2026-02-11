@@ -30,21 +30,21 @@ public class CategoriaEquiposControlador {
 	public SesionUsuario obtenerSesionUsuario() {
 		return sesionUsuario;
 	}
-	
+
 	@GetMapping
-	public String listarCategoriaEquipos(Model model) {	
+	public String listarCategoriaEquipos(Model model) {
 		List<CategoriaEquiposResponseDTO> contenidoBD = servicioCategoriaEquipos.listarCategoriaEquipo();
 		contenidoBD.sort(Comparator.comparing(CategoriaEquiposResponseDTO::getIdCategoria));
 		model.addAttribute("listarcategorias", contenidoBD);
 		return "categorias_equipo/listarCategorias";
 	}
-	
+
 	@GetMapping("/nueva-categoria")
 	public String nuevaCategoria(Model model) {
 		model.addAttribute("nuevacategoria", new CategoriaEquiposRequestDTO());
 		return "categorias_equipo/nuevaCategoria";
 	}
-	
+
 	@PostMapping
 	public String guardarCategoria(@ModelAttribute CategoriaEquiposRequestDTO nuevacategoria, Model model) {
 		try {
@@ -61,14 +61,14 @@ public class CategoriaEquiposControlador {
 			return nuevacategoria.getIdCategoria() > 0 ? "categorias_equipo/editarCategoria" : "categorias_equipo/nuevaCategoria";
 		}
 	}
-	
+
 	@GetMapping("/editar-categoria/{id}")
 	public String editarCategoria(@PathVariable Integer id, Model model) {
 		CategoriaEquiposResponseDTO categoria = servicioCategoriaEquipos.obtenerCategoriaEquipo(id);
 		model.addAttribute("nuevacategoria", categoria);
 		return "categorias_equipo/editarCategoria";
 	}
-	
+
 	@PostMapping("/eliminar/{id}")
 	public String eliminarCategoria(@PathVariable Integer id, Model model) {
 		try {

@@ -2,13 +2,11 @@ package com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa;
 
 import java.io.Serializable;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,5 +45,5 @@ public class ProveedoresJpa implements Serializable {
     private String direccion;
 
     private boolean estado;
-    
+
 }

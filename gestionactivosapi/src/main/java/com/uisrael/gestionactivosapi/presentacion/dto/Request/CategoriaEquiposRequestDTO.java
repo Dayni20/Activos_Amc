@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 public class CategoriaEquiposRequestDTO {
-	
+
 	private int idCategoria;
-	
+
 	@Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
 	@Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\\s]+$", message = "El nombre solo puede contener letras, números y espacios")
 	private String nombre;
-	
+
 	private boolean estado;
 
 }

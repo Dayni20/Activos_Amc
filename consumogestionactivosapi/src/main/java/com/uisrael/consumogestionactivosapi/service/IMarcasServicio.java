@@ -8,19 +8,19 @@ import com.uisrael.consumogestionactivosapi.modelo.dto.response.MarcasResponseDT
 public interface IMarcasServicio {
 	//Listar
 	public List<MarcasResponseDTO> listarMarca();
-	
+
 	//Nuevo
 	public void nuevaMarca(MarcasRequestDTO dto);
-	
-	//Obtener 
+
+	//Obtener
 	  MarcasResponseDTO obtenerMarca(Integer id);
-	  
-	//Editar 
+
+	//Editar
 	void actualizarMarca(Integer id, MarcasRequestDTO dto);
-	
-	//Eliminar 
+
+	//Eliminar
 	 void eliminarMarca(Integer id);
-	
-	
+
+
 
 }

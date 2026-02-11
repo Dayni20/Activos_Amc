@@ -9,7 +9,7 @@ public class CategoriaEquipos implements Serializable {
 	private final int idCategoria;
 	private final String nombre;
 	private final boolean estado;
-	
+
 	public CategoriaEquipos(int idCategoria, String nombre, boolean estado) {
 		this.idCategoria = idCategoria;
 		this.nombre = nombre;

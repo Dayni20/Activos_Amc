@@ -9,7 +9,9 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.MarcasJpa;
 public interface IMarcasJpaMapper {
 
     default Marcas toDomain(MarcasJpa entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+			return null;
+		}
 
         return Marcas.of(
                 entity.getIdMarca(),

@@ -49,14 +49,14 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
         existente.setTelefono(custodio.getTelefono());
         existente.setEstado(custodio.isEstado());
         existente.setFechaIngreso(custodio.getFechaIngreso());
-        
+
 		// Actualizar departamento por id si viene
 		if (custodio.getFkDepartamento() != null) {
 			DepartamentosJpa dep = new DepartamentosJpa();
 			dep.setIdDepartamento(custodio.getFkDepartamento().getIdDepartamento());
 			existente.setFkDepartamento(dep);
 		}
-		
+
 		if (custodio.getFkCargo() != null) {
 			CargosJpa car = new CargosJpa();
 			car.setIdCargo(custodio.getFkCargo().getIdCargo());
@@ -96,6 +96,6 @@ public class CustodiosRepositorioImpl implements ICustodiosRepositorio {
 	@Override
 	public boolean existeCedulaParaOtro(String cedula, int idCustodio) {
 		return jpaRepository.existsByCedulaIgnoreCaseAndIdCustodioNot(cedula, idCustodio);
-		
+
 	}
 }

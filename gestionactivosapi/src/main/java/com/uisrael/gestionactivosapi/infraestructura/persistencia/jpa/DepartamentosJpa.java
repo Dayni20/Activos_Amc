@@ -33,9 +33,9 @@ public class DepartamentosJpa implements Serializable {
 
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-    
+
     private boolean estado;
-    
+
     @ManyToOne
     @JoinColumn(name = "fkUbicacion")
     private UbicacionesJpa fkUbicacion;

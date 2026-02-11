@@ -51,7 +51,7 @@ public class UbicacionesUseCaseImpl implements IUbicacionesUseCase {
 
 		return repositorio.actualizarEstado(id, actualizado);
 	}
-	
+
 	@Override
 	public boolean nombreExiste(String nombre) {
 		return repositorio.existeNombre(nombre.trim());

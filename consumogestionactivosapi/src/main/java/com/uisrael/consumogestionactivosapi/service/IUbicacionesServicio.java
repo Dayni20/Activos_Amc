@@ -14,10 +14,10 @@ public interface IUbicacionesServicio {
 	UbicacionesResponseDTO obtenerPorId(Integer idUbicacion);
 
 	void actualizarUbicacion(Integer idUbicacion, UbicacionesRequestDTO dto);
-	
+
 	void actualizarEstado(Integer idUbicacion, boolean estado);
-	
+
 	boolean nombreExiste(String nombre);
-	
+
 	boolean nombreExisteParaOtro(String nombre, int idUbicacion);
 }

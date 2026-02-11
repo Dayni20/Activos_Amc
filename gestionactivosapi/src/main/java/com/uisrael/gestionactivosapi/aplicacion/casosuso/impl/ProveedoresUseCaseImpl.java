@@ -3,13 +3,12 @@ package com.uisrael.gestionactivosapi.aplicacion.casosuso.impl;
 import java.util.List;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IProveedoresUseCase;
-
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IProveedoresRepositorio;
 
 
 public class ProveedoresUseCaseImpl implements IProveedoresUseCase{
-	
+
 	private final IProveedoresRepositorio repositorio;
 
 	public ProveedoresUseCaseImpl(IProveedoresRepositorio repositorio) {
@@ -30,7 +29,7 @@ public class ProveedoresUseCaseImpl implements IProveedoresUseCase{
 	public List<Proveedores> listar() {
 		return repositorio.listarTodos();
 	}
-	
+
 	@Override
 	public Proveedores actualizar(int id, Proveedores proveedores) {
 		return repositorio.actualizar(id, proveedores);

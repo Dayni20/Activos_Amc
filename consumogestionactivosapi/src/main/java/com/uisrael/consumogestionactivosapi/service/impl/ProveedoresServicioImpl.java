@@ -5,16 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.ProveedoresResponseDTO;
 import com.uisrael.consumogestionactivosapi.service.IProveedoresServicio;
 
 @Service
 public class ProveedoresServicioImpl implements IProveedoresServicio {
-	
+
 	private final WebClient clienteweb;
-	
+
 
 	public ProveedoresServicioImpl(WebClient clienteweb) {
 		super();
@@ -66,7 +65,9 @@ public class ProveedoresServicioImpl implements IProveedoresServicio {
 	}
 
 	private String normalizarRuc(String ruc) {
-	    if (ruc == null) return "";
+	    if (ruc == null) {
+			return "";
+		}
 	    // deja solo números
 	    return ruc.trim().replaceAll("\\D", "");
 	}
@@ -127,6 +128,6 @@ public class ProveedoresServicioImpl implements IProveedoresServicio {
                 .toBodilessEntity()
                 .block();
     }
-	
+
 
 }

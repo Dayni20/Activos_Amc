@@ -13,9 +13,9 @@ import com.uisrael.consumogestionactivosapi.service.IMarcasServicio;
 
 @Service
 public class MarcasServicioImpl  implements IMarcasServicio{
-	
+
 	private final WebClient clienteweb;
-	
+
 	public MarcasServicioImpl(WebClient clienteweb) {
 		super();
 		this.clienteweb = clienteweb;
@@ -76,7 +76,7 @@ public class MarcasServicioImpl  implements IMarcasServicio{
 	        }
 	    }
 
-	
+
 	 @Override
 	    public void actualizarMarca(Integer id, MarcasRequestDTO dto) {
 
@@ -121,16 +121,16 @@ public class MarcasServicioImpl  implements IMarcasServicio{
                 .toBodilessEntity()
                 .block();
     }
-	
+
 	 private String normalizarTexto(String texto) {
 	        return texto == null ? "" : texto.trim().toUpperCase();
 	    }
 
-	  
+
 	    private int obtenerIdMarca(MarcasResponseDTO m) {
 	        // ✅ AJUSTA si tu getter es distinto:
 	        return m.getIdMarca();
 	    }
-	
+
 
 }

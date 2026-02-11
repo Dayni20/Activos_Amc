@@ -11,9 +11,9 @@ public class CustodiosResponseDTO {
 	private String telefono;
 	private LocalDate fechaIngreso;
 	private boolean estado;
-	
+
 	private DepartamentosResponseDTO fkDepartamento;
-	
+
 	private CargosResponseDTO fkCargo;
 
 	public int getIdCustodio() {

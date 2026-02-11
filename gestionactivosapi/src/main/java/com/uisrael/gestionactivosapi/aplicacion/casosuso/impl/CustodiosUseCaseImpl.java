@@ -16,15 +16,15 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
 
     @Override
     public Custodios crear(Custodios custodio) {
-    	
+
     	if (repositorio.existeCedula(custodio.getCorreo().trim())) {
 			throw new RuntimeException("Ya existe un empleado con ese correo");
 		}
-    	
+
     	if (repositorio.existeCedula(custodio.getCedula().trim())) {
 			throw new RuntimeException("Ya existe un empleado con esa cédula");
 		}
-    	
+
         return repositorio.guardar(custodio);
     }
 
@@ -43,12 +43,12 @@ public class CustodiosUseCaseImpl implements ICustodiosUseCase {
     public Custodios actualizar(int id, Custodios custodio) {
         repositorio.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Custodio no encontrado"));
-        
-        
+
+
     	if (repositorio.existeCedulaParaOtro(custodio.getCedula().trim(), id)) {
 			throw new RuntimeException("Ya existe otro empleado con esa cédula");
 		}
-    	
+
     	if (repositorio.existeCorreoParaOtro(custodio.getCorreo().trim(), id)) {
 			throw new RuntimeException("Ya existe otro empleado con ese correo");
 		}

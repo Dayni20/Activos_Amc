@@ -8,10 +8,10 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.RolesJpa;
 
 @Mapper(componentModel = "spring")
 public interface IRolesJpaMapper {
-	
+
 	@Mapping(source = "idRol", target = "idRol")
 	Roles toDomain(RolesJpa entity);
-	
+
 	@Mapping(source = "idRol", target = "idRol")
 	RolesJpa toEntity(Roles rol);
 

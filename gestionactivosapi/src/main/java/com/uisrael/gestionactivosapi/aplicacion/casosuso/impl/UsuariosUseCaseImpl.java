@@ -6,14 +6,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IUsuariosUseCase;
 import com.uisrael.gestionactivosapi.dominio.entidades.Usuarios;
-import com.uisrael.gestionactivosapi.dominio.repositorios.IUsuariosRepositorio;
-import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IDepartamentosRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.IRolesRepositorio;
+import com.uisrael.gestionactivosapi.dominio.repositorios.IUsuariosRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.DepartamentosJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.RolesJpa;
 
 public class UsuariosUseCaseImpl implements IUsuariosUseCase {
-    
+
 	private final IUsuariosRepositorio repositorio;
 	private final IRolesRepositorio rolesRepositorio;
 	private final IDepartamentosRepositorio departamentosRepositorio;
@@ -32,7 +32,7 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 		if (!usuario.isEstado()) {
 			throw new IllegalArgumentException("Solo se pueden crear usuarios en estado activo");
 		}
-		
+
 		if (usuario.getFkRol() != null) {
 			int idRol = usuario.getFkRol().getIdRol();
 			var rolOpt = rolesRepositorio.buscarPorId(idRol);
@@ -53,13 +53,13 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 				throw new IllegalArgumentException("No se puede asignar un departamento inactivo");
 			}
 		}
-		
+
 		if (repositorio.buscarPorCorreo(usuario.getCorreo()).isPresent()) {
 			throw new IllegalArgumentException("Ya existe un usuario con el correo: " + usuario.getCorreo());
 		}
 
 		String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
-		
+
 		RolesJpa rol = usuario.getFkRol();
 		DepartamentosJpa departamento = usuario.getFkDepartamento();
 		Usuarios usuarioConContrasenaEncriptada = new Usuarios(
@@ -89,12 +89,12 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 	public void eliminar(int id) {
 		Usuarios usuario = repositorio.buscarPorId(id)
 			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
-		
+
 		// Validar que el usuario esté activo antes de desactivarlo
 		if (!usuario.isEstado()) {
 			throw new IllegalArgumentException("Este usuario ya se encuentra inactivo");
 		}
-		
+
 		// Eliminado lógico: cambiar estado a false
 		Usuarios usuarioInactivo = new Usuarios(
 			usuario.getIdUsuario(),
@@ -112,7 +112,7 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 	public Usuarios actualizar(Usuarios usuario) {
 		Usuarios usuarioExistente = repositorio.buscarPorId(usuario.getIdUsuario())
 			.orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuario.getIdUsuario()));
-		
+
 		if (usuario.getFkRol() != null) {
 			int idRol = usuario.getFkRol().getIdRol();
 			var rolOpt = rolesRepositorio.buscarPorId(idRol);
@@ -133,7 +133,7 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 				throw new IllegalArgumentException("No se puede asignar un departamento inactivo");
 			}
 		}
-		
+
 		repositorio.buscarPorCorreo(usuario.getCorreo()).ifPresent(usuarioConCorreo -> {
 			if (usuarioConCorreo.getIdUsuario() != usuario.getIdUsuario()) {
 				throw new IllegalArgumentException("Ya existe otro usuario con el correo: " + usuario.getCorreo());
@@ -142,11 +142,11 @@ public class UsuariosUseCaseImpl implements IUsuariosUseCase {
 
 		String contrasenaFinal = usuarioExistente.getContrasena();
 		// Solo actualizar contraseña si se proporciona una nueva (no vacía)
-		if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty() 
+		if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()
 			&& !usuario.getContrasena().equals(usuarioExistente.getContrasena())) {
 			contrasenaFinal = passwordEncoder.encode(usuario.getContrasena());
 		}
-		
+
 		RolesJpa rol = usuario.getFkRol();
 		DepartamentosJpa departamento = usuario.getFkDepartamento();
 		Usuarios usuarioActualizado = new Usuarios(

@@ -1,32 +1,48 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.util.WorkbookUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.CategoriaEquiposRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.EquiposRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.MarcasRequestDTO;
 import com.uisrael.consumogestionactivosapi.modelo.dto.request.ProveedoresRequestDTO;
-
 import com.uisrael.consumogestionactivosapi.modelo.dto.response.EquiposResponseDTO;
-
 import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 import com.uisrael.consumogestionactivosapi.service.ICategoriaEquiposServicio;
 import com.uisrael.consumogestionactivosapi.service.IEquiposServicio;
@@ -79,15 +95,15 @@ public class EquiposControlador {
 		model.addAttribute("equipo", equipo);
 		return "Equipos/nuevoEquipo";
 	}
-	
+
 	@GetMapping("/editar-equipo/{id}")
 	public String editar(@PathVariable Integer id, Model model) {
 		EquiposResponseDTO dto = servicioEquipos.obtenerPorId(id);
 
 		Integer idProveedor = dto.getFkProveedor().getIdProveedor();
-		
+
 		Integer idMarca = dto.getFkMarca().getIdMarca();
-		
+
 		Integer idCategoria = dto.getFkCategoria().getIdCategoria();
 
 		model.addAttribute("listaproveedores",
@@ -97,7 +113,7 @@ public class EquiposControlador {
 
 		model.addAttribute("listamarcas", servicioMarcas.listarMarca().stream()
 				.filter(marca -> marca.isEstado() || marca.getIdMarca() == idMarca).toList());
-		
+
 		model.addAttribute("listacategorias", servicioCategoriaEquipos.listarCategoriaEquipo().stream()
 				.filter(cate -> cate.isEstado() || cate.getIdCategoria() == idCategoria).toList());
 
@@ -167,7 +183,7 @@ public class EquiposControlador {
 				model.addAttribute("errorIp", "Ya existe un equipo con esa dirección IP");
 				hayErrores = true;
 			}
-			
+
 			if (!esIpValida(equipo.getIp())) {
 		        model.addAttribute("errorIp", "La IP no tiene un formato válido");
 		        hayErrores = true;
@@ -224,13 +240,13 @@ public class EquiposControlador {
 				model.addAttribute("errorMac", "Ya existe un equipo con esa dirección MAC");
 				hayErrores = true;
 			}
-			
+
 			if (!esMacValida(equipo.getMac())) {
 		        model.addAttribute("errorMac", "La MAC no tiene un formato válido");
 		        hayErrores = true;
 		    }
 		}
-				
+
 
 		if (hayErrores) {
 			int idMarca = equipo.getFkMarca().getIdMarca();
@@ -306,9 +322,11 @@ public class EquiposControlador {
 
 		return "Equipos/reporteEquipos";
 	}
-	
+
 	public static boolean esIpValida(String ip) {
-	    if (ip == null || ip.isBlank()) return false;
+	    if (ip == null || ip.isBlank()) {
+			return false;
+		}
 
 	    String regexIp =
 	        "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}" +
@@ -316,9 +334,11 @@ public class EquiposControlador {
 
 	    return ip.matches(regexIp);
 	}
-	
+
 	public static boolean esMacValida(String mac) {
-	    if (mac == null || mac.isBlank()) return false;
+	    if (mac == null || mac.isBlank()) {
+			return false;
+		}
 
 	    String regexMac = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
 
@@ -509,8 +529,9 @@ public class EquiposControlador {
 				// aplicar estilo a toda la fila (opcional)
 				for (int i = 0; i < cols.length; i++) {
 					Cell cell = row.getCell(i);
-					if (cell != null)
+					if (cell != null) {
 						cell.setCellStyle(dataStyle);
+					}
 				}
 			}
 
@@ -558,8 +579,9 @@ public class EquiposControlador {
 	// Si fechaCompra viene como LocalDate, lo formatea bonito; si viene String, lo
 	// deja
 	private String formatFecha(Object fecha) {
-		if (fecha == null)
+		if (fecha == null) {
 			return "-";
+		}
 		if (fecha instanceof LocalDate d) {
 			return d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		}

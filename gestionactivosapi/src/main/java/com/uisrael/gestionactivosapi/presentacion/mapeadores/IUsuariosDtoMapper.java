@@ -8,9 +8,9 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.UsuariosResponseD
 
 @Mapper(componentModel = "spring")
 public interface IUsuariosDtoMapper {
-	
+
 	Usuarios toDomain(UsuariosRequestDTO dto);
-	
+
 	UsuariosResponseDTO toResponseDto(Usuarios usuario);
 
 }

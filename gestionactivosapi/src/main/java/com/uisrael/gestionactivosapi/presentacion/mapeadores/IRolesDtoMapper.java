@@ -8,9 +8,9 @@ import com.uisrael.gestionactivosapi.presentacion.dto.Response.RolesResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface IRolesDtoMapper {
-	
+
 	Roles toDomain(RolesRequestDTO dto);
-	
+
 	RolesResponseDTO toResponseDto(Roles rol);
 
 }

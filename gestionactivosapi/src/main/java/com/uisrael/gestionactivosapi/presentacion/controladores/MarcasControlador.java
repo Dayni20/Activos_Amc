@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uisrael.gestionactivosapi.aplicacion.casosuso.entradas.IMarcasUseCase;
 import com.uisrael.gestionactivosapi.dominio.entidades.Marcas;
 import com.uisrael.gestionactivosapi.presentacion.dto.Request.MarcasRequestDTO;
-
 import com.uisrael.gestionactivosapi.presentacion.dto.Response.MarcasResponseDTO;
 import com.uisrael.gestionactivosapi.presentacion.mapeadores.IMarcasDtoMapper;
 
@@ -48,7 +47,7 @@ public class MarcasControlador {
     public List<MarcasResponseDTO> listar() {
         return marcasUseCase.listar().stream().map(mapper::toResponseDto).toList();
     }
-    
+
     @PutMapping("/{id}")
 	public ResponseEntity<MarcasResponseDTO> actualizar(@PathVariable int id,
 			@Valid @RequestBody MarcasRequestDTO request) {
@@ -58,13 +57,13 @@ public class MarcasControlador {
 		Marcas actualizado = marcasUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}
-    
+
     @DeleteMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void eliminar(@PathVariable int id) {
 		marcasUseCase.eliminar(id);
     }
-    
+
     @GetMapping("/{id}")
 	public MarcasResponseDTO obtenerPorId(@PathVariable int id) {
 		return mapper.toResponseDto(marcasUseCase.obtenerPorId(id));

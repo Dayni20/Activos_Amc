@@ -5,23 +5,22 @@ import java.util.Optional;
 
 import com.uisrael.gestionactivosapi.dominio.entidades.Proveedores;
 import com.uisrael.gestionactivosapi.dominio.repositorios.IProveedoresRepositorio;
-
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.ProveedoresJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IProveedoresJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IProveedoresJpaRepositorio;
 
 public class ProveedoresRepositorioImpl implements IProveedoresRepositorio {
-	
+
     private final IProveedoresJpaRepositorio jpaRepository;
-	
+
 	private final IProveedoresJpaMapper entityMapper;
-	
+
 	public ProveedoresRepositorioImpl(IProveedoresJpaRepositorio jpaRepository,
 			IProveedoresJpaMapper entityMapper) {
 		this.jpaRepository = jpaRepository;
 		this.entityMapper = entityMapper;
 	}
-	
+
 	@Override
 	public Proveedores guardar(Proveedores proveedores) {
 		ProveedoresJpa entity = entityMapper.toEntity(proveedores);
@@ -54,7 +53,7 @@ public class ProveedoresRepositorioImpl implements IProveedoresRepositorio {
 		ProveedoresJpa guardado = jpaRepository.save(existente);
 		return entityMapper.toDomain(guardado);
 	}
-			
+
 		@Override
 		public void eliminar(int id) {
 			ProveedoresJpa entity = jpaRepository.findById(id)

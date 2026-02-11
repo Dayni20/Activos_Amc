@@ -62,7 +62,7 @@ public class UbicacionesServicioImpl implements IUbicacionesServicio {
 				.bodyValue(dto).retrieve().toBodilessEntity().block();
 
 	}
-	
+
 	@Override
 	public boolean nombreExiste(String nombre) {
 	    try {

@@ -1,5 +1,8 @@
 package com.uisrael.consumogestionactivosapi.controlador;
 
+import java.util.Base64;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 
 import jakarta.servlet.http.HttpSession;
-
-import java.util.Base64;
-import java.util.Map;
 
 @Controller
 public class AuthControlador {
@@ -40,7 +40,7 @@ public class AuthControlador {
 		if (error != null) {
 			model.addAttribute("error", "Credenciales incorrectas. Por favor, intente nuevamente.");
 		}
-		
+
 		return "auth/login";
 	}
 
@@ -66,7 +66,7 @@ public class AuthControlador {
 						.retrieve()
 						.bodyToMono(new org.springframework.core.ParameterizedTypeReference<Map<String, Object>>(){})
 						.block();
-				
+
 				if (respuestaUsuario != null) {
 					String nombreUsuario = (String) respuestaUsuario.getOrDefault("nombreUsuario", correo.split("@")[0]);
 					String rol = (String) respuestaUsuario.getOrDefault("rol", "AUDITOR");

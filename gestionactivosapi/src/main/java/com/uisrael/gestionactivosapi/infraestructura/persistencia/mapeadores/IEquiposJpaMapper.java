@@ -31,29 +31,37 @@ public interface IEquiposJpaMapper {
 
 
     default MarcasJpa map(Marcas m) {
-        if (m == null) return null;
+        if (m == null) {
+			return null;
+		}
         MarcasJpa j = new MarcasJpa();
         j.setIdMarca(m.getIdMarca());
         return j;
     }
 
     default Marcas map(MarcasJpa j) {
-        if (j == null) return null;
-   
+        if (j == null) {
+			return null;
+		}
+
         return new Marcas(j.getIdMarca(), j.getNombre(), j.isEstado());
     }
 
     default ProveedoresJpa map(Proveedores p) {
-        if (p == null) return null;
+        if (p == null) {
+			return null;
+		}
         ProveedoresJpa j = new ProveedoresJpa();
         j.setIdProveedor(p.getIdProveedor());
         return j;
     }
-    
+
 
     default Proveedores map(ProveedoresJpa j) {
-        if (j == null) return null;
-      
+        if (j == null) {
+			return null;
+		}
+
         return new Proveedores(
             j.getIdProveedor(),
             j.getNombre(),
@@ -64,16 +72,20 @@ public interface IEquiposJpaMapper {
             j.isEstado()
         );
     }
-    
+
     default CategoriaEquiposJpa map(CategoriaEquipos c) {
-        if (c == null) return null;
+        if (c == null) {
+			return null;
+		}
         CategoriaEquiposJpa j = new CategoriaEquiposJpa();
         j.setIdCategoria(c.getIdCategoria());
         return j;
     }
 
     default CategoriaEquipos map(CategoriaEquiposJpa j) {
-        if (j == null) return null;
+        if (j == null) {
+			return null;
+		}
         return new CategoriaEquipos(
             j.getIdCategoria(),
             j.getNombre(),

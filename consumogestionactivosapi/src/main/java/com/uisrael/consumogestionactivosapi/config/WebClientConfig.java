@@ -8,15 +8,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.uisrael.consumogestionactivosapi.security.SesionUsuario;
 
-@Configuration 
-public class WebClientConfig { 
-	
+@Configuration
+public class WebClientConfig {
+
 	private final SesionUsuario sesionUsuario;
-	
+
 	public WebClientConfig(SesionUsuario sesionUsuario) {
 		this.sesionUsuario = sesionUsuario;
 	}
-	
+
 	@Bean
 	WebClient WebClient(WebClient.Builder builder) {
 		return builder
@@ -34,5 +34,5 @@ public class WebClientConfig {
 			})
 			.build();
 	}
-	
+
 }

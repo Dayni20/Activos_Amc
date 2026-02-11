@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class InicioControlador {
 
 	private final SesionUsuario sesionUsuario;
-	
+
 	@ModelAttribute("sesionUsuario")
 	public SesionUsuario obtenerSesionUsuario() {
 		return sesionUsuario;
 	}
-	
+
 	@GetMapping("/inicio")
 	public String mostrarInicio() {
 		return "inicio";

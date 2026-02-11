@@ -16,7 +16,7 @@ public interface IUbicacionesRepositorio {
 	Ubicaciones actualizar(int id, Ubicaciones ubicacion);
 
 	Ubicaciones actualizarEstado(int id, Ubicaciones ubicacion);
-	
+
 	boolean existeNombre(String nombre);
 
 	boolean existeNombreParaOtro(String nombre, int idUbicacion);

@@ -24,17 +24,17 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/ubicaciones")
 public class UbicacionesControlador {
-	
+
 	private final IUbicacionesUseCase ubicacionUseCase;
-	
+
 	private final IUbicacionesDtoMapper mapper;
 
 	public UbicacionesControlador(IUbicacionesUseCase ubicacionUseCase, IUbicacionesDtoMapper mapper) {
 		this.ubicacionUseCase = ubicacionUseCase;
 		this.mapper = mapper;
 	}
-	
-	
+
+
 	@PostMapping
 	public ResponseEntity<?> crear(@Valid @RequestBody UbicacionesRequestDTO request) {
 
@@ -47,12 +47,12 @@ public class UbicacionesControlador {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
-	
+
 	@GetMapping
 	public List<UbicacionesResponseDTO> listar() {
 		return ubicacionUseCase.listar().stream().map(mapper::toResponseDto).toList();
 	}
-		
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> actualizar(@PathVariable int id, @Valid @RequestBody UbicacionesRequestDTO request) {
 
@@ -63,7 +63,7 @@ public class UbicacionesControlador {
 		Ubicaciones actualizado = ubicacionUseCase.actualizar(id, mapper.toDomain(request));
 		return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}
-	
+
 	@PutMapping("/estado/{id}")
 	public ResponseEntity<UbicacionesResponseDTO> actualizarEstado(
 	        @PathVariable int id,
@@ -73,13 +73,13 @@ public class UbicacionesControlador {
 	    Ubicaciones actualizado = ubicacionUseCase.actualizarEstado(id, estado);
 	    return ResponseEntity.ok(mapper.toResponseDto(actualizado));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<UbicacionesResponseDTO> obtenerPorId(@PathVariable int id) {
 	    Ubicaciones ubicacion = ubicacionUseCase.obtenerPorId(id);
 	    return ResponseEntity.ok(mapper.toResponseDto(ubicacion));
 	}
-	
+
 	@GetMapping("/existe-nombre")
 	public ResponseEntity<Boolean> existeNombre(@RequestParam String nombre,
 			@RequestParam(required = false) Integer id) {

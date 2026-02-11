@@ -10,12 +10,12 @@ import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.IUb
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.IUbicacionesJpaRepositorio;
 
 public class UbicacionesRepositorioImpl implements IUbicacionesRepositorio {
-	
+
 	private final IUbicacionesJpaRepositorio jpaRepository;
-	
+
 	private final IUbicacionesJpaMapper entityMapper;
-	
-	
+
+
 
 	public UbicacionesRepositorioImpl(IUbicacionesJpaRepositorio jpaRepository, IUbicacionesJpaMapper entityMapper) {
 		super();
@@ -61,7 +61,7 @@ public class UbicacionesRepositorioImpl implements IUbicacionesRepositorio {
 		UbicacionesJpa guardado = jpaRepository.save(existente);
 		return entityMapper.toDomain(guardado);
 	}
-	
+
     @Override
     public boolean existeNombre(String nombre) {
         return jpaRepository.existsByNombreIgnoreCase(nombre);
@@ -71,6 +71,6 @@ public class UbicacionesRepositorioImpl implements IUbicacionesRepositorio {
     public boolean existeNombreParaOtro(String nombre, int idUbicacion) {
         return jpaRepository.existsByNombreIgnoreCaseAndIdUbicacionNot(nombre, idUbicacion);
     }
-	
+
 
 }

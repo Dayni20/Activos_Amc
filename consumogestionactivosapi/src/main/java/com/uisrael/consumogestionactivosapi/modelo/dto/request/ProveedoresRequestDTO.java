@@ -10,13 +10,13 @@ public class ProveedoresRequestDTO {
 
     @Size(max = 100)
     private String nombre;
-   
+
     @Size(max = 20)
     private String ruc;
-    
+
     @Size(max = 20)
     private String telefono;
-   
+
     @Size(max = 100)
     private String correo;
 

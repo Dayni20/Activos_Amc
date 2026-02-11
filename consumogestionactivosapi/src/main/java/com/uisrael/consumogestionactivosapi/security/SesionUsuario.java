@@ -62,9 +62,13 @@ public class SesionUsuario {
 	}
 
 	public boolean tieneAlgunRol(String... roles) {
-		if (this.rol == null) return false;
+		if (this.rol == null) {
+			return false;
+		}
 		for (String r : roles) {
-			if (this.rol.equals(r)) return true;
+			if (this.rol.equals(r)) {
+				return true;
+			}
 		}
 		return false;
 	}

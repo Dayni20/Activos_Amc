@@ -12,9 +12,9 @@ import com.uisrael.consumogestionactivosapi.service.ICategoriaEquiposServicio;
 
 @Service
 public class CategoriaEquiposServicioImpl implements ICategoriaEquiposServicio {
-	
+
 	private final WebClient clienteweb;
-	
+
 	public CategoriaEquiposServicioImpl(WebClient clienteweb) {
 		super();
 		this.clienteweb = clienteweb;

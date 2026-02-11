@@ -8,8 +8,8 @@ import com.uisrael.gestionactivosapi.dominio.repositorios.ICustodiasRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.jpa.CustodiasJpa;
 import com.uisrael.gestionactivosapi.infraestructura.persistencia.mapeadores.ICustodiasJpaMapper;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiasJpaRepositorio;
-import com.uisrael.gestionactivosapi.infraestructura.repositorios.IEquiposJpaRepositorio;
 import com.uisrael.gestionactivosapi.infraestructura.repositorios.ICustodiosJpaRepositorio;
+import com.uisrael.gestionactivosapi.infraestructura.repositorios.IEquiposJpaRepositorio;
 
 public class CustodiasRepositorioImpl implements ICustodiasRepositorio {
 
@@ -116,5 +116,5 @@ public class CustodiasRepositorioImpl implements ICustodiasRepositorio {
 				.orElseThrow(() -> new RuntimeException("No se pudo leer la custodia"));
 
 		return entityMapper.toDomain(completo);
-	}	
+	}
 }
