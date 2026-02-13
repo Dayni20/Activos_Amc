@@ -297,6 +297,30 @@ public class EquiposControlador {
 				.filter(c -> c.isEstado() || c.getIdCategoria() == idCatSel).collect(Collectors.toList()));
 	}
 
+
+
+	public static boolean esIpValida(String ip) {
+	    if (ip == null || ip.isBlank()) {
+			return false;
+		}
+
+	    String regexIp =
+	        "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}" +
+	        "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
+
+	    return ip.matches(regexIp);
+	}
+
+	public static boolean esMacValida(String mac) {
+	    if (mac == null || mac.isBlank()) {
+			return false;
+		}
+
+	    String regexMac = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+
+	    return mac.matches(regexMac);
+	}
+
 	@GetMapping("/reporte-equipo")
 	public String listarEquiposReporte(@RequestParam(required = false) String tipo, Model model) {
 
@@ -322,29 +346,7 @@ public class EquiposControlador {
 
 		return "Equipos/reporteEquipos";
 	}
-
-	public static boolean esIpValida(String ip) {
-	    if (ip == null || ip.isBlank()) {
-			return false;
-		}
-
-	    String regexIp =
-	        "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}" +
-	        "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)$";
-
-	    return ip.matches(regexIp);
-	}
-
-	public static boolean esMacValida(String mac) {
-	    if (mac == null || mac.isBlank()) {
-			return false;
-		}
-
-	    String regexMac = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
-
-	    return mac.matches(regexMac);
-	}
-
+	
 	@GetMapping("/reporte-equipo/excel")
 	public ResponseEntity<byte[]> descargarExcelEquipos(@RequestParam(required = false) String tipo) {
 

@@ -35,37 +35,57 @@
 
             <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-            <p>
-                <b>Custodio:</b>
-                <span th:text="${cabecera != null && cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span>
-            </p>
+            <div class="mb-3">
+                <p class="mb-1">
+                    <b>Custodio:</b>
+                    <span th:text="${cabecera != null && cabecera.fkCustodio != null ? cabecera.fkCustodio.nombre : ''}"></span>
+                </p>
+
+                <p class="mb-0">
+                    <b>ID Custodio:</b>
+                    <span th:text="${cabecera != null ? cabecera.idCustodio : ''}"></span>
+                </p>
+            </div>
 
             <form id="formCerrarCustodia"
                   th:action="@{/custodias/cerrar-custodia}"
                   th:object="${form}"
                   method="post">
 
-                <!-- IDs -->
-                <input type="hidden" th:field="*{idCustodia}"/>
+                <!-- ✅ ENVIAR idCustodio (clave real) -->
+                <input type="hidden" th:field="*{idCustodio}"/>
 
-                <!-- ✅ IMPORTANTE: enviar fechaInicio oculta para NO perderla -->
-                <input type="hidden" th:field="*{fechaInicio}"/>
-
-                <!-- ✅ OBSERVACIÓN EDITABLE + FECHA FIN EDITABLE -->
                 <div class="row g-3 mb-3">
-                    <div class="col-md-8">
-                        <label class="form-label"><b>Observación</b></label>
+
+                    <!-- ✅ FECHA INICIO (solo lectura, pero se envía hidden) -->
+                    <div class="col-md-4">
+                        <label class="form-label"><b>Fecha Inicio</b></label>
+
+                        <!-- visible -->
                         <input type="text"
                                class="form-control"
-                               th:field="*{observacion}"
-                               placeholder="Ingrese observación"/>
+                               th:value="${form.fechaInicio != null ? #temporals.format(form.fechaInicio, 'yyyy-MM-dd') : ''}"
+                               readonly/>
+
+                        <!-- hidden (se envía al POST) -->
+                        <input type="hidden" th:field="*{fechaInicio}"/>
                     </div>
 
+                    <!-- ✅ FECHA FIN editable -->
                     <div class="col-md-4">
                         <label class="form-label"><b>Fecha Fin</b></label>
                         <input type="date"
                                class="form-control"
                                th:field="*{fechaFin}"/>
+                    </div>
+
+                    <!-- ✅ OBSERVACIÓN editable -->
+                    <div class="col-md-4">
+                        <label class="form-label"><b>Observación</b></label>
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{observacion}"
+                               placeholder="Ingrese observación"/>
                     </div>
                 </div>
 
@@ -74,6 +94,7 @@
                         <thead>
                         <tr>
                             <th style="width:80px">Devolver</th>
+                            <th style="width:90px">PK</th>
                             <th style="width:90px">ID Equipo</th>
                             <th>Código</th>
                             <th>Tipo</th>
@@ -84,18 +105,24 @@
 
                         <tbody>
                         <tr th:each="d : ${detalles}">
+
+                            <!-- ✅ CHECK: ENVÍA idCustodiaEquipo (PK) -->
                             <td class="text-center">
                                 <input type="checkbox"
                                        th:field="*{detallesEntregados}"
                                        th:value="${d.idCustodiaEquipo}">
                             </td>
 
-                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
+                            <!-- ✅ PK -->
+                            <td th:text="${d.idCustodiaEquipo}"></td>
 
+                            <!-- ✅ EQUIPO -->
+                            <td th:text="${d.fkEquipo != null ? d.fkEquipo.idEquipo : ''}"></td>
                             <td th:text="${d.fkEquipo != null ? d.fkEquipo.codigoSap : ''}"></td>
                             <td th:text="${d.fkEquipo != null ? d.fkEquipo.tipoEquipo : ''}"></td>
                             <td th:text="${d.fkEquipo != null ? d.fkEquipo.modelo : ''}"></td>
                             <td th:text="${d.fkEquipo != null ? d.fkEquipo.serial : ''}"></td>
+
                         </tr>
                         </tbody>
                     </table>
@@ -109,3 +136,4 @@
 </div>
 </body>
 </html>
+	

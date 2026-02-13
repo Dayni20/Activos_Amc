@@ -1,190 +1,186 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{plantilla/plantillaui}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{plantilla/plantillaui}">
 
 <head>
-<title>Custodias</title>
+    <title>Custodias</title>
 
-<style>
-.card-body {
-	overflow: visible !important;
-}
-
-.table-responsive {
-	overflow: visible !important;
-}
-</style>
+    <style>
+        .card-body { overflow: visible !important; }
+        .table-responsive { overflow: visible !important; }
+    </style>
 </head>
 
 <body>
-	<div layout:fragment="contenidopaginas">
+<div layout:fragment="contenidopaginas">
 
-		<!-- HEADER -->
-		<div class="page-header">
-			<div class="page-header-left d-flex align-items-center">
-				<div class="page-header-title">
-					<h5 class="m-b-10">Custodias</h5>
-				</div>
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/custodias}">Home</a></li>
-					<li class="breadcrumb-item">Custodias</li>
-				</ul>
-			</div>
+    <!-- HEADER -->
+    <div class="page-header">
+        <div class="page-header-left d-flex align-items-center">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Custodias</h5>
+            </div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/custodias}">Home</a></li>
+                <li class="breadcrumb-item">Custodias</li>
+            </ul>
+        </div>
 
-			<div class="page-header-right ms-auto">
-				<a th:href="@{/custodias/nueva-custodia}" class="btn btn-primary">
-					<i class="feather-plus me-2"></i> Nueva Custodia
-				</a>
-			</div>
-		</div>
+        <div class="page-header-right ms-auto">
+            <a th:href="@{/custodias/nueva-custodia}" class="btn btn-primary">
+                <i class="feather-plus me-2"></i> Nueva Custodia
+            </a>
+        </div>
+    </div>
 
-		<!-- TABLE -->
-		<div class="main-content">
-			<div class="card">
-				<div class="card-body p-0">
+    <!-- ✅ SI QUIERES MOSTRAR ALGÚN TEXTO, VA AQUÍ, NO EN THEAD -->
+    <!-- (si no lo necesitas, bórralo) -->
+    <!--
+    <div class="mb-2">
+        <b>ID Custodio:</b>
+        <span th:text="${cabecera != null ? cabecera.idCustodio : ''}"></span>
+    </div>
+    -->
 
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th style="width: 60px;"></th>
-									<th>ID Custodio</th>
-									<th>Custodio</th>
-									<th>Fecha Inicio</th>
-									<th>Fecha Fin</th>
-									<th>Observación</th>
+    <!-- TABLE -->
+    <div class="main-content">
+        <div class="card">
+            <div class="card-body p-0">
 
-									<th class="text-end">Acciones</th>
-								</tr>
-							</thead>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width: 60px;"></th>
+                            <th>ID Custodio</th>
+                            <th>Custodio</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Observación</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                        </thead>
 
-							<tbody id="custodiasAccordion">
+                        <tbody id="custodiasAccordion">
 
-								<!-- SIN DATOS -->
-								<tr
-									th:if="${listacustodias == null || #lists.isEmpty(listacustodias)}">
-									<td colspan="8" class="text-center py-4">No hay custodias
-										registradas</td>
-								</tr>
+                        <!-- SIN DATOS -->
+                        <tr th:if="${listacustodias == null || #lists.isEmpty(listacustodias)}">
+                            <td colspan="7" class="text-center py-4">No hay custodias registradas</td>
+                        </tr>
 
-								<!-- AGRUPADO POR CUSTODIO -->
-								<th:block th:each="c, iter : ${listacustodias}"
-									th:if="${iter.index == 0
-                                   || listacustodias[iter.index-1].fkCustodio.idCustodio != c.fkCustodio.idCustodio}">
+                        <!-- AGRUPADO POR idCustodio -->
+                        <th:block th:each="c, iter : ${listacustodias}"
+                                  th:if="${iter.index == 0 || listacustodias[iter.index-1].idCustodio != c.idCustodio}">
 
-									<!-- FILA PRINCIPAL -->
-									<tr>
-										<td>
-											<button type="button"
-												class="btn btn-sm btn-outline-primary btn-toggle"
-												th:attr="data-bs-target='#detalle-custodio-' + ${c.fkCustodio.idCustodio}">
-												+</button>
-										</td>
+                            <tr>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-primary btn-toggle"
+                                            th:attr="data-bs-target='#detalle-custodio-' + ${c.idCustodio}">
+                                        +
+                                    </button>
+                                </td>
 
-										<td th:text="${c.fkCustodio.idCustodio}"></td>
+                                <td th:text="${c.idCustodio}"></td>
 
-										<td
-											th:text="${c.fkCustodio.nombre + ' - ' + c.fkCustodio.cedula}"></td>
+                                <td th:text="${c.fkCustodio != null
+                                    ? c.fkCustodio.nombre + ' - ' + c.fkCustodio.cedula
+                                    : 'Sin custodio'}"></td>
 
-										<td th:text="${c.fechaInicio}"></td>
-										<td th:text="${c.fechaFin != null ? c.fechaFin : '-'}"></td>
-										<td th:text="${c.observacion != null ? c.observacion : '-'}"></td>
+                                <!-- ✅ FECHAS Y OBS: desde resumen -->
+                                <td th:text="${resumenPorCustodio[c.idCustodio] != null
+                                    ? resumenPorCustodio[c.idCustodio].fechaInicio
+                                    : '-'}"></td>
 
-											<!-- ✅ ESTADO REAL POR idCustodia 
-											<td><span th:if="${custodiaActiva[c.idCustodia]}"
-												class="badge bg-soft-warning text-warning"> Pendiente
-											</span> <span th:unless="${custodiaActiva[c.idCustodia]}"
-												class="badge bg-soft-success text-success"> Cerrada /
-													Desvinculada </span></td>-->
+                                <td th:text="${resumenPorCustodio[c.idCustodio] != null
+                                    && resumenPorCustodio[c.idCustodio].fechaFin != null
+                                    ? resumenPorCustodio[c.idCustodio].fechaFin
+                                    : '-'}"></td>
 
-										<!-- ACCIONES -->
-										<td class="text-end">
-											<div class="hstack gap-2 justify-content-end">
+                                <td th:text="${resumenPorCustodio[c.idCustodio] != null
+                                    && resumenPorCustodio[c.idCustodio].observacion != null
+                                    ? resumenPorCustodio[c.idCustodio].observacion
+                                    : '-'}"></td>
 
-												<!-- ✅ CERRAR SOLO SI QUEDA PENDIENTE -->
-												<a th:if="${custodiaActiva[c.idCustodia]}"
-													th:href="@{/custodias/cerrar-custodia/{id}(id=${c.idCustodia})}"
-													class="avatar-text avatar-md" title="Cerrar custodia">
-													<i class="feather feather-log-out text-danger"></i>
-												</a>
+                                <!-- ✅ ACCIONES -->
+                                <td class="text-end">
+                                    <div class="hstack gap-2 justify-content-end">
 
-												<!-- VER ACTA ENTREGA -->
-												<a
-													th:href="@{/custodias/acta-entrega/custodio/{id}(id=${c.fkCustodio.idCustodio})}"
-													class="avatar-text avatar-md" title="Ver Acta de Entrega">
-													<i class="feather feather-file-text"></i>
-												</a>
+                                        <!-- ✅ CERRAR -->
+                                        <a th:if="${custodioActiva[c.idCustodio] && resumenPorCustodio[c.idCustodio] != null}"
+                                           th:href="@{/custodias/cerrar-custodia/custodio/{id}(id=${c.idCustodio})}"
+                                           class="avatar-text avatar-md"
+                                           title="Cerrar custodia">
+                                            <i class="feather feather-log-out text-danger"></i>
+                                        </a>
 
-												<!-- DESCARGAR PDF ENTREGA -->
-												<a
-													th:href="@{/custodias/acta-entrega/pdf/custodio/{id}(id=${c.fkCustodio.idCustodio})}"
-													class="avatar-text avatar-md" title="Descargar Acta (PDF)">
-													<i class="feather feather-download"></i>
-												</a>
+                                        <!-- ✅ VER ACTA ENTREGA -->
+                                        <a th:href="@{/custodias/acta-entrega/custodio/{id}(id=${c.idCustodio})}"
+                                           class="avatar-text avatar-md"
+                                           title="Ver Acta de Entrega">
+                                            <i class="feather feather-file-text"></i>
+                                        </a>
 
-											</div>
-										</td>
-									</tr>
+                                        <!-- ✅ PDF ACTA ENTREGA -->
+                                        <a th:href="@{/custodias/acta-entrega/pdf/custodio/{id}(id=${c.idCustodio})}"
+                                           class="avatar-text avatar-md"
+                                           title="Descargar Acta (PDF)">
+                                            <i class="feather feather-download"></i>
+                                        </a>
 
-									<!-- DETALLE COLLAPSE -->
-									<tr>
-										<td colspan="8" class="p-0">
-											<div class="collapse" data-bs-parent="#custodiasAccordion"
-												th:id="'detalle-custodio-' + ${c.fkCustodio.idCustodio}">
+                                    </div>
+                                </td>
+                            </tr>
 
-												<div class="p-3 bg-light border-top">
+                            <!-- DETALLE COLLAPSE -->
+                            <tr>
+                                <td colspan="7" class="p-0">
+                                    <div class="collapse" data-bs-parent="#custodiasAccordion"
+                                         th:id="'detalle-custodio-' + ${c.idCustodio}">
+                                        <div class="p-3 bg-light border-top">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID Equipo</th>
+                                                    <th>Equipo</th>
+                                                    <th>Modelo</th>
+                                                    <th>Serial</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="x : ${listacustodias}"
+                                                    th:if="${x.idCustodio == c.idCustodio}">
+                                                    <td th:text="${x.fkEquipo != null ? x.fkEquipo.idEquipo : ''}"></td>
+                                                    <td th:text="${x.fkEquipo != null ? x.fkEquipo.codigoSap + ' - ' + x.fkEquipo.tipoEquipo : ''}"></td>
+                                                    <td th:text="${x.fkEquipo != null ? x.fkEquipo.modelo : ''}"></td>
+                                                    <td th:text="${x.fkEquipo != null ? x.fkEquipo.serial : ''}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
 
-													<table class="table table-hover mb-0">
-														<thead>
-															<tr>
-																<th>ID Equipo</th>
-																<th>Equipo</th>
-																<th>Modelo</th>
-																<th>Serial</th>
-															</tr>
-														</thead>
-														<tbody>
+                        </th:block>
 
-															<!-- EQUIPOS DEL CUSTODIO -->
-															<tr th:each="x : ${listacustodias}"
-																th:if="${x.fkCustodio.idCustodio == c.fkCustodio.idCustodio}">
+                        </tbody>
+                    </table>
+                </div>
 
-																<td th:text="${x.fkEquipo.idEquipo}"></td>
+            </div>
+        </div>
+    </div>
 
-																<td
-																	th:text="${x.fkEquipo.codigoSap + ' - ' + x.fkEquipo.tipoEquipo}"></td>
-																<td th:text="${x.fkEquipo.modelo}"></td>
-																<td th:text="${x.fkEquipo.serial}"></td>
-															</tr>
-
-														</tbody>
-													</table>
-
-												</div>
-											</div>
-										</td>
-									</tr>
-
-								</th:block>
-
-							</tbody>
-						</table>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<!-- JS TOGGLE -->
-		<script>
+    <!-- JS TOGGLE -->
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".btn-toggle").forEach(btn => {
                 const target = document.querySelector(btn.dataset.bsTarget);
                 if (!target) return;
 
                 const collapse = bootstrap.Collapse.getOrCreateInstance(target, { toggle: false });
-
                 btn.textContent = target.classList.contains("show") ? "-" : "+";
 
                 btn.addEventListener("click", e => {
@@ -198,6 +194,5 @@
         });
     </script>
 
-	</div>
+</div>
 </body>
-</html>

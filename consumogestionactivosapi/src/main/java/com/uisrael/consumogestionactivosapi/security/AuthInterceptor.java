@@ -9,21 +9,34 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-	private final SesionUsuario sesionUsuario;
+	 private final SesionUsuario sesionUsuario;
 
-	public AuthInterceptor(SesionUsuario sesionUsuario) {
-		this.sesionUsuario = sesionUsuario;
-	}
+	    public AuthInterceptor(SesionUsuario sesionUsuario) {
+	        this.sesionUsuario = sesionUsuario;
+	    }
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	    @Override
+	    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+	            throws Exception {
 
-		if (!sesionUsuario.isAutenticado()) {
-			response.sendRedirect("/login");
-			return false;
-		}
+	        // ✅ Evita que el navegador guarde páginas protegidas (soluciona el "atrás")
+	        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	        response.setHeader("Pragma", "no-cache");
+	        response.setDateHeader("Expires", 0);
 
-		return true;
-	}
+	        String uri = request.getRequestURI();
+
+	        // ✅ Permitir el login sin exigir sesión (por si cambias excludes)
+	        if (uri.equals("/login") || uri.equals("/") || uri.equals("/logout")) {
+	            return true;
+	        }
+
+	        // ✅ Bloqueo por sesión
+	        if (!sesionUsuario.isAutenticado()) {
+	            response.sendRedirect("/login");
+	            return false;
+	        }
+
+	        return true;
+	    }
 }
